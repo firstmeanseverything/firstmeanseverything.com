@@ -6,7 +6,7 @@ const AuthStateContext = createContext()
 
 function authReducer(state, { payload, type }) {
   switch (type) {
-    case 'SIGN_IN':
+    case 'AUTHENTICATE':
       return { ...state, ...payload, isAuthenticated: true }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -26,7 +26,7 @@ function AuthProvider({ children }) {
           appId: process.env.USERBASE_APP_ID,
         })
 
-        if (user) dispatch({ type: 'SIGN_IN', payload: { user } })
+        if (user) dispatch({ type: 'AUTHENTICATE', payload: { user } })
       } catch (err) {
         console.log(err)
       }
@@ -35,9 +35,21 @@ function AuthProvider({ children }) {
     initUserbase()
   }, [])
 
+  const signIn = async (data) => {
+    const user = await userbase.signIn({ ...data, rememberMe: 'local' })
+
+    dispatch({ type: 'AUTHENTICATE', payload: { user } })
+  }
+
+  const signUp = async (data) => {
+    const user = await userbase.signUp({ ...data, rememberMe: 'local' })
+
+    dispatch({ type: 'AUTHENTICATE', payload: { user } })
+  }
+
   return (
     <AuthStateContext.Provider value={{ ...state }}>
-      <AuthDispatchContext.Provider value={{ dispatch }}>
+      <AuthDispatchContext.Provider value={{ dispatch, signIn, signUp }}>
         {children}
       </AuthDispatchContext.Provider>
     </AuthStateContext.Provider>
