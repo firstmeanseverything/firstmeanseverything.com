@@ -8,16 +8,20 @@ function authReducer(state, { payload, type }) {
   switch (type) {
     case 'AUTHENTICATE':
       return { ...state, ...payload, isAuthenticated: true }
+    case 'UNAUTHENTICATE':
+      return { ...state, ...initialState }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
+const initialState = {
+  isAuthenticated: false,
+  user: null,
+}
+
 function AuthProvider({ children }) {
-  const [state, dispatch] = useReducer(authReducer, {
-    isAuthenticated: false,
-    user: null,
-  })
+  const [state, dispatch] = useReducer(authReducer, initialState)
 
   useEffect(() => {
     const initUserbase = async () => {
@@ -41,6 +45,12 @@ function AuthProvider({ children }) {
     dispatch({ type: 'AUTHENTICATE', payload: { user } })
   }
 
+  const signOut = async () => {
+    await userbase.signOut()
+
+    dispatch({ type: 'UNAUTHENTICATE' })
+  }
+
   const signUp = async (data) => {
     const user = await userbase.signUp({ ...data, rememberMe: 'local' })
 
@@ -49,7 +59,9 @@ function AuthProvider({ children }) {
 
   return (
     <AuthStateContext.Provider value={{ ...state }}>
-      <AuthDispatchContext.Provider value={{ dispatch, signIn, signUp }}>
+      <AuthDispatchContext.Provider
+        value={{ dispatch, signIn, signOut, signUp }}
+      >
         {children}
       </AuthDispatchContext.Provider>
     </AuthStateContext.Provider>
