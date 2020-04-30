@@ -1,11 +1,7 @@
-import { useAuthState } from '../context/auth'
+import ProgramList from '../components/program-list'
 
 function Index() {
-  const { isAuthenticated } = useAuthState()
-
-  if (!isAuthenticated) return 'Hello, stranger!'
-
-  return 'Welcome back'
+  return <ProgramList />
 }
 
 export default Index
