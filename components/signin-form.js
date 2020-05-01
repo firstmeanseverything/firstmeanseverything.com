@@ -8,8 +8,8 @@ function SignInForm() {
   const { signIn } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      username: yup.string().required(),
-      password: yup.string().required(),
+      username: yup.string().required('Username is required'),
+      password: yup.string().required('Password is required'),
     }),
   })
 
