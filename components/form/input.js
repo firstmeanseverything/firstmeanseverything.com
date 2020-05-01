@@ -7,9 +7,7 @@ function FormInput({
   disabled = false,
   field,
   label,
-  required,
   type = 'text',
-  validation = {},
   ...props
 }) {
   const { errors, register } = useFormContext()
@@ -23,10 +21,7 @@ function FormInput({
           id={field}
           type={type}
           disabled={disabled}
-          ref={register({
-            required: required ? `${label || `This field`} is required` : false,
-            ...validation,
-          })}
+          ref={register}
           {...props}
         />
       </div>
