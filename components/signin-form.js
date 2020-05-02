@@ -24,8 +24,12 @@ function SignInForm() {
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormInput field="username" />
-        <FormInput field="password" type="password" />
+        <div className="mb-4">
+          <FormInput field="username" placeholder="Username" />
+        </div>
+        <div className="mb-4">
+          <FormInput field="password" type="password" placeholder="Password" />
+        </div>
         <button type="submit">Go</button>
       </form>
     </FormContext>

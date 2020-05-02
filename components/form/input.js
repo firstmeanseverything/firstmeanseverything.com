@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import { ErrorMessage, useFormContext } from 'react-hook-form'
 
 import FormError from './error'
@@ -12,11 +13,20 @@ function FormInput({
 }) {
   const { errors, register } = useFormContext()
 
+  const hasError = errors[field]
+
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="flex flex-col">
         {label && <FormLabel label={label} for={field} />}
         <input
+          className={cx(
+            'appearance-none border focus:border-blue-500 focus:outline-none px-4 py-2 rounded w-full',
+            {
+              'border-red-600': hasError,
+              'cursor-not-allowed opacity-50': disabled,
+            }
+          )}
           name={field}
           id={field}
           type={type}

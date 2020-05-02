@@ -35,10 +35,16 @@ function SignUpForm() {
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormInput field="username" />
-        <FormInput field="email" type="email" />
-        <FormInput field="password" type="password" />
-        <FormInput field="confirm" type="password" />
+        <div className="mb-4">
+          <FormInput field="username" placeholder="Username" />
+        </div>
+        <div className="mb-4">
+          <FormInput field="email" type="email" placeholder="Email address" />
+        </div>
+        <div className="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-2 ">
+          <FormInput field="password" type="password" placeholder="Password" />
+          <FormInput field="confirm" type="password" placeholder="Confirm" />
+        </div>
         <button type="submit">Go</button>
       </form>
     </FormContext>
