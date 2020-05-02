@@ -8,7 +8,10 @@ function SignInForm() {
   const { signIn } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      username: yup.string().required('Username is required'),
+      username: yup
+        .string()
+        .required('Email address is required')
+        .email('Email is not valid'),
       password: yup.string().required('Password is required'),
     }),
   })
@@ -25,7 +28,7 @@ function SignInForm() {
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <FormInput field="username" placeholder="Username" />
+          <FormInput field="username" placeholder="Email address" />
         </div>
         <div className="mb-4">
           <FormInput field="password" type="password" placeholder="Password" />

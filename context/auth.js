@@ -51,8 +51,16 @@ function AuthProvider({ children }) {
     dispatch({ type: 'UNAUTHENTICATE' })
   }
 
-  const signUp = async (data) => {
-    const user = await userbase.signUp({ ...data, rememberMe: 'local' })
+  const signUp = async ({ username, password, ...rest }) => {
+    const user = await userbase.signUp({
+      email: username,
+      password,
+      profile: {
+        ...rest,
+      },
+      rememberMe: 'local',
+      username,
+    })
 
     dispatch({ type: 'AUTHENTICATE', payload: { user } })
   }
