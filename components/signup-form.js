@@ -8,10 +8,9 @@ function SignUpForm() {
   const { signUp } = useAuthDispatch()
   const { handleSubmit, unregister, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      username: yup.string().required('Username is required'),
-      email: yup
+      username: yup
         .string()
-        .required('Email is required')
+        .required('Email address is required')
         .email('Email is not valid'),
       password: yup
         .string()
@@ -36,10 +35,11 @@ function SignUpForm() {
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <FormInput field="username" placeholder="Username" />
-        </div>
-        <div className="mb-4">
-          <FormInput field="email" type="email" placeholder="Email address" />
+          <FormInput
+            field="username"
+            type="email"
+            placeholder="Email address"
+          />
         </div>
         <div className="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-2 ">
           <FormInput field="password" type="password" placeholder="Password" />
