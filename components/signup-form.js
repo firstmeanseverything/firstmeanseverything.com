@@ -12,6 +12,7 @@ function SignUpForm() {
         .string()
         .required('Email address is required')
         .email('Email is not valid'),
+      name: yup.string().required('Name is required'),
       password: yup
         .string()
         .required('Password is required')
@@ -40,6 +41,9 @@ function SignUpForm() {
             type="email"
             placeholder="Email address"
           />
+        </div>
+        <div className="mb-4">
+          <FormInput field="name" placeholder="Name" />
         </div>
         <div className="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-2 ">
           <FormInput field="password" type="password" placeholder="Password" />
