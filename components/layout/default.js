@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import { useAuthState, useAuthDispatch } from '../context/auth'
+import { useAuthState, useAuthDispatch } from '../../context/auth'
 
-function Layout({ children }) {
+function DefaultLayout({ children }) {
   const { signOut } = useAuthDispatch()
   const { isAuthenticated } = useAuthState()
 
@@ -40,4 +40,4 @@ function Layout({ children }) {
   )
 }
 
-export default Layout
+export default DefaultLayout

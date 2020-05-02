@@ -48,7 +48,9 @@ function ProgramList() {
         data.programs.map((program) => (
           <li key={program.id}>
             {program.date}
-            <Link href={program.pdf.url}>Download</Link>
+            <a href={program.pdf.url} target="_blank" rel="nofollow noreferrer">
+              Download
+            </a>
           </li>
         ))
       )}
