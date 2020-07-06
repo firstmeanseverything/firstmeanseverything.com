@@ -1,77 +1,49 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
-import userbase from 'userbase-js'
+import firebase from '../lib/firebase'
 
-const AuthDispatchContext = createContext()
 const AuthStateContext = createContext()
 
-function authReducer(state, { payload, type }) {
+function reducer(state, { payload, type }) {
   switch (type) {
     case 'AUTHENTICATE':
-      return { ...state, ...payload, isAuthenticated: true }
+      return { ...state, ...payload, authState: 'authenticated' }
     case 'UNAUTHENTICATE':
-      return { ...state, ...initialState }
+      return { ...state, ...initialState, authState: 'unauthenticated' }
     default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type: ${type}`)
   }
 }
 
 const initialState = {
-  isAuthenticated: false,
   user: null,
+  authState: 'loading',
 }
 
 function AuthProvider({ children }) {
-  const [state, dispatch] = useReducer(authReducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    const initUserbase = async () => {
+    const listener = firebase.auth().onAuthStateChanged(async (user) => {
       try {
-        const { user } = await userbase.init({
-          appId: process.env.USERBASE_APP_ID,
-        })
-
-        if (user) dispatch({ type: 'AUTHENTICATE', payload: { user } })
-      } catch (err) {
-        console.log(err)
+        if (user) {
+          dispatch({ type: 'AUTHENTICATE', payload: { user } })
+        } else dispatch({ type: 'UNAUTHENTICATE' })
+      } catch (error) {
+        console.log(error)
       }
-    }
-
-    initUserbase()
-  }, [])
-
-  const signIn = async (data) => {
-    const user = await userbase.signIn({ ...data, rememberMe: 'local' })
-
-    dispatch({ type: 'AUTHENTICATE', payload: { user } })
-  }
-
-  const signOut = async () => {
-    await userbase.signOut()
-
-    dispatch({ type: 'UNAUTHENTICATE' })
-  }
-
-  const signUp = async ({ username, password, ...rest }) => {
-    const user = await userbase.signUp({
-      email: username,
-      password,
-      profile: {
-        ...rest,
-      },
-      rememberMe: 'local',
-      username,
     })
 
-    dispatch({ type: 'AUTHENTICATE', payload: { user } })
-  }
+    return () => listener()
+  }, [])
+
+  const isAuthenticated = state.authState === 'authenticated'
+  const isAuthLoading = state.authState === 'loading'
 
   return (
-    <AuthStateContext.Provider value={{ ...state }}>
-      <AuthDispatchContext.Provider
-        value={{ dispatch, signIn, signOut, signUp }}
-      >
-        {children}
-      </AuthDispatchContext.Provider>
+    <AuthStateContext.Provider
+      value={{ isAuthenticated, isAuthLoading, ...state }}
+    >
+      {children}
     </AuthStateContext.Provider>
   )
 }
@@ -85,13 +57,4 @@ function useAuthState() {
   return context
 }
 
-function useAuthDispatch() {
-  const context = useContext(AuthDispatchContext)
-
-  if (context === undefined)
-    throw new Error('useAuthDispatch must be used within an AuthProvider')
-
-  return context
-}
-
-export { AuthProvider, useAuthDispatch, useAuthState }
+export { AuthProvider, useAuthState }
