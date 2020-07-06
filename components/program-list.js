@@ -9,11 +9,14 @@ function ProgramList() {
   const { isAuthenticated } = useAuthState()
   const [category, setCategory] = useState('RX')
 
-  const graphcms = new GraphQLClient(process.env.GRAPHCMS_ENDPOINT, {
-    headers: {
-      authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`,
-    },
-  })
+  const graphcms = new GraphQLClient(
+    process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
+    {
+      headers: {
+        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
+      },
+    }
+  )
 
   const date = new Date().toDateString()
 
