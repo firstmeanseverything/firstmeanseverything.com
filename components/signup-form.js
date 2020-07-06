@@ -1,18 +1,16 @@
 import { FormContext, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+import firebase from '../lib/firebase'
 import { FormInput } from './form'
-import { useAuthDispatch } from '../context/auth'
 
 function SignUpForm() {
-  const { signUp } = useAuthDispatch()
-  const { handleSubmit, unregister, ...methods } = useForm({
+  const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      username: yup
+      email: yup
         .string()
         .required('Email address is required')
         .email('Email is not valid'),
-      name: yup.string().required('Name is required'),
       password: yup
         .string()
         .required('Password is required')
@@ -24,26 +22,14 @@ function SignUpForm() {
     }),
   })
 
-  const onSubmit = async ({ confirm, ...rest }) => {
-    try {
-      await signUp({ ...rest })
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const signUp = async ({ email, password }) =>
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
 
   return (
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(signUp)}>
         <div className="mb-4">
-          <FormInput
-            field="username"
-            type="email"
-            placeholder="Email address"
-          />
-        </div>
-        <div className="mb-4">
-          <FormInput field="name" placeholder="Name" />
+          <FormInput field="email" type="email" placeholder="Email address" />
         </div>
         <div className="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-2 ">
           <FormInput field="password" type="password" placeholder="Password" />

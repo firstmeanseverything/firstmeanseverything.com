@@ -1,34 +1,57 @@
+import { useReducer } from 'react'
 import { FormContext, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+import firebase from '../lib/firebase'
 import { FormInput } from './form'
-import { useAuthDispatch } from '../context/auth'
+
+function reducer(state, { payload, type }) {
+  switch (type) {
+    case 'ERROR':
+      return { ...state, formState: 'error', ...payload }
+    case 'LOADING':
+      return { ...state, formState: 'loading', ...payload }
+    default:
+      throw new Error(`Unhandled action type: ${type}`)
+  }
+}
 
 function SignInForm() {
-  const { signIn } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      username: yup
+      email: yup
         .string()
         .required('Email address is required')
         .email('Email is not valid'),
       password: yup.string().required('Password is required'),
     }),
   })
+  const [state, dispatch] = useReducer(reducer, {
+    formState: null,
+    message: null,
+  })
 
-  const onSubmit = async (data) => {
+  const signIn = async ({ email, password }) => {
+    dispatch({
+      type: 'LOADING',
+      payload: { message: 'Signing you in' },
+    })
     try {
-      await signIn(data)
-    } catch (err) {
-      console.log(err)
+      await firebase.auth().signInWithEmailAndPassword(email, password)
+    } catch (error) {
+      dispatch({
+        type: 'ERROR',
+        payload: { message: error.message },
+      })
     }
   }
 
   return (
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {state.formState === 'error' && <p>{state.message}</p>}
+      <form onSubmit={handleSubmit(signIn)}>
         <div className="mb-4">
-          <FormInput field="username" placeholder="Email address" />
+          <FormInput field="email" placeholder="Email address" />
         </div>
         <div className="mb-4">
           <FormInput field="password" type="password" placeholder="Password" />

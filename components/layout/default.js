@@ -1,10 +1,12 @@
 import Link from 'next/link'
 
-import { useAuthState, useAuthDispatch } from '../../context/auth'
+import firebase from '../../lib/firebase'
+import { useAuthState } from '../../context/auth'
 
 function DefaultLayout({ children }) {
-  const { signOut } = useAuthDispatch()
   const { isAuthenticated } = useAuthState()
+
+  const signOut = async () => await firebase.auth().signOut()
 
   return (
     <React.Fragment>
@@ -16,9 +18,7 @@ function DefaultLayout({ children }) {
         </li>
         {isAuthenticated ? (
           <li>
-            <Link href="#">
-              <a onClick={() => signOut()}>Sign out</a>
-            </Link>
+            <button onClick={signOut}>Sign out</button>
           </li>
         ) : (
           <React.Fragment>
