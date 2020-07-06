@@ -1,0 +1,10 @@
+{
+  "automerge": true,
+  "extends": ["config:base", "schedule:weekly"],
+  "ignorePresets": [":semanticPrefixFixDepsChoreOthers"],
+  "major": {
+    "automerge": false
+  },
+  "reviewers": ["ynnoj"],
+  "semanticCommits": true
+}
