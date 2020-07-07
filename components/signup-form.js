@@ -7,6 +7,7 @@ import { FormInput } from './form'
 function SignUpForm() {
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
+      name: yup.string().required('Name is required'),
       email: yup
         .string()
         .required('Email address is required')
@@ -22,12 +23,20 @@ function SignUpForm() {
     }),
   })
 
-  const signUp = async ({ email, password }) =>
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
+  const signUp = async ({ email, name, password }) => {
+    const { user } = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+
+    await firebase.firestore().collection('users').doc(user.uid).set({ name })
+  }
 
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(signUp)}>
+        <div className="mb-4">
+          <FormInput field="name" placeholder="Name" />
+        </div>
         <div className="mb-4">
           <FormInput field="email" type="email" placeholder="Email address" />
         </div>

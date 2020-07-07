@@ -26,7 +26,20 @@ function AuthProvider({ children }) {
     const listener = firebase.auth().onAuthStateChanged(async (user) => {
       try {
         if (user) {
-          dispatch({ type: 'AUTHENTICATE', payload: { user } })
+          const { email, uid } = user
+
+          const doc = await firebase
+            .firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get()
+
+          const { name } = doc.data()
+
+          dispatch({
+            type: 'AUTHENTICATE',
+            payload: { user: { email, name, uid } },
+          })
         } else dispatch({ type: 'UNAUTHENTICATE' })
       } catch (error) {
         console.log(error)
