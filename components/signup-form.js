@@ -28,7 +28,7 @@ function SignUpForm() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
 
-    await firebase.firestore().doc(user.uid).set({ name })
+    await firebase.firestore().collection('users').doc(user.uid).set({ name })
   }
 
   return (
