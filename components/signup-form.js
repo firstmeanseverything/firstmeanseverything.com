@@ -7,6 +7,7 @@ import { FormInput } from './form'
 function SignUpForm() {
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
+      name: yup.string().required('Name is required'),
       email: yup
         .string()
         .required('Email address is required')
@@ -28,6 +29,9 @@ function SignUpForm() {
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(signUp)}>
+        <div className="mb-4">
+          <FormInput field="name" placeholder="Name" />
+        </div>
         <div className="mb-4">
           <FormInput field="email" type="email" placeholder="Email address" />
         </div>
