@@ -23,8 +23,13 @@ function SignUpForm() {
     }),
   })
 
-  const signUp = async ({ email, password }) =>
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
+  const signUp = async ({ email, password }) => {
+    const { user } = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+
+    await firebase.firestore().doc(user.uid).set({ name })
+  }
 
   return (
     <FormContext {...methods}>
