@@ -24,11 +24,23 @@ function SignUpForm() {
   })
 
   const signUp = async ({ email, name, password }) => {
+    const { stripe_customer_id } = await fetch('/api/create-stripe-customer', {
+      method: 'POST',
+      body: JSON.stringify({ email, name }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+
     const { user } = await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
 
-    await firebase.firestore().collection('users').doc(user.uid).set({ name })
+    await firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .set({ name, stripe_customer_id })
   }
 
   return (
