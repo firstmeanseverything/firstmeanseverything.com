@@ -1,9 +1,7 @@
 import Stripe from 'stripe'
 
-import ProgramList from '../components/program-list'
-
 function Index({ prices }) {
-  return <ProgramList />
+  return 'hi'
 }
 
 export async function getStaticProps() {
