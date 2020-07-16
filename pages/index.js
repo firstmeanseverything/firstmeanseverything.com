@@ -1,7 +1,13 @@
 import Stripe from 'stripe'
 
 function Index({ prices }) {
-  return 'hi'
+  return prices.map((price) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: price.currency,
+      minimumFractionDigits: 0,
+    }).format(price.unit_amount / 100)
+  )
 }
 
 export async function getStaticProps() {
