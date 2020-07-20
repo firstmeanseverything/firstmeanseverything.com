@@ -6361,10 +6361,10 @@ strip-ansi@^3.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
-stripe@8.69.0:
-  version "8.69.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.69.0.tgz#80a63fdceba82ef70c4f587d9beec856e9ca859b"
-  integrity sha512-RD/oW1cwMBHOYFN5gs8ehbEkMFg8tJPByQzVyibJxng5t6PxsEWtV+p5QM28aoT/XKSA7+EwCcDNmH1uPw4OMg==
+stripe@8.76.0:
+  version "8.76.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.76.0.tgz#7478536811a36698b7f1860d20b709eec08f43be"
+  integrity sha512-5KJ9tom3eOOwPzyRZXW7tNqZmNqiRl66xqw30p6W/i1c9ZmVizmriTgRZ0PJldjsoZhrwlr4X6ddcGndc6H93g==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
