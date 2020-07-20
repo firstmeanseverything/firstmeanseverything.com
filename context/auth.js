@@ -28,17 +28,16 @@ function AuthProvider({ children }) {
         if (user) {
           const { email, uid } = user
 
-          const doc = await firebase
+          const { name, stripe_customer_id } = await firebase
             .firestore()
             .collection('users')
             .doc(user.uid)
             .get()
-
-          const { name } = doc.data()
+            .then((doc) => doc.data())
 
           dispatch({
             type: 'AUTHENTICATE',
-            payload: { user: { email, name, uid } },
+            payload: { user: { email, name, stripe_customer_id, uid } },
           })
         } else dispatch({ type: 'UNAUTHENTICATE' })
       } catch (error) {
