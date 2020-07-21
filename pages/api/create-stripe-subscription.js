@@ -16,16 +16,13 @@ export default async (req, res) => {
       },
     })
 
-    const {
-      id: stripe_subscription_id,
-      status: stripe_subscription_status,
-    } = await stripe.subscriptions.create({
+    const subscription = await stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
       expand: ['latest_invoice.payment_intent'],
     })
 
-    res.status(201).json({ stripe_subscription_id, stripe_subscription_status })
+    res.status(201).json(subscription)
   } catch (error) {
     res.status(500).json({
       status: 500,
