@@ -29,7 +29,7 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: 500,
-      mesage: 'There was an issue creating the subscription',
+      message: error.message,
     })
   }
 }

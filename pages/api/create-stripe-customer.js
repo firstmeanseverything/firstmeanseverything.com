@@ -13,8 +13,6 @@ export default async (req, res) => {
 
     res.status(201).json(customer)
   } catch (error) {
-    res
-      .status(500)
-      .json({ status: 500, mesage: 'There was an issue creating the customer' })
+    res.status(500).json({ status: 500, message: error.message })
   }
 }
