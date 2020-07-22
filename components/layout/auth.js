@@ -1,5 +1,3 @@
-import React from 'react'
-
 function AuthLayout({ children }) {
   const getRandomImage = () => {
     const images = Array.from(

@@ -1,4 +1,6 @@
 import { useRouter } from 'next/router'
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
 import { AuthProvider } from '../context/auth'
 import { AuthLayout, DefaultLayout } from '../components/layout'
@@ -12,11 +14,17 @@ function App({ Component, pageProps }) {
 
   const Layout = isAuthPath ? AuthLayout : DefaultLayout
 
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  )
+
   return (
     <AuthProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Elements stripe={stripePromise}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Elements>
     </AuthProvider>
   )
 }

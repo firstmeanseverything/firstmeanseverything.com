@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Link from 'next/link'
 import { GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
 
