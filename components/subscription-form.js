@@ -118,13 +118,6 @@ function SubscriptionForm({ price }) {
   const onSubscriptionComplete = (result) => {
     localStorage.clear()
     console.log(result)
-    // await firebase.firestore().collection('users').doc(user.uid).set(
-    //   {
-    //     stripe_subscription_id: subscription.id,
-    //     stripe_subscription_status,
-    //   },
-    //   { merge: true }
-    // )
   }
 
   const createSubscription = ({ customerId, paymentMethodId, priceId }) => {
