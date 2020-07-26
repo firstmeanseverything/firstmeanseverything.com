@@ -1,10 +1,11 @@
 import { FormContext, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import firebase from '../lib/firebase'
 import { FormInput } from './form'
+import { useAuthDispatch } from '../context/auth'
 
 function SignUpForm() {
+  const { signUp } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
       name: yup.string().required('Name is required'),
@@ -23,32 +24,12 @@ function SignUpForm() {
     }),
   })
 
-  const signUp = async ({ email, name, password }) => {
-    const { id: stripe_customer_id } = await fetch(
-      '/api/create-stripe-customer',
-      {
-        method: 'POST',
-        body: JSON.stringify({ email, name }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    ).then((response) => response.json())
-
-    const { user } = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-
-    await firebase
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .set({ name, stripe_customer_id })
-  }
+  const onSubmit = async ({ email, name, password }) =>
+    await signUp(email, password)
 
   return (
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(signUp)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <FormInput field="name" placeholder="Name" />
         </div>

@@ -5,12 +5,12 @@ import SignUpForm from '../components/signup-form'
 import { useAuthState } from '../context/auth'
 
 function SignUp() {
-  const { isAuthenticated } = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
 
   useEffect(() => {
-    if (isAuthenticated) router.push('/')
-  }, [isAuthenticated])
+    if (user) router.push('/')
+  }, [user])
 
   return <SignUpForm />
 }
