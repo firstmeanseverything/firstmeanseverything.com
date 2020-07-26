@@ -73,7 +73,15 @@ async function parseUser(user) {
     name: user.displayName,
     token: user.xa,
     photoUrl: user.photoURL,
+    stripeRole: await getStripeRole(),
   }
+}
+
+async function getStripeRole() {
+  await firebase.auth().currentUser.getIdToken(true)
+  const decodedToken = await firebase.auth().currentUser.getIdTokenResult()
+
+  return decodedToken.claims.stripeRole || 'free'
 }
 
 function useAuthDispatch() {

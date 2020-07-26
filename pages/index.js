@@ -1,8 +1,11 @@
 import Stripe from 'stripe'
 
-import SubscriptionForm from '../components/subscription-form'
+import { createCheckoutSession, goToBillingPortal } from '../lib/db'
+import { useAuthState } from '../context/auth'
 
 function Index({ prices }) {
+  const { user } = useAuthState()
+
   return (
     <React.Fragment>
       <div>
@@ -14,7 +17,10 @@ function Index({ prices }) {
           }).format(price.unit_amount / 100)
         )}
       </div>
-      <SubscriptionForm price={prices[0]} />
+      <button onClick={() => createCheckoutSession(user.uid, prices[0].id)}>
+        Subscribe
+      </button>
+      <button onClick={() => goToBillingPortal()}>Manage</button>
     </React.Fragment>
   )
 }
@@ -25,7 +31,7 @@ export async function getStaticProps() {
   const { data: prices } = await stripe.prices.list({
     active: true,
     expand: ['data.product'],
-    product: 'prod_GluoMMJud0rQns',
+    product: 'prod_HhE1ef4MH5DDwC',
   })
 
   return {
