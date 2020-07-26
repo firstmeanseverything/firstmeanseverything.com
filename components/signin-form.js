@@ -2,8 +2,8 @@ import { useReducer } from 'react'
 import { FormContext, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import firebase from '../lib/firebase'
 import { FormInput } from './form'
+import { useAuthDispatch } from '../context/auth'
 
 function reducer(state, { payload, type }) {
   switch (type) {
@@ -17,6 +17,7 @@ function reducer(state, { payload, type }) {
 }
 
 function SignInForm() {
+  const { signIn } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
       email: yup
@@ -31,13 +32,13 @@ function SignInForm() {
     message: null,
   })
 
-  const signIn = async ({ email, password }) => {
+  const onSubmit = async ({ email, password }) => {
     dispatch({
       type: 'LOADING',
       payload: { message: 'Signing you in' },
     })
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password)
+      await signIn(email, password)
     } catch (error) {
       dispatch({
         type: 'ERROR',
@@ -49,7 +50,7 @@ function SignInForm() {
   return (
     <FormContext {...methods}>
       {state.formState === 'error' && <p>{state.message}</p>}
-      <form onSubmit={handleSubmit(signIn)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <FormInput field="email" placeholder="Email address" />
         </div>
