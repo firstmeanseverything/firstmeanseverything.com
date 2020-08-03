@@ -22,7 +22,7 @@
     "react-hook-form": "5.7.2",
     "stripe": "8.79.0",
     "swr": "0.3.0",
-    "yup": "0.29.1"
+    "yup": "0.29.2"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "2.3.0",
