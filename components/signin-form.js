@@ -50,15 +50,45 @@ function SignInForm() {
   return (
     <FormContext {...methods}>
       {state.formState === 'error' && <p>{state.message}</p>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <FormInput field="email" placeholder="Email address" />
-        </div>
-        <div className="mb-4">
-          <FormInput field="password" type="password" placeholder="Password" />
-        </div>
-        <button type="submit">Go</button>
-      </form>
+      <div className="mt-6">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <FormInput
+              field="email"
+              label="Email address"
+              placeholder="team@firstmeanseverything.com"
+            />
+          </div>
+          <div className="mt-6">
+            <FormInput
+              field="password"
+              type="password"
+              label="Password"
+              placeholder="••••••••"
+            />
+          </div>
+          <div className="mt-6 flex items-center justify-end">
+            <div className="text-sm leading-5">
+              <a
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+              >
+                Forgot your password?
+              </a>
+            </div>
+          </div>
+          <div className="mt-6">
+            <span className="block w-full rounded-md shadow-sm">
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+              >
+                Sign in
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
     </FormContext>
   )
 }
