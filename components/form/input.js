@@ -18,22 +18,28 @@ function FormInput({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col">
-        {label && <FormLabel label={label} for={field} />}
-        <input
-          className={cx(
-            'appearance-none border focus:border-blue-500 focus:outline-none px-4 py-2 rounded w-full',
-            {
-              'border-red-600': hasError,
-              'cursor-not-allowed opacity-50': disabled,
-            }
-          )}
-          name={field}
-          id={field}
-          type={type}
-          disabled={disabled}
-          ref={register}
-          {...props}
-        />
+        {label && (
+          <div>
+            <FormLabel label={label} htmlFor={field} />
+          </div>
+        )}
+        <div className="mt-1 rounded-md shadow-sm">
+          <input
+            className={cx(
+              'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+              {
+                'border-red-600': hasError,
+                'cursor-not-allowed opacity-50': disabled,
+              }
+            )}
+            name={field}
+            id={field}
+            type={type}
+            disabled={disabled}
+            ref={register}
+            {...props}
+          />
+        </div>
       </div>
       <ErrorMessage as={<FormError />} name={field} errors={errors} />
     </div>
