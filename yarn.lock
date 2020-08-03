@@ -6444,10 +6444,10 @@ strip-ansi@6.0.0:
   dependencies:
     ansi-regex "^5.0.0"
 
-stripe@8.79.0:
-  version "8.79.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.79.0.tgz#34263fe2bc9baf63580579e93f91638252ca38b1"
-  integrity sha512-Bqr121uWg9IGsPheN12cEE4zYVFU9Juy9MwIHv9RnEEAQafUSXtRtvjRcFDDQMvCm7Pd49zFLC/JrmFPyfVm9g==
+stripe@8.81.0:
+  version "8.81.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.81.0.tgz#c5ef1e57a8a806c1e908dc509ad137cd8f3c7cf6"
+  integrity sha512-eGnx3WcP7fsn0uCxuPSb7UQj7U3yZLv9WE5rIU2LArgggaq54fejNvf7IbzUs1jDhoJRgUERJylc651WmbF/ow==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
