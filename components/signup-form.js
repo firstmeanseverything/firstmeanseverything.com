@@ -8,7 +8,6 @@ function SignUpForm() {
   const { signUp } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     validationSchema: yup.object().shape({
-      name: yup.string().required('Name is required'),
       email: yup
         .string()
         .required('Email address is required')
@@ -24,24 +23,47 @@ function SignUpForm() {
     }),
   })
 
-  const onSubmit = async ({ email, name, password }) =>
-    await signUp(email, password)
+  const onSubmit = async ({ email, password }) => await signUp(email, password)
 
   return (
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <FormInput field="name" placeholder="Name" />
-        </div>
-        <div className="mb-4">
-          <FormInput field="email" type="email" placeholder="Email address" />
-        </div>
-        <div className="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-2 ">
-          <FormInput field="password" type="password" placeholder="Password" />
-          <FormInput field="confirm" type="password" placeholder="Confirm" />
-        </div>
-        <button type="submit">Go</button>
-      </form>
+      <div className="mt-6">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <FormInput
+              field="email"
+              label="Email address"
+              placeholder="team@firstmeanseverything.com"
+            />
+          </div>
+          <div className="mt-6">
+            <div className="grid grid-cols-1 gap-2 mb-4 row-gap-6 sm:grid-cols-2">
+              <FormInput
+                field="password"
+                type="password"
+                label="Password"
+                placeholder="••••••••"
+              />
+              <FormInput
+                field="confirm"
+                type="password"
+                label="Confirm Password"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <span className="block w-full rounded-md shadow-sm">
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+              >
+                Sign up
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
     </FormContext>
   )
 }
