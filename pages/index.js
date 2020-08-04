@@ -10,7 +10,7 @@ import { useAuthState } from '../context/auth'
 function Index() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
-  const [category, setCategory] = useState('RX')
+  const [activeCategory, setActiveCategory] = useState('RX')
 
   useEffect(() => {
     if (!isAuthenticating && !user) router.push('/signin')
@@ -51,13 +51,42 @@ function Index() {
     { revalidateOnFocus: false }
   )
 
+  const programCategories = [
+    { label: 'RX', value: 'RX' },
+    { label: 'Scaled', value: 'SCALED' },
+  ]
+
   return (
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+        <div className="align-middle inline-block min-w-full overflow-hidden border border-gray-200 rounded shadow-sm">
+          <div class="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
+            <nav class="flex space-x-4">
+              {programCategories.map((category, index) => (
+                <button
+                  onClick={() => setActiveCategory(category.value)}
+                  class={cx(
+                    'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
+                    {
+                      'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
+                        activeCategory === category.value,
+                      'text-gray-500 hover:text-gray-700 focus:text-indigo-600 focus:bg-indigo-50':
+                        activeCategory !== category.value,
+                    }
+                  )}
+                  aria-current={
+                    activeCategory === category.value ? 'page' : 'false'
+                  }
+                  key={index}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </nav>
+          </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr>
+              <tr class="border-t border-gray-200">
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Date
                 </th>
