@@ -3,7 +3,7 @@ import Link from 'next/link'
 import cx from 'classnames'
 
 import FMEMark from '../svgs/fme-mark.svg'
-import Transition from './Transition'
+import Transition from './transition'
 import { useAuthDispatch, useAuthState } from '../context/auth'
 
 function Navigation() {
