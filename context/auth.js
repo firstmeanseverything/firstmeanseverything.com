@@ -9,6 +9,7 @@ const AuthStateContext = createContext()
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [isAuthenticating, setIsAuthenticating] = useState(true)
 
   const handleUser = async (rawUser) => {
     if (rawUser) {
@@ -21,10 +22,14 @@ function AuthProvider({ children }) {
         expires: 1,
       })
 
+      setIsAuthenticating(false)
+
       return { token, ...user }
     } else {
       setUser(false)
       cookie.remove('first-means-everything')
+
+      setIsAuthenticating(false)
 
       return false
     }
@@ -59,7 +64,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthDispatchContext.Provider value={{ signIn, signOut, signUp }}>
-      <AuthStateContext.Provider value={{ user }}>
+      <AuthStateContext.Provider value={{ isAuthenticating, user }}>
         {children}
       </AuthStateContext.Provider>
     </AuthDispatchContext.Provider>
