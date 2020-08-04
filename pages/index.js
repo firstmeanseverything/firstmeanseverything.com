@@ -26,12 +26,13 @@ function Index() {
   )
 
   const date = new Date().toDateString()
+  const free = user?.stripeRole !== 'basic'
 
   const { data, error } = useSWR(
     user
       ? [
-          `query AvailablePrograms($category: ProgramCategory!, $date: Date!) {
-            programs(where: {date_lt: $date, category: $category}) {
+          `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
+            programs(where: {date_lt: $date, category: $category, free: $free}) {
               date
               category
               id
@@ -42,9 +43,11 @@ function Index() {
           }`,
           category,
           date,
+          free,
         ]
       : null,
-    (query, category, date) => graphcms.request(query, { category, date }),
+    (query, category, date, free) =>
+      graphcms.request(query, { category, date, free }),
     { revalidateOnFocus: false }
   )
 
