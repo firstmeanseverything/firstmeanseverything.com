@@ -17,8 +17,6 @@ export async function getStaticPaths() {
       programs(where: { free: false }) {
         date
         category
-        free
-        id
       }
     }
   `)
