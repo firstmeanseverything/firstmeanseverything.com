@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
 import cx from 'classnames'
 
 import DocDownloadSVG from '../svgs/document-download.svg'
+import { graphcmsClient } from '../lib/graphcms'
 import { useAuthState } from '../context/auth'
 
 function Index() {
@@ -15,15 +15,6 @@ function Index() {
   useEffect(() => {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
-
-  const graphcms = new GraphQLClient(
-    process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
-    {
-      headers: {
-        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
-      },
-    }
-  )
 
   const { data, error } = useSWR(
     user
@@ -43,7 +34,7 @@ function Index() {
         ]
       : null,
     (query, activeCategory) =>
-      graphcms.request(query, {
+      graphcmsClient.request(query, {
         category: activeCategory,
         date: new Date().toDateString(),
         free: user?.stripeRole !== 'basic',
