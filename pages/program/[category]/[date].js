@@ -1,7 +1,14 @@
+import renderToString from 'next-mdx-remote/render-to-string'
+import hydrate from 'next-mdx-remote/hydrate'
+
 import { graphcmsClient } from '../../../lib/graphcms'
 
+const components = { h1: (props) => <h1 {...props} /> }
+
 function Program({ program }) {
-  return program.id
+  const content = hydrate(program.mdx, components)
+
+  return content
 }
 
 export async function getStaticPaths() {
@@ -36,6 +43,9 @@ export async function getStaticProps({ params }) {
     `
     query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
       programs(where: { date: $date, category: $category }) {
+        content {
+          markdown
+        }
         date
         category
         free
@@ -50,7 +60,10 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      program,
+      program: {
+        mdx: await renderToString(program.content.markdown, components),
+        ...program,
+      },
     },
   }
 }
