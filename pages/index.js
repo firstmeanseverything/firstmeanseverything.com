@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
 
-import DocDownloadSVG from '../svgs/document-download.svg'
 import { graphcmsClient } from '../lib/graphcms'
 import { useAuthState } from '../context/auth'
 
@@ -25,9 +25,6 @@ function Index() {
               category
               free
               id
-              pdf {
-                url
-              }
             }
           }`,
           activeCategory,
@@ -129,17 +126,20 @@ function Index() {
                           {program.category}
                         </span>
                       </td>
-
                       <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                        <a
-                          className="text-indigo-600 hover:text-indigo-900"
-                          href={program.pdf.url}
-                          target="_blank"
-                          rel="nofollow noreferrer"
-                          title="Download PDF"
+                        <Link
+                          href="/program/[category]/[date]"
+                          as={`/program/${program.category.toLowerCase()}/${
+                            program.date
+                          }`}
                         >
-                          <DocDownloadSVG className="h-6 w-auto" />
-                        </a>
+                          <a
+                            className="text-indigo-600 hover:text-indigo-900"
+                            title="View"
+                          >
+                            View
+                          </a>
+                        </Link>
                       </td>
                     </tr>
                   )
