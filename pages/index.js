@@ -20,7 +20,7 @@ function Index() {
     user
       ? [
           `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-            programs(where: {date_lt: $date, category: $category, free: $free}) {
+            programs(orderBy: date_DESC, where: {date_lt: $date, category: $category, free: $free}) {
               date
               category
               free
