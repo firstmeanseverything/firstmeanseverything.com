@@ -16,25 +16,41 @@ function Index() {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
 
+  const hasSubscription = user?.stripeRole !== 'basic'
+
   const { data, error } = useSWR(
     user
-      ? [
-          `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-            programs(orderBy: date_DESC, where: {date_lt: $date, category: $category, free: $free}) {
-              date
-              category
-              free
-              id
-            }
-          }`,
-          activeCategory,
-        ]
+      ? hasSubscription
+        ? [
+            `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
+              programs(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
+                date
+                category
+                free
+                id
+              }
+            }`,
+            activeCategory,
+            hasSubscription,
+          ]
+        : [
+            `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
+              programs(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
+                date
+                category
+                free
+                id
+              }
+            }`,
+            activeCategory,
+            hasSubscription,
+          ]
       : null,
-    (query, activeCategory) =>
+    (query, activeCategory, hasSubscription) =>
       graphcmsClient.request(query, {
         category: activeCategory,
         date: new Date().toDateString(),
-        free: user?.stripeRole !== 'basic',
+        free: !hasSubscription,
       }),
     { revalidateOnFocus: false }
   )
