@@ -3,17 +3,17 @@ import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
 
-import { graphcmsClient } from '../../../lib/graphcms'
-import { useAuthState } from '../../../context/auth'
+import { graphcmsClient } from '../../../../lib/graphcms'
+import { useAuthState } from '../../../../context/auth'
 
 const components = { h1: (props) => <h1 {...props} /> }
 
-function ProgramPage({ program }) {
+function SamplePage({ program }) {
   const { user } = useAuthState()
   const router = useRouter()
 
   useEffect(() => {
-    if (!user || user.stripeRole !== 'basic') router.push('/')
+    if (!user) router.push('/')
   }, [user])
 
   const content = hydrate(program.mdx, components)
@@ -24,17 +24,17 @@ function ProgramPage({ program }) {
 export async function getStaticPaths() {
   const { programs } = await graphcmsClient.request(`
     {
-      programs(where: { free: false }) {
-        date
+      programs(where: { free: true }) {
         category
+        id
       }
     }
   `)
 
-  const paths = programs.map(({ category, date }) => ({
+  const paths = programs.map(({ category, id }) => ({
     params: {
       category: category.toLowerCase(),
-      date,
+      id,
     },
   }))
 
@@ -49,12 +49,11 @@ export async function getStaticProps({ params }) {
     programs: [program],
   } = await graphcmsClient.request(
     `
-    query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
-      programs(where: { date: $date, category: $category }) {
+    query SamplePageQuery($category: ProgramCategory!, $id: ID!) {
+      programs(where: { category: $category, id: $id }) {
         content {
           markdown
         }
-        date
         category
         free
         id
@@ -62,7 +61,7 @@ export async function getStaticProps({ params }) {
     }`,
     {
       category: params.category.toUpperCase(),
-      date: params.date,
+      id: params.id,
     }
   )
 
@@ -76,4 +75,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default ProgramPage
+export default SamplePage
