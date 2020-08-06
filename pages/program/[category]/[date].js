@@ -5,7 +5,7 @@ import { graphcmsClient } from '../../../lib/graphcms'
 
 const components = { h1: (props) => <h1 {...props} /> }
 
-function Program({ program }) {
+function ProgramPage({ program }) {
   const content = hydrate(program.mdx, components)
 
   return content
@@ -66,4 +66,4 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default Program
+export default ProgramPage
