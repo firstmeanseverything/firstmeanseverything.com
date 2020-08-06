@@ -1,11 +1,21 @@
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
 
 import { graphcmsClient } from '../../../lib/graphcms'
+import { useAuthState } from '../../../context/auth'
 
 const components = { h1: (props) => <h1 {...props} /> }
 
 function ProgramPage({ program }) {
+  const { user } = useAuthState()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!user || user.stripeRole !== 'basic') router.push('/')
+  }, [user])
+
   const content = hydrate(program.mdx, components)
 
   return content
