@@ -16,7 +16,7 @@ function Index() {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
 
-  const hasSubscription = user?.stripeRole !== 'basic'
+  const hasSubscription = user?.stripeRole === 'basic'
 
   const { data, error } = useSWR(
     user
