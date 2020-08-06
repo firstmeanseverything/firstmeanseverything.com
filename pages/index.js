@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
 import cx from 'classnames'
 
-import DocDownloadSVG from '../svgs/document-download.svg'
+import { graphcmsClient } from '../lib/graphcms'
 import { useAuthState } from '../context/auth'
 
 function Index() {
@@ -16,34 +16,22 @@ function Index() {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
 
-  const graphcms = new GraphQLClient(
-    process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
-    {
-      headers: {
-        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
-      },
-    }
-  )
-
   const { data, error } = useSWR(
     user
       ? [
           `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-            programs(where: {date_lt: $date, category: $category, free: $free}) {
+            programs(orderBy: date_DESC, where: {date_lt: $date, category: $category, free: $free}) {
               date
               category
               free
               id
-              pdf {
-                url
-              }
             }
           }`,
           activeCategory,
         ]
       : null,
     (query, activeCategory) =>
-      graphcms.request(query, {
+      graphcmsClient.request(query, {
         category: activeCategory,
         date: new Date().toDateString(),
         free: user?.stripeRole !== 'basic',
@@ -60,12 +48,12 @@ function Index() {
     <div className="flex flex-col">
       <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div className="align-middle inline-block min-w-full overflow-hidden border border-gray-200 rounded shadow-sm">
-          <div class="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
-            <nav class="flex space-x-4">
+          <div className="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
+            <nav className="flex space-x-4">
               {programCategories.map((category, index) => (
                 <button
                   onClick={() => setActiveCategory(category.value)}
-                  class={cx(
+                  className={cx(
                     'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
                     {
                       'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
@@ -86,7 +74,7 @@ function Index() {
           </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr class="border-t border-gray-200">
+              <tr className="border-t border-gray-200">
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Date
                 </th>
@@ -138,17 +126,20 @@ function Index() {
                           {program.category}
                         </span>
                       </td>
-
                       <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                        <a
-                          className="text-indigo-600 hover:text-indigo-900"
-                          href={program.pdf.url}
-                          target="_blank"
-                          rel="nofollow noreferrer"
-                          title="Download PDF"
+                        <Link
+                          href="/program/[category]/[date]"
+                          as={`/program/${program.category.toLowerCase()}/${
+                            program.date
+                          }`}
                         >
-                          <DocDownloadSVG className="h-6 w-auto" />
-                        </a>
+                          <a
+                            className="text-indigo-600 hover:text-indigo-900"
+                            title="View"
+                          >
+                            View
+                          </a>
+                        </Link>
                       </td>
                     </tr>
                   )
