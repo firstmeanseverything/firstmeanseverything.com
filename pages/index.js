@@ -92,7 +92,7 @@ function Index() {
             <thead>
               <tr className="border-t border-gray-200">
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Date
+                  {hasSubscription ? 'Date' : 'Title'}
                 </th>
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Category
@@ -108,7 +108,7 @@ function Index() {
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"></td>
                 </tr>
               ) : (
-                data.programs.map((program) => {
+                data.programs.map((program, index) => {
                   const dateDiff = Math.floor(
                     (new Date() - new Date(program.date)) /
                       (1000 * 60 * 60 * 24)
@@ -120,19 +120,30 @@ function Index() {
                     <tr key={program.id}>
                       <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div className="flex items-center">
+                          {!hasSubscription && (
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                              Free
+                            </span>
+                          )}
                           {isNew && (
                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
                               New
                             </span>
                           )}
-                          <div className={cx({ 'ml-4': isNew })}>
+                          <div
+                            className={cx({
+                              'ml-4': isNew || !hasSubscription,
+                            })}
+                          >
                             <div className="text-sm leading-5 font-medium text-gray-900">
-                              {new Intl.DateTimeFormat('en-GB', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                              }).format(new Date(program.date))}
+                              {hasSubscription
+                                ? new Intl.DateTimeFormat('en-GB', {
+                                    weekday: 'long',
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  }).format(new Date(program.date))
+                                : `Sample week ${index + 1}`}
                             </div>
                           </div>
                         </div>
@@ -144,10 +155,20 @@ function Index() {
                       </td>
                       <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
                         <Link
-                          href="/program/[category]/[date]"
-                          as={`/program/${program.category.toLowerCase()}/${
-                            program.date
-                          }`}
+                          href={
+                            hasSubscription
+                              ? '/program/[category]/[date]'
+                              : '/program/[category]/sample/[id]'
+                          }
+                          as={
+                            hasSubscription
+                              ? `/program/${program.category.toLowerCase()}/${
+                                  program.date
+                                }`
+                              : `/program/${program.category.toLowerCase()}/sample/${
+                                  program.id
+                                }`
+                          }
                         >
                           <a
                             className="text-indigo-600 hover:text-indigo-900"
