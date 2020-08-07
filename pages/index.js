@@ -5,9 +5,10 @@ import useSWR from 'swr'
 import cx from 'classnames'
 
 import { graphcmsClient } from '../lib/graphcms'
+import { getProduct } from '../lib/db-admin'
 import { useAuthState } from '../context/auth'
 
-function Index() {
+function Index({ product }) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = useState('RX')
@@ -188,6 +189,16 @@ function Index() {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const { product } = await getProduct(process.env.STRIPE_PRODUCT_ID)
+
+  return {
+    props: {
+      product,
+    },
+  }
 }
 
 export default Index
