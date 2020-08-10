@@ -7316,10 +7316,10 @@ strip-ansi@^3.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
-stripe@8.81.0:
-  version "8.81.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.81.0.tgz#c5ef1e57a8a806c1e908dc509ad137cd8f3c7cf6"
-  integrity sha512-eGnx3WcP7fsn0uCxuPSb7UQj7U3yZLv9WE5rIU2LArgggaq54fejNvf7IbzUs1jDhoJRgUERJylc651WmbF/ow==
+stripe@8.84.0:
+  version "8.84.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.84.0.tgz#92fe7a9476360c712faa62010c059f3814abf381"
+  integrity sha512-2RWr/VJOlBbmAAdxh7jQwTlEZ4V5uVzPF9mL544n5hBg//HHKqwUUxIsL0X2tk0eYUEMaOVwarK78y/MsGI5pg==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
