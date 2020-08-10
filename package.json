@@ -24,7 +24,7 @@
     "react-transition-group": "4.4.1",
     "stripe": "8.84.0",
     "swr": "0.3.0",
-    "yup": "0.29.2"
+    "yup": "0.29.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.2.0",
