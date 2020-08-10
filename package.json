@@ -22,7 +22,7 @@
     "react-dom": "16.13.1",
     "react-hook-form": "5.7.2",
     "react-transition-group": "4.4.1",
-    "stripe": "8.81.0",
+    "stripe": "8.84.0",
     "swr": "0.3.0",
     "yup": "0.29.2"
   },
