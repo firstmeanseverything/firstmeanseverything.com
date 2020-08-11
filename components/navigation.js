@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import cx from 'classnames'
 
@@ -9,11 +10,25 @@ import { useAuthDispatch, useAuthState } from '../context/auth'
 function Navigation() {
   const { signOut } = useAuthDispatch()
   const { user } = useAuthState()
+  const router = useRouter()
   const [accountPopoverOpen, setAccountPopoverOpen] = useState(false)
   const [navOpen, setNavOpen] = useState(false)
 
   const toggleAccountPopover = () => setAccountPopoverOpen((open) => !open)
   const toggleNavOpen = () => setNavOpen((open) => !open)
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setAccountPopoverOpen(false)
+      setNavOpen(false)
+    })
+
+    return () =>
+      router.events.off('routeChangeStart', () => {
+        setAccountPopoverOpen(false)
+        setNavOpen(false)
+      })
+  }, [])
 
   return (
     <nav className="bg-gray-800">
