@@ -8,6 +8,7 @@ import { graphcmsClient } from '../lib/graphcms'
 import { getProduct } from '../lib/db-admin'
 import SubscriptionCTA from '../components/subscription-cta'
 import { useAuthState } from '../context/auth'
+import SkeletonRow from '../components/skeleton-row'
 
 function Index({ product }) {
   const { isAuthenticating, user } = useAuthState()
@@ -106,11 +107,23 @@ function Index({ product }) {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {!data ? (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"></td>
-                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"></td>
-                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200"></td>
-                  </tr>
+                  <React.Fragment>
+                    {Array.from(Array(4), (_, index) => {
+                      const isEvenRow = Boolean(index % 2)
+
+                      return (
+                        <SkeletonRow
+                          key={index}
+                          cells={3}
+                          style={{
+                            animationFillMode: 'backwards',
+                            animationDelay: `${index * 150}ms`,
+                          }}
+                          isEvenRow={isEvenRow}
+                        />
+                      )
+                    })}
+                  </React.Fragment>
                 ) : (
                   data.programs.map((program, index) => {
                     const dateDiff = Math.floor(
