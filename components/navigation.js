@@ -30,6 +30,13 @@ function Navigation() {
       })
   }, [])
 
+  const primaryLinks = [
+    {
+      href: '/',
+      label: 'Program',
+    },
+  ]
+
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -45,11 +52,25 @@ function Navigation() {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline">
-                  <Link href="/">
-                    <a className="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
-                      Program
-                    </a>
-                  </Link>
+                  {primaryLinks.map((link, index) => {
+                    const isActive = router.pathname === link.href
+
+                    return (
+                      <Link key={index} href={link.href}>
+                        <a
+                          className={cx(
+                            'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                            {
+                              'text-white bg-gray-900': isActive,
+                              'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                            }
+                          )}
+                        >
+                          {link.label}
+                        </a>
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -165,11 +186,25 @@ function Navigation() {
         })}
       >
         <div className="px-2 py-3 sm:px-3">
-          <Link href="/">
-            <a className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
-              Program
-            </a>
-          </Link>
+          {primaryLinks.map((link, index) => {
+            const isActive = router.pathname === link.href
+
+            return (
+              <Link key={index} href="/">
+                <a
+                  className={cx(
+                    'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                    {
+                      'text-white bg-gray-900': isActive,
+                      'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                    }
+                  )}
+                >
+                  Program
+                </a>
+              </Link>
+            )
+          })}
         </div>
         {user && (
           <div className="pt-4 pb-3 border-t border-gray-700">
