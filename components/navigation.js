@@ -79,11 +79,11 @@ function Navigation() {
                 <div className="ml-3 relative">
                   <div>
                     <button
+                      onClick={toggleAccountPopover}
                       className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
                       id="user-menu"
                       aria-label="User menu"
                       aria-haspopup="true"
-                      onClick={toggleAccountPopover}
                     >
                       <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
                         <svg
@@ -245,14 +245,14 @@ function Navigation() {
                   Your Account
                 </a>
               </Link>
-              <button
+              <a
                 href="#"
                 onClick={signOut}
                 className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 role="menuitem"
               >
                 Sign out
-              </button>
+              </a>
             </div>
           </div>
         )}
