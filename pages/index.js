@@ -73,6 +73,7 @@ function Index({ product }) {
               <nav className="flex space-x-4">
                 {programCategories.map((category, index) => (
                   <button
+                    key={index}
                     onClick={() => setActiveCategory(category.value)}
                     className={cx(
                       'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
@@ -86,7 +87,6 @@ function Index({ product }) {
                     aria-current={
                       activeCategory === category.value ? 'page' : 'false'
                     }
-                    key={index}
                   >
                     {category.label}
                   </button>
