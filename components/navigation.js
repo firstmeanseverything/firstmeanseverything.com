@@ -96,12 +96,11 @@ function Navigation() {
                           </div>
                           <div className="border-t border-gray-100"></div>
                           <div className="py-1">
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              Your Account
-                            </a>
+                            <Link href="/account">
+                              <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                Your Account
+                              </a>
+                            </Link>
                             <a
                               href="#"
                               onClick={signOut}
@@ -203,13 +202,14 @@ function Navigation() {
               aria-orientation="vertical"
               aria-labelledby="user-menu"
             >
-              <a
-                href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                role="menuitem"
-              >
-                Your Account
-              </a>
+              <Link href="/account">
+                <a
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                  role="menuitem"
+                >
+                  Your Account
+                </a>
+              </Link>
               <button
                 href="#"
                 onClick={signOut}
