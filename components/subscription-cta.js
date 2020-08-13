@@ -15,7 +15,7 @@ function SubscriptionCTA({ description, name, prices }) {
 
   return (
     <div className="pb-16 sm:pb-20 lg:pb-28">
-      <div className="max-w-lg mx-auto rounded-lg shadow-sm border border-gray-200 overflow-hidden lg:max-w-none lg:flex">
+      <div className="max-w-lg mx-auto rounded-lg shadow overflow-hidden lg:max-w-none lg:flex">
         <div className="bg-white px-6 py-8 lg:flex-shrink-1 lg:p-12">
           <h3 className="text-2xl leading-8 font-extrabold text-gray-900 sm:text-3xl sm:leading-9">
             {name}

@@ -17,7 +17,7 @@ function Account() {
 
   return (
     <Page title="Account">
-      <div className="bg-white shadow sm:rounded-lg">
+      <div className="bg-white shadow rounded sm:rounded-lg">
         <div className="px-4 py-5 sm:p-6">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             Manage billing
