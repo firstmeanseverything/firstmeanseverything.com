@@ -31,6 +31,7 @@ function Index({ product }) {
                 category
                 free
                 id
+                title
               }
             }`,
             activeCategory,
@@ -43,6 +44,7 @@ function Index({ product }) {
                 category
                 free
                 id
+                title
               }
             }`,
             activeCategory,
@@ -97,8 +99,13 @@ function Index({ product }) {
               <thead>
                 <tr className="border-t border-gray-200">
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    {hasSubscription ? 'Date' : 'Title'}
+                    Title
                   </th>
+                  {hasSubscription && (
+                    <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                      Date
+                    </th>
+                  )}
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     Category
                   </th>
@@ -114,7 +121,7 @@ function Index({ product }) {
                       return (
                         <SkeletonRow
                           key={index}
-                          cells={3}
+                          cells={4}
                           style={{
                             animationFillMode: 'backwards',
                             animationDelay: `${index * 150}ms`,
@@ -153,18 +160,21 @@ function Index({ product }) {
                               })}
                             >
                               <div className="text-sm leading-5 font-medium text-gray-900">
-                                {hasSubscription
-                                  ? new Intl.DateTimeFormat('en-GB', {
-                                      weekday: 'long',
-                                      year: 'numeric',
-                                      month: 'long',
-                                      day: 'numeric',
-                                    }).format(new Date(program.date))
-                                  : `Sample week ${index + 1}`}
+                                {program.title}
                               </div>
                             </div>
                           </div>
                         </td>
+                        {hasSubscription && (
+                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
+                            {new Intl.DateTimeFormat('en-GB', {
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            }).format(new Date(program.date))}
+                          </td>
+                        )}
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             {program.category}
