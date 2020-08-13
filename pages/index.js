@@ -6,9 +6,10 @@ import cx from 'classnames'
 
 import { graphcmsClient } from '../lib/graphcms'
 import { getProduct } from '../lib/db-admin'
+import Page from '../components/page'
+import SkeletonRow from '../components/skeleton-row'
 import SubscriptionCTA from '../components/subscription-cta'
 import { useAuthState } from '../context/auth'
-import SkeletonRow from '../components/skeleton-row'
 
 function Index({ product }) {
   const { isAuthenticating, user } = useAuthState()
@@ -65,39 +66,40 @@ function Index({ product }) {
     { label: 'Scaled', value: 'SCALED' },
   ]
 
+  const HeaderControls = () => {
+    return (
+      <nav className="flex space-x-4">
+        {programCategories.map((category, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveCategory(category.value)}
+            className={cx(
+              'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
+              {
+                'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
+                  activeCategory === category.value,
+                'text-gray-500 hover:text-gray-700 focus:text-indigo-600 focus:bg-indigo-50':
+                  activeCategory !== category.value,
+              }
+            )}
+            aria-current={activeCategory === category.value ? 'page' : 'false'}
+          >
+            {category.label}
+          </button>
+        ))}
+      </nav>
+    )
+  }
+
   return (
-    <React.Fragment>
+    <Page title="Program" controls={<HeaderControls />}>
       {user && !hasSubscription && <SubscriptionCTA {...product} />}
       <div className="flex flex-col">
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-          <div className="align-middle inline-block min-w-full overflow-hidden border border-gray-200 rounded-lg shadow-sm">
-            <div className="bg-white px-4 py-3 flex items-center justify-between sm:px-6">
-              <nav className="flex space-x-4">
-                {programCategories.map((category, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveCategory(category.value)}
-                    className={cx(
-                      'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
-                      {
-                        'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
-                          activeCategory === category.value,
-                        'text-gray-500 hover:text-gray-700 focus:text-indigo-600 focus:bg-indigo-50':
-                          activeCategory !== category.value,
-                      }
-                    )}
-                    aria-current={
-                      activeCategory === category.value ? 'page' : 'false'
-                    }
-                  >
-                    {category.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
+          <div className="align-middle inline-block min-w-full overflow-hidden rounded sm:rounded-lg shadow">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
-                <tr className="border-t border-gray-200">
+                <tr>
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     Title
                   </th>
@@ -214,7 +216,7 @@ function Index({ product }) {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </Page>
   )
 }
 
