@@ -28,6 +28,7 @@ function Index({ product }) {
         ? [
             `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
               programs(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
+                bias
                 date
                 category
                 free
@@ -41,6 +42,7 @@ function Index({ product }) {
         : [
             `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
               programs(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
+                bias
                 date
                 category
                 free
@@ -103,6 +105,9 @@ function Index({ product }) {
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     Title
                   </th>
+                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                    Bias
+                  </th>
                   {hasSubscription && (
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                       Date
@@ -139,8 +144,9 @@ function Index({ product }) {
                       (new Date() - new Date(program.date)) /
                         (1000 * 60 * 60 * 24)
                     )
-
                     const isNew = dateDiff <= 7
+                    const formattedBias =
+                      program.bias[0] + program.bias.slice(1).toLowerCase()
 
                     return (
                       <tr key={program.id}>
@@ -166,6 +172,11 @@ function Index({ product }) {
                               </div>
                             </div>
                           </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {formattedBias}
+                          </span>
                         </td>
                         {hasSubscription && (
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
