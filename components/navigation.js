@@ -53,7 +53,7 @@ function Navigation() {
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline">
                   {primaryLinks.map((link, index) => {
-                    const isActive = router.pathname === link.href
+                    const isActive = router.pathname.startsWith(link.href)
 
                     return (
                       <Link key={index} href={link.href}>
@@ -187,7 +187,7 @@ function Navigation() {
       >
         <div className="px-2 py-3 sm:px-3">
           {primaryLinks.map((link, index) => {
-            const isActive = router.pathname === link.href
+            const isActive = router.pathname.startsWith(link.href)
 
             return (
               <Link key={index} href="/">
