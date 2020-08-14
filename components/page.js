@@ -1,4 +1,4 @@
-function Page({ children, controls, title }) {
+function Page({ children, controls, meta, title }) {
   return (
     <React.Fragment>
       <header className="bg-white shadow-sm">
@@ -8,6 +8,11 @@ function Page({ children, controls, title }) {
               <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
                 {title}
               </h1>
+              {meta && (
+                <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-3">
+                  {meta}
+                </div>
+              )}
             </div>
             {controls && (
               <div className="mt-5 flex lg:mt-0 lg:ml-4">{controls}</div>
