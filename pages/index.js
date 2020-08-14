@@ -116,7 +116,6 @@ function Index({ product }) {
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                     Category
                   </th>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -149,7 +148,24 @@ function Index({ product }) {
                       program.bias[0] + program.bias.slice(1).toLowerCase()
 
                     return (
-                      <tr key={program.id}>
+                      <tr
+                        key={program.id}
+                        onClick={() =>
+                          router.push(
+                            program.free
+                              ? '/program/[category]/sample/[id]'
+                              : '/program/[category]/[date]',
+                            program.free
+                              ? `/program/${program.category.toLowerCase()}/sample/${
+                                  program.id
+                                }`
+                              : `/program/${program.category.toLowerCase()}/${
+                                  program.date
+                                }`
+                          )
+                        }
+                        className="cursor-pointer hover:bg-gray-50"
+                      >
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                           <div className="flex items-center">
                             {!hasSubscription && (
@@ -192,31 +208,6 @@ function Index({ product }) {
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             {program.category}
                           </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                          <Link
-                            href={
-                              hasSubscription
-                                ? '/program/[category]/[date]'
-                                : '/program/[category]/sample/[id]'
-                            }
-                            as={
-                              hasSubscription
-                                ? `/program/${program.category.toLowerCase()}/${
-                                    program.date
-                                  }`
-                                : `/program/${program.category.toLowerCase()}/sample/${
-                                    program.id
-                                  }`
-                            }
-                          >
-                            <a
-                              className="text-indigo-600 hover:text-indigo-900"
-                              title="View"
-                            >
-                              View
-                            </a>
-                          </Link>
                         </td>
                       </tr>
                     )
