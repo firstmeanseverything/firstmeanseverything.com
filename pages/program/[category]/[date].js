@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
+import he from 'he'
 
 import { graphcmsClient } from '../../../lib/graphcms'
 import Page from '../../../components/page'
@@ -122,7 +123,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       program: {
-        mdx: await renderToString(program.content.markdown),
+        mdx: await renderToString(he.decode(program.content.markdown)),
         ...program,
       },
     },
