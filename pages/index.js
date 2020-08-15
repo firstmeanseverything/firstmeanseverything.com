@@ -27,7 +27,7 @@ function Index({ product }) {
       ? hasSubscription
         ? [
             `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-              programs(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
+              programs: programWeeks(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
                 bias
                 date
                 category
@@ -41,7 +41,7 @@ function Index({ product }) {
           ]
         : [
             `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
-              programs(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
+              programs: programWeeks(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
                 bias
                 date
                 category
