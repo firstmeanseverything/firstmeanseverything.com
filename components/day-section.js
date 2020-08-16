@@ -35,11 +35,11 @@ function DaySection({ mdxContent, title }) {
         </button>
       </dt>
       <dd
-        className={cx('border-t mt-6 pr-12 pt-6', {
+        className={cx('border-t mt-6 pr-12 pt-6 space-y-6', {
           hidden: !dayOpen,
         })}
       >
-        <div className="prose">{mdxContent}</div>
+        {mdxContent}
       </dd>
     </div>
   )

@@ -9,9 +9,25 @@ import { graphcmsClient } from '../../../lib/graphcms'
 import Page from '../../../components/page'
 import ProgramMeta from '../../../components/program-meta'
 import { useAuthState } from '../../../context/auth'
+import WorkoutBlock from '../../../components/workout-block'
 
 const mdxComponents = {
   DaySection,
+  Gymnastics: ({ children, ...props }) => (
+    <WorkoutBlock {...props} title="Gymnastics">
+      {children}
+    </WorkoutBlock>
+  ),
+  Metcon: ({ children, ...props }) => (
+    <WorkoutBlock {...props} title="Metcon">
+      {children}
+    </WorkoutBlock>
+  ),
+  Strength: ({ children, ...props }) => (
+    <WorkoutBlock {...props} title="Strength">
+      {children}
+    </WorkoutBlock>
+  ),
 }
 
 function ProgramPage({ program }) {
