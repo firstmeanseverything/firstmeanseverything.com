@@ -1883,6 +1883,11 @@
     lodash.camelcase "^4.3.0"
     protobufjs "^6.8.6"
 
+"@hookform/resolvers@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-0.1.0.tgz#30f5cf17a3a5590ca90dcfa834492e515e17d0a5"
+  integrity sha512-/6cnDycgWhmvUpRmYY7506qJlym+hirk4tbt2waY3C2rOjFn+4/Gt4CuVLzjrsNJvOJkN36bx+OSlccecBgsrg==
+
 "@mdx-js/mdx@^1.6.8":
   version "1.6.16"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.6.16.tgz#f01af0140539c1ce043d246259d8becd2153b2bb"
