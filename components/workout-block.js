@@ -3,6 +3,8 @@ import cx from 'classnames'
 function WorkoutBlock({ children, title }) {
   const styleClass = (title) => {
     switch (title) {
+      case 'Active Recovery':
+        return 'bg-yellow-50 border-yellow-200 text-yellow-500'
       case 'Gymnastics':
         return 'bg-indigo-50 border-indigo-200 text-indigo-500'
       case 'Strength':

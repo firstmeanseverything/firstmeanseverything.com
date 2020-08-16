@@ -3,8 +3,9 @@ import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
 
 import mdxComponents from './mdx'
+import WorkoutBlock from './workout-block'
 
-function DaySection({ content, id, title }) {
+function DaySection({ activeRecovery, content, id, title }) {
   const [dayOpen, setDayOpen] = useState(false)
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
@@ -44,7 +45,11 @@ function DaySection({ content, id, title }) {
           hidden: !dayOpen,
         })}
       >
-        {mdxContent}
+        {activeRecovery ? (
+          <WorkoutBlock title="Active Recovery">{mdxContent}</WorkoutBlock>
+        ) : (
+          mdxContent
+        )}
       </dd>
     </div>
   )
