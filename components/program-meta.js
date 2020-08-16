@@ -18,11 +18,12 @@ function ProgramMeta({ bias, category, date }) {
             clipRule="evenodd"
           />
         </svg>
-        {new Intl.DateTimeFormat('en-GB', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }).format(new Date(date))}
+        {date &&
+          new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }).format(new Date(date))}
       </div>
       <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
         <svg
