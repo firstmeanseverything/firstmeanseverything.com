@@ -3,6 +3,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    padding: ['first', 'responsive'],
+  },
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/ui')],
 }
