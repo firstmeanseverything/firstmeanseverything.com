@@ -126,7 +126,7 @@ function Index({ product }) {
                       return (
                         <SkeletonRow
                           key={index}
-                          cells={4}
+                          cells={hasSubscription ? 4 : 3}
                           style={{
                             animationFillMode: 'backwards',
                             animationDelay: `${index * 150}ms`,
