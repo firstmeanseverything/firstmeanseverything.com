@@ -137,7 +137,7 @@ function Index({ product }) {
                     })}
                   </React.Fragment>
                 ) : (
-                  data.programs.map((program, index) => {
+                  data.programs.map((program) => {
                     const dateDiff = Math.floor(
                       (new Date() - new Date(program.date)) /
                         (1000 * 60 * 60 * 24)
