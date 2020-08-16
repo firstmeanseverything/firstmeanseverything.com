@@ -41,7 +41,7 @@ function FormInput({
           />
         </div>
       </div>
-      <ErrorMessage as={<FormError />} name={field} errors={errors} />
+      {hasError && <FormError>{errors?.[field]?.message}</FormError>}
     </div>
   )
 }
