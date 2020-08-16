@@ -11,12 +11,13 @@ import ProgramMeta from '../../../components/program-meta'
 import { useAuthState } from '../../../context/auth'
 
 function ProgramPage({ program }) {
-  const { user } = useAuthState()
+  const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   useEffect(() => {
-    if (!user || user.stripeRole !== 'basic') router.push('/')
-  }, [user])
+    if (!isAuthenticating && !(user || user.stripeRole === 'basic'))
+      router.push('/')
+  }, [isAuthenticating, user])
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
