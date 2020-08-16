@@ -1,5 +1,6 @@
 import { useReducer } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
 
 import { FormInput } from './form'
@@ -19,13 +20,15 @@ function reducer(state, { payload, type }) {
 function SignInForm() {
   const { signIn } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
-    validationSchema: yup.object().shape({
-      email: yup
-        .string()
-        .required('Email address is required')
-        .email('Email is not valid'),
-      password: yup.string().required('Password is required'),
-    }),
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .required('Email address is required')
+          .email('Email is not valid'),
+        password: yup.string().required('Password is required'),
+      })
+    ),
   })
   const [state, dispatch] = useReducer(reducer, {
     formState: null,

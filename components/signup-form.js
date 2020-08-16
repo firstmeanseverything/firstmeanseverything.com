@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
 
 import { FormInput } from './form'
@@ -7,20 +8,22 @@ import { useAuthDispatch } from '../context/auth'
 function SignUpForm() {
   const { signUp } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
-    validationSchema: yup.object().shape({
-      email: yup
-        .string()
-        .required('Email address is required')
-        .email('Email is not valid'),
-      password: yup
-        .string()
-        .required('Password is required')
-        .min(6, 'Password must be at least 6 characters'),
-      confirm: yup
-        .string()
-        .required('Password confirmation is required')
-        .oneOf([yup.ref('password'), null], 'Passwords do not match'),
-    }),
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup
+          .string()
+          .required('Email address is required')
+          .email('Email is not valid'),
+        password: yup
+          .string()
+          .required('Password is required')
+          .min(6, 'Password must be at least 6 characters'),
+        confirm: yup
+          .string()
+          .required('Password confirmation is required')
+          .oneOf([yup.ref('password'), null], 'Passwords do not match'),
+      })
+    ),
   })
 
   const onSubmit = async ({ email, password }) => await signUp(email, password)
