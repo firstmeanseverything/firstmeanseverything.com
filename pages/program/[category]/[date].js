@@ -24,14 +24,14 @@ function ProgramPage({ program }) {
   const ProgramMeta = ({ bias, category, date }) => {
     return (
       <React.Fragment>
-        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
+        <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
             {category}
           </span>
         </div>
-        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
+        <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
           <svg
-            class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+            className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -47,9 +47,9 @@ function ProgramPage({ program }) {
             day: 'numeric',
           }).format(new Date(date))}
         </div>
-        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
+        <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
           <svg
-            class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+            className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

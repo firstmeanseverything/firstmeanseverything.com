@@ -9,7 +9,7 @@ function Page({ children, controls, meta, title }) {
                 {title}
               </h1>
               {meta && (
-                <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-3">
+                <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-3">
                   {meta}
                 </div>
               )}
