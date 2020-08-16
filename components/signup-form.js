@@ -1,4 +1,4 @@
-import { FormContext, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { FormInput } from './form'
@@ -26,7 +26,7 @@ function SignUpForm() {
   const onSubmit = async ({ email, password }) => await signUp(email, password)
 
   return (
-    <FormContext {...methods}>
+    <FormProvider {...methods}>
       <div className="mt-6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -64,7 +64,7 @@ function SignUpForm() {
           </div>
         </form>
       </div>
-    </FormContext>
+    </FormProvider>
   )
 }
 

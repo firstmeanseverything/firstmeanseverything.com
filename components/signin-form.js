@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { FormContext, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { FormInput } from './form'
@@ -48,7 +48,7 @@ function SignInForm() {
   }
 
   return (
-    <FormContext {...methods}>
+    <FormProvider {...methods}>
       {state.formState === 'error' && <p>{state.message}</p>}
       <div className="mt-6">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -89,7 +89,7 @@ function SignInForm() {
           </div>
         </form>
       </div>
-    </FormContext>
+    </FormProvider>
   )
 }
 
