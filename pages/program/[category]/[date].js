@@ -121,7 +121,7 @@ function ProgramPage({ program }) {
 export async function getStaticPaths() {
   const { programs } = await graphcmsClient.request(`
     {
-      programs(where: { free: false }) {
+      programs: programWeeks(where: { free: false }) {
         date
         category
       }
@@ -147,11 +147,16 @@ export async function getStaticProps({ params }) {
   } = await graphcmsClient.request(
     `
     query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
-      programs(where: { date: $date, category: $category }) {
+      programs: programWeeks(where: { date: $date, category: $category }) {
         bias
         category
-        content {
-          markdown
+        days {
+          activeRecovery
+          content {
+            markdown
+          }
+          id
+          title
         }
         date
         free
@@ -165,11 +170,23 @@ export async function getStaticProps({ params }) {
     }
   )
 
+  const { days, ...rest } = program
+
   return {
     props: {
       program: {
-        mdx: await renderToString(he.decode(program.content.markdown)),
-        ...program,
+        days: await Promise.all(
+          days.map(async ({ content, ...day }) => ({
+            content: {
+              mdx: await renderToString(
+                he.decode(content.markdown, mdxComponents)
+              ),
+              ...content,
+            },
+            ...day,
+          }))
+        ),
+        ...rest,
       },
     },
   }
