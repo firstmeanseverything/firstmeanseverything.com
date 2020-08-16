@@ -1,13 +1,18 @@
 import { useState } from 'react'
+import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
 
-function DaySection({ mdxContent, title }) {
+import mdxComponents from './mdx'
+
+function DaySection({ content, id, title }) {
   const [dayOpen, setDayOpen] = useState(false)
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
+  const mdxContent = hydrate(content.mdx, mdxComponents)
+
   return (
-    <div className="pt-6 first:pt-0">
+    <div key={id} className="pt-6 first:pt-0">
       <dt className="text-2xl leading-7">
         <button
           onClick={() => toggleDayOpen()}

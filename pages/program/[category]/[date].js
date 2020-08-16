@@ -1,34 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
-import hydrate from 'next-mdx-remote/hydrate'
 import he from 'he'
 
 import DaySection from '../../../components/day-section'
 import { graphcmsClient } from '../../../lib/graphcms'
+import mdxComponents from '../../../components/mdx'
 import Page from '../../../components/page'
 import ProgramMeta from '../../../components/program-meta'
 import { useAuthState } from '../../../context/auth'
-import WorkoutBlock from '../../../components/workout-block'
-
-const mdxComponents = {
-  DaySection,
-  Gymnastics: ({ children, ...props }) => (
-    <WorkoutBlock {...props} title="Gymnastics">
-      {children}
-    </WorkoutBlock>
-  ),
-  Metcon: ({ children, ...props }) => (
-    <WorkoutBlock {...props} title="Metcon">
-      {children}
-    </WorkoutBlock>
-  ),
-  Strength: ({ children, ...props }) => (
-    <WorkoutBlock {...props} title="Strength">
-      {children}
-    </WorkoutBlock>
-  ),
-}
 
 function ProgramPage({ program }) {
   const { user } = useAuthState()
@@ -42,15 +22,7 @@ function ProgramPage({ program }) {
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
       <div className="bg-white shadow rounded sm:rounded-lg">
         <div className="px-4 py-5 sm:p-6">
-          <dl className="divide-y space-y-6">
-            {program.days.map((day) => {
-              const mdxContent = hydrate(day.content.mdx, mdxComponents)
-
-              return (
-                <DaySection {...day} mdxContent={mdxContent} key={day.id} />
-              )
-            })}
-          </dl>
+          <dl className="divide-y space-y-6">{program.days.map(DaySection)}</dl>
         </div>
       </div>
     </Page>
