@@ -5,8 +5,8 @@ import cx from 'classnames'
 import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'
 
-function DaySection({ activeRecovery, content, id, title }) {
-  const [dayOpen, setDayOpen] = useState(false)
+function DaySection({ activeRecovery, content, id, title }, index) {
+  const [dayOpen, setDayOpen] = useState(index === 0)
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
