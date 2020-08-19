@@ -23,7 +23,7 @@
     "next-mdx-remote": "0.6.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-hook-form": "6.4.0",
+    "react-hook-form": "6.4.1",
     "react-transition-group": "4.4.1",
     "stripe": "8.84.0",
     "swr": "0.3.0",
