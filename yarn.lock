@@ -7202,10 +7202,10 @@ strip-ansi@^3.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
-stripe@8.84.0:
-  version "8.84.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.84.0.tgz#92fe7a9476360c712faa62010c059f3814abf381"
-  integrity sha512-2RWr/VJOlBbmAAdxh7jQwTlEZ4V5uVzPF9mL544n5hBg//HHKqwUUxIsL0X2tk0eYUEMaOVwarK78y/MsGI5pg==
+stripe@8.88.0:
+  version "8.88.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.88.0.tgz#ba7e9eec21bbf5459491366081d04a811b55f0de"
+  integrity sha512-aeixfX6Gem5UiRdoH9wphQ344abxgAQrLg2sAY/0IddZ5mprZKS568Pb3WX0qy2E5OJGute+jEAn2Za7DKLQtw==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
