@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
 
+import Badge from '../components/badge'
 import { graphcmsClient } from '../lib/graphcms'
 import { getProduct } from '../lib/db-admin'
 import Page from '../components/page'
@@ -168,15 +169,9 @@ function Index({ product }) {
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                           <div className="flex items-center">
                             {!hasSubscription && (
-                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
-                                Free
-                              </span>
+                              <Badge label="Free" theme="orange" />
                             )}
-                            {isNew && (
-                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
-                                New
-                              </span>
-                            )}
+                            {isNew && <Badge label="New" theme="orange" />}
                             <div
                               className={cx({
                                 'ml-4': isNew || !hasSubscription,
@@ -189,9 +184,7 @@ function Index({ product }) {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {formattedBias}
-                          </span>
+                          <Badge label={formattedBias} theme="green" />
                         </td>
                         {hasSubscription && (
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
@@ -204,9 +197,7 @@ function Index({ product }) {
                           </td>
                         )}
                         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {program.category}
-                          </span>
+                          <Badge label={program.category} theme="green" />
                         </td>
                       </tr>
                     )
