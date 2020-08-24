@@ -37,6 +37,13 @@ function Navigation() {
     },
   ]
 
+  const secondaryLinks = [
+    {
+      href: '/account',
+      label: 'Your Account',
+    },
+  ]
+
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -232,23 +239,36 @@ function Navigation() {
               </div>
             </div>
             <div
-              className="mt-3 px-2"
+              className="mt-3 px-2 space-y-1"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="user-menu"
             >
-              <Link href="/account">
-                <a
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                  role="menuitem"
-                >
-                  Your Account
-                </a>
-              </Link>
+              {secondaryLinks.map((link, index) => {
+                const isActive = router.pathname.startsWith(link.href)
+
+                return (
+                  <Link key={index} href={link.href}>
+                    <a
+                      className={cx(
+                        'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                        {
+                          'text-white bg-gray-900': isActive,
+                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive,
+                        }
+                      )}
+                      role="menuitem"
+                    >
+                      {link.label}
+                    </a>
+                  </Link>
+                )
+              })}
+
               <a
                 href="#"
                 onClick={signOut}
-                className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 role="menuitem"
               >
                 Sign out
