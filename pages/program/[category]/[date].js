@@ -23,7 +23,9 @@ function ProgramPage({ program }) {
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
       <div className="bg-white shadow rounded sm:rounded-lg">
         <div className="px-4 py-5 sm:p-6">
-          <dl className="divide-y space-y-6">{program.days.map(DaySection)}</dl>
+          <dl className="divide-y space-y-6">
+            {[...program.days, { rest: true, title: 'Sunday' }].map(DaySection)}
+          </dl>
         </div>
       </div>
     </Page>

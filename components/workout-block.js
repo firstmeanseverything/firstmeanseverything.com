@@ -16,9 +16,9 @@ function WorkoutBlock({ children, title }) {
 
   return (
     <div className={cx('border p-3 rounded', styleClass(title))}>
-      <h2 className="font-bold mb-4 text-lg tracking-tight uppercase">
+      <h3 className="font-bold mb-4 text-lg tracking-tight uppercase">
         {title}
-      </h2>
+      </h3>
       <div className="prose">{children}</div>
     </div>
   )
