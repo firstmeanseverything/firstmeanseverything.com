@@ -1,10 +1,10 @@
+import Badge from './badge'
+
 function ProgramMeta({ bias, category, date }) {
   return (
     <React.Fragment>
       <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
-        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-          {category}
-        </span>
+        <Badge label={category} theme="green" />
       </div>
       <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
         <svg
