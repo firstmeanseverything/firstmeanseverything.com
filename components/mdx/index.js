@@ -40,8 +40,8 @@ const mdxComponents = {
     const { user } = useAuthState()
 
     const userWeight = user?.[movement]
-      ? `${user[movement] * Number(percent / 100)}kg`
-      : `${percent}%`
+      ? `${Number(user[movement]) * Number(percent / 100)}kg`
+      : `${Number(percent)}%`
 
     const parseMovement = (movement) => {
       switch (true) {
