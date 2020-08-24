@@ -190,7 +190,7 @@ function Navigation() {
             const isActive = router.pathname.startsWith(link.href)
 
             return (
-              <Link key={index} href="/">
+              <Link key={index} href={link.href}>
                 <a
                   className={cx(
                     'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
@@ -200,7 +200,7 @@ function Navigation() {
                     }
                   )}
                 >
-                  Program
+                  {link.label}
                 </a>
               </Link>
             )
