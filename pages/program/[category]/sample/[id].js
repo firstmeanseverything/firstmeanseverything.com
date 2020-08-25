@@ -89,7 +89,7 @@ export async function getStaticProps({ params }) {
           days.map(async ({ content, ...day }) => ({
             content: {
               mdx: await renderToString(
-                he.decode(content.markdown, mdxComponents)
+                he.decode(content.markdown, { components: mdxComponents })
               ),
               ...content,
             },

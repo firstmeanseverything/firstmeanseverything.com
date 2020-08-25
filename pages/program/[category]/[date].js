@@ -92,9 +92,9 @@ export async function getStaticProps({ params }) {
         days: await Promise.all(
           days.map(async ({ content, ...day }) => ({
             content: {
-              mdx: await renderToString(
-                he.decode(content.markdown, mdxComponents)
-              ),
+              mdx: await renderToString(he.decode(content.markdown), {
+                components: mdxComponents,
+              }),
               ...content,
             },
             ...day,
