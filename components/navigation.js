@@ -57,29 +57,33 @@ function Navigation() {
                   </a>
                 </Link>
               </div>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline">
-                  {primaryLinks.map((link, index) => {
-                    const isActive = router.pathname.startsWith(link.href)
+              {primaryLinks.length ? (
+                <React.Fragment>
+                  <div className="hidden md:block">
+                    <div className="ml-10 flex items-baseline">
+                      {primaryLinks.map((link, index) => {
+                        const isActive = router.pathname.startsWith(link.href)
 
-                    return (
-                      <Link key={index} href={link.href}>
-                        <a
-                          className={cx(
-                            'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
-                            {
-                              'text-white bg-gray-900': isActive,
-                              'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
-                            }
-                          )}
-                        >
-                          {link.label}
-                        </a>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </div>
+                        return (
+                          <Link key={index} href={link.href}>
+                            <a
+                              className={cx(
+                                'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                                {
+                                  'text-white bg-gray-900': isActive,
+                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                                }
+                              )}
+                            >
+                              {link.label}
+                            </a>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </React.Fragment>
+              ) : null}
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
@@ -192,29 +196,35 @@ function Navigation() {
           block: navOpen,
         })}
       >
-        <div className="px-2 py-3 sm:px-3">
-          {primaryLinks.map((link, index) => {
-            const isActive = router.pathname.startsWith(link.href)
+        {primaryLinks.length ? (
+          <div className="px-2 py-3 sm:px-3">
+            {primaryLinks.map((link, index) => {
+              const isActive = router.pathname.startsWith(link.href)
 
-            return (
-              <Link key={index} href={link.href}>
-                <a
-                  className={cx(
-                    'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
-                    {
-                      'text-white bg-gray-900': isActive,
-                      'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
-                    }
-                  )}
-                >
-                  {link.label}
-                </a>
-              </Link>
-            )
-          })}
-        </div>
+              return (
+                <Link key={index} href={link.href}>
+                  <a
+                    className={cx(
+                      'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                      {
+                        'text-white bg-gray-900': isActive,
+                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                      }
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+        ) : null}
         {user && (
-          <div className="pt-4 pb-3 border-t border-gray-700">
+          <div
+            className={cx('pt-4 pb-3 border-gray-700', {
+              'border-t': primaryLinks.length,
+            })}
+          >
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
