@@ -30,12 +30,7 @@ function Navigation() {
       })
   }, [])
 
-  const primaryLinks = [
-    {
-      href: '/',
-      label: 'Program',
-    },
-  ]
+  const primaryLinks = []
 
   const secondaryLinks = [
     {
