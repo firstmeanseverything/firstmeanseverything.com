@@ -30,10 +30,12 @@ function Navigation() {
       })
   }, [])
 
-  const primaryLinks = [
+  const primaryLinks = []
+
+  const secondaryLinks = [
     {
-      href: '/',
-      label: 'Program',
+      href: '/account',
+      label: 'Your Account',
     },
   ]
 
@@ -50,29 +52,33 @@ function Navigation() {
                   </a>
                 </Link>
               </div>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline">
-                  {primaryLinks.map((link, index) => {
-                    const isActive = router.pathname.startsWith(link.href)
+              {primaryLinks.length ? (
+                <React.Fragment>
+                  <div className="hidden md:block">
+                    <div className="ml-10 flex items-baseline">
+                      {primaryLinks.map((link, index) => {
+                        const isActive = router.pathname.startsWith(link.href)
 
-                    return (
-                      <Link key={index} href={link.href}>
-                        <a
-                          className={cx(
-                            'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
-                            {
-                              'text-white bg-gray-900': isActive,
-                              'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
-                            }
-                          )}
-                        >
-                          {link.label}
-                        </a>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </div>
+                        return (
+                          <Link key={index} href={link.href}>
+                            <a
+                              className={cx(
+                                'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                                {
+                                  'text-white bg-gray-900': isActive,
+                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                                }
+                              )}
+                            >
+                              {link.label}
+                            </a>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </React.Fragment>
+              ) : null}
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
@@ -185,29 +191,35 @@ function Navigation() {
           block: navOpen,
         })}
       >
-        <div className="px-2 py-3 sm:px-3">
-          {primaryLinks.map((link, index) => {
-            const isActive = router.pathname.startsWith(link.href)
+        {primaryLinks.length ? (
+          <div className="px-2 py-3 sm:px-3">
+            {primaryLinks.map((link, index) => {
+              const isActive = router.pathname.startsWith(link.href)
 
-            return (
-              <Link key={index} href="/">
-                <a
-                  className={cx(
-                    'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
-                    {
-                      'text-white bg-gray-900': isActive,
-                      'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
-                    }
-                  )}
-                >
-                  Program
-                </a>
-              </Link>
-            )
-          })}
-        </div>
+              return (
+                <Link key={index} href={link.href}>
+                  <a
+                    className={cx(
+                      'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                      {
+                        'text-white bg-gray-900': isActive,
+                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                      }
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+        ) : null}
         {user && (
-          <div className="pt-4 pb-3 border-t border-gray-700">
+          <div
+            className={cx('pt-4 pb-3 border-gray-700', {
+              'border-t': primaryLinks.length,
+            })}
+          >
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
@@ -223,7 +235,7 @@ function Navigation() {
               <div className="ml-3">
                 {user.name && (
                   <div className="text-base font-medium leading-none text-white">
-                    Tom Cook
+                    {user.name}
                   </div>
                 )}
                 <div className="mt-1 text-sm font-medium leading-none text-gray-400">
@@ -232,23 +244,36 @@ function Navigation() {
               </div>
             </div>
             <div
-              className="mt-3 px-2"
+              className="mt-3 px-2 space-y-1"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="user-menu"
             >
-              <Link href="/account">
-                <a
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                  role="menuitem"
-                >
-                  Your Account
-                </a>
-              </Link>
+              {secondaryLinks.map((link, index) => {
+                const isActive = router.pathname.startsWith(link.href)
+
+                return (
+                  <Link key={index} href={link.href}>
+                    <a
+                      className={cx(
+                        'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                        {
+                          'text-white bg-gray-900': isActive,
+                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive,
+                        }
+                      )}
+                      role="menuitem"
+                    >
+                      {link.label}
+                    </a>
+                  </Link>
+                )
+              })}
+
               <a
                 href="#"
                 onClick={signOut}
-                className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                 role="menuitem"
               >
                 Sign out

@@ -7,7 +7,7 @@ import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'
 
 function DaySection(
-  { activeRecovery = false, content, id, rest = false, title },
+  { activeRecovery = false, content, rest = false, title },
   index
 ) {
   const [dayOpen, setDayOpen] = useState(index === 0)
@@ -17,7 +17,7 @@ function DaySection(
   const mdxContent = content ? hydrate(content.mdx, mdxComponents) : null
 
   return (
-    <div key={id} className="pt-6 first:pt-0">
+    <div key={title} className="pt-6 first:pt-0">
       <dt className="text-2xl leading-7">
         <button
           {...(!rest && { onClick: () => toggleDayOpen() })}
