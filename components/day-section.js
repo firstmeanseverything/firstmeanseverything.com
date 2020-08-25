@@ -14,7 +14,9 @@ function DaySection(
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
-  const mdxContent = content ? hydrate(content.mdx, mdxComponents) : null
+  const mdxContent = content
+    ? hydrate(content.mdx, { components: mdxComponents })
+    : null
 
   return (
     <div key={title} className="pt-6 first:pt-0">
