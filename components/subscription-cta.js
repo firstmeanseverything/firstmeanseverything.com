@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import cx from 'classnames'
 
+import Button from './button'
 import { createCheckoutSession } from '../lib/db'
 import { useAuthState } from '../context/auth'
 
 function SubscriptionCTA({ description, name, prices }) {
-  const { user } = useAuthState()
+  const { isAuthenticating, user } = useAuthState()
   const [activeBillingInterval, setBillingInterval] = useState('month')
   const [checkoutLoading, setCheckoutLoading] = useState(false)
 
@@ -125,24 +125,18 @@ function SubscriptionCTA({ description, name, prices }) {
             </span>
           </div>
           <div className="mt-6">
-            <div className="rounded-md shadow">
-              <button
-                onClick={() => {
-                  setCheckoutLoading(true)
-                  createCheckoutSession(user.uid, activePrice.id)
-                }}
-                className={cx(
-                  'w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-700 bg-yellow-300 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out',
-                  {
-                    'cursor-not-allowed opacity-50': checkoutLoading,
-                    'hover:bg-yellow-200': !checkoutLoading,
-                  }
-                )}
-                disabled={checkoutLoading}
-              >
-                Unlock
-              </button>
-            </div>
+            <Button
+              onClick={() => {
+                setCheckoutLoading(true)
+                createCheckoutSession(user.uid, activePrice.id)
+              }}
+              size="xlarge"
+              theme="yellow"
+              isDisabled={isAuthenticating}
+              isLoading={checkoutLoading}
+            >
+              Unlock
+            </Button>
           </div>
         </div>
       </div>

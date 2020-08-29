@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import cx from 'classnames'
 
+import Button from '../components/button'
 import { goToBillingPortal } from '../lib/db'
 import Page from '../components/page'
 import { useAuthState } from '../context/auth'
@@ -31,26 +31,16 @@ function Account() {
               </p>
             </div>
             <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
-              <span className="inline-flex rounded-md shadow-sm">
-                <button
-                  onClick={() => {
-                    setBillingLoading(true)
-                    goToBillingPortal()
-                  }}
-                  className={cx(
-                    'inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150',
-                    {
-                      'cursor-not-allowed opacity-50':
-                        isAuthenticating || billingLoading,
-                      'hover:bg-indigo-500':
-                        !isAuthenticating || !billingLoading,
-                    }
-                  )}
-                  disabled={isAuthenticating || billingLoading}
-                >
-                  Manage billing
-                </button>
-              </span>
+              <Button
+                onClick={() => {
+                  setBillingLoading(true)
+                  goToBillingPortal()
+                }}
+                isDisabled={isAuthenticating}
+                isLoading={billingLoading}
+              >
+                Manage billing
+              </Button>
             </div>
           </div>
         </div>
