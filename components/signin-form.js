@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
 
+import Alert from './alert'
 import Button from './button'
 import { FormInput } from './form'
 import { useAuthDispatch } from '../context/auth'
@@ -36,6 +37,7 @@ function SignInForm() {
     message: null,
   })
 
+  const isError = state.formState === 'error'
   const isLoading = state.formState === 'loading'
 
   const onSubmit = async ({ email, password }) => {
@@ -55,7 +57,12 @@ function SignInForm() {
 
   return (
     <FormProvider {...methods}>
-      {state.formState === 'error' && <p>{state.message}</p>}
+      {isError && (
+        <Alert
+          title="There was a problem signing you in"
+          message={state.message}
+        />
+      )}
       <div className="mt-6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -63,6 +70,7 @@ function SignInForm() {
               field="email"
               label="Email address"
               placeholder="team@firstmeanseverything.com"
+              disabled={isLoading}
             />
           </div>
           <div className="mt-6">
@@ -71,6 +79,7 @@ function SignInForm() {
               type="password"
               label="Password"
               placeholder="••••••••"
+              disabled={isLoading}
             />
           </div>
           <div className="mt-6 flex items-center justify-end">
