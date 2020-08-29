@@ -37,6 +37,21 @@ function Button({
     }
   }
 
+  const svgSizeClass = (size) => {
+    switch (size) {
+      case 'large':
+        return 'h-5 w-5'
+      case 'regular':
+      case 'small':
+      default:
+        return 'h-4 w-4'
+      case 'xlarge':
+        return 'h-6 w-6'
+      case 'xsmall':
+        return 'h-3 w-3'
+    }
+  }
+
   const disabled = isDisabled || isLoading
 
   return (
@@ -55,7 +70,9 @@ function Button({
         {...props}
       >
         {isLoading ? (
-          <SpinnerSVG className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+          <SpinnerSVG
+            className={cx('animate-spin mr-3 text-white', svgSizeClass(size))}
+          />
         ) : null}
         {isLoading ? 'Loading' : children}
       </button>
