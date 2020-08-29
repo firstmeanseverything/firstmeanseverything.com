@@ -100,7 +100,7 @@ function SignUpForm() {
           </div>
           <div className="mt-6">
             <Button type="submit" size="large" isLoading={isLoading}>
-              Sign in
+              Sign up
             </Button>
           </div>
         </form>
