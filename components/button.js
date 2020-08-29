@@ -34,6 +34,10 @@ function Button({
         return cx('text-white bg-indigo-600', {
           'hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700': !disabled,
         })
+      case 'yellow':
+        return cx('text-gray-700 bg-yellow-300', {
+          'hover:bg-yellow-200 focus:border-yellow-400 focus:shadow-outline-yellow active:bg-yellow-400': !disabled,
+        })
     }
   }
 
