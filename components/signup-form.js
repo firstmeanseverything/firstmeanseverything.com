@@ -1,3 +1,4 @@
+import { useReducer } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
@@ -5,6 +6,17 @@ import * as yup from 'yup'
 import Button from './button'
 import { FormInput } from './form'
 import { useAuthDispatch } from '../context/auth'
+
+function reducer(state, { payload, type }) {
+  switch (type) {
+    case 'ERROR':
+      return { ...state, formState: 'error', ...payload }
+    case 'LOADING':
+      return { ...state, formState: 'loading', ...payload }
+    default:
+      throw new Error(`Unhandled action type: ${type}`)
+  }
+}
 
 function SignUpForm() {
   const { signUp } = useAuthDispatch()
@@ -26,8 +38,25 @@ function SignUpForm() {
       })
     ),
   })
+  const [state, dispatch] = useReducer(reducer, {
+    formState: null,
+    message: null,
+  })
 
-  const onSubmit = async ({ email, password }) => await signUp(email, password)
+  const onSubmit = async ({ email, password }) => {
+    dispatch({
+      type: 'LOADING',
+      payload: { message: 'Creating your account' },
+    })
+    try {
+      await signUp(email, password)
+    } catch (error) {
+      dispatch({
+        type: 'ERROR',
+        payload: { message: error.message },
+      })
+    }
+  }
 
   return (
     <FormProvider {...methods}>
