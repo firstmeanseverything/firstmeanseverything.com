@@ -70,6 +70,7 @@ function SignInForm() {
               field="email"
               label="Email address"
               placeholder="team@firstmeanseverything.com"
+              disabled={isLoading}
             />
           </div>
           <div className="mt-6">
@@ -78,6 +79,7 @@ function SignInForm() {
               type="password"
               label="Password"
               placeholder="••••••••"
+              disabled={isLoading}
             />
           </div>
           <div className="mt-6 flex items-center justify-end">

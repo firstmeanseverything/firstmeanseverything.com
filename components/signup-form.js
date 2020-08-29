@@ -77,6 +77,7 @@ function SignUpForm() {
               field="email"
               label="Email address"
               placeholder="team@firstmeanseverything.com"
+              disabled={isLoading}
             />
           </div>
           <div className="mt-6">
@@ -86,17 +87,19 @@ function SignUpForm() {
                 type="password"
                 label="Password"
                 placeholder="••••••••"
+                disabled={isLoading}
               />
               <FormInput
                 field="confirm"
                 type="password"
                 label="Confirm Password"
                 placeholder="••••••••"
+                disabled={isLoading}
               />
             </div>
           </div>
           <div className="mt-6">
-            <Button type="submit" size="large">
+            <Button type="submit" size="large" isLoading={isLoading}>
               Sign in
             </Button>
           </div>
