@@ -7,6 +7,7 @@ function Button({
   isDisabled = false,
   isLoading = false,
   size = 'regular',
+  theme = 'blue',
   type = 'button',
   ...props
 }) {
@@ -26,21 +27,31 @@ function Button({
     }
   }
 
+  const themeClass = (theme, disabled) => {
+    switch (theme) {
+      case 'blue':
+      default:
+        return cx('text-white bg-indigo-600', {
+          'hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700': !disabled,
+        })
+    }
+  }
+
+  const disabled = isDisabled || isLoading
+
   return (
     <span className="block rounded-md shadow-sm">
       <button
         type={type}
         className={cx(
-          'w-full flex items-center justify-center border border-transparent font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150',
+          'w-full flex items-center justify-center border border-transparent font-medium focus:outline-none transition ease-in-out duration-150',
           sizeClass(size),
+          themeClass(theme, disabled),
           {
-            'cursor-not-allowed opacity-50': isDisabled || isLoading,
-            'hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700': !(
-              isDisabled || isLoading
-            ),
+            'cursor-not-allowed opacity-50': disabled,
           }
         )}
-        disabled={isDisabled || isLoading}
+        disabled={disabled}
         {...props}
       >
         {isLoading ? (
