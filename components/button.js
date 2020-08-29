@@ -74,9 +74,7 @@ function Button({
         {...props}
       >
         {isLoading ? (
-          <SpinnerSVG
-            className={cx('animate-spin mr-3 text-white', svgSizeClass(size))}
-          />
+          <SpinnerSVG className={cx('animate-spin mr-3', svgSizeClass(size))} />
         ) : null}
         {isLoading ? 'Loading' : children}
       </button>
