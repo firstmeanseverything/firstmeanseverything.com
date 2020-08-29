@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
 
+import Alert from './alert'
 import Button from './button'
 import { FormInput } from './form'
 import { useAuthDispatch } from '../context/auth'
@@ -43,6 +44,9 @@ function SignUpForm() {
     message: null,
   })
 
+  const isError = state.formState === 'error'
+  const isLoading = state.formState === 'loading'
+
   const onSubmit = async ({ email, password }) => {
     dispatch({
       type: 'LOADING',
@@ -60,6 +64,12 @@ function SignUpForm() {
 
   return (
     <FormProvider {...methods}>
+      {isError && (
+        <Alert
+          title="There was a problem creating your account"
+          message={state.message}
+        />
+      )}
       <div className="mt-6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
