@@ -7,7 +7,7 @@ function Button({
   isDisabled = false,
   isLoading = false,
   size = 'regular',
-  theme = 'blue',
+  theme = 'indigo',
   type = 'button',
   ...props
 }) {
@@ -29,7 +29,7 @@ function Button({
 
   const themeClass = (theme, disabled) => {
     switch (theme) {
-      case 'blue':
+      case 'indigo':
       default:
         return cx('text-white bg-indigo-600', {
           'hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700': !disabled,
