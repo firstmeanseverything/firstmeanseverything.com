@@ -30,7 +30,7 @@ function SubscriptionCTA({ description, name, prices }) {
               </h4>
               <div className="flex-1 border-t-2 border-gray-200"></div>
             </div>
-            <ul className="mt-8 lg:grid lg:grid-cols-2 lg:col-gap-8 lg:row-gap-5">
+            <ul className="mt-8 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5">
               <li className="flex items-start lg:col-span-1">
                 <div className="flex-shrink-0">
                   <svg
