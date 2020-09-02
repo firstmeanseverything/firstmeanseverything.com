@@ -6,12 +6,12 @@ import SignInForm from '../components/signin-form'
 import { useAuthState } from '../context/auth'
 
 function SignIn() {
-  const { user } = useAuthState()
+  const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   useEffect(() => {
-    if (user) router.push('/')
-  }, [user])
+    if (!isAuthenticating && user) router.push('/')
+  }, [isAuthenticating, user])
 
   return (
     <React.Fragment>

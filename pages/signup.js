@@ -6,12 +6,12 @@ import SignUpForm from '../components/signup-form'
 import { useAuthState } from '../context/auth'
 
 function SignUp() {
-  const { user } = useAuthState()
+  const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   useEffect(() => {
-    if (user) router.push('/')
-  }, [user])
+    if (!isAuthenticating && user) router.push('/')
+  }, [isAuthenticating, user])
 
   return (
     <React.Fragment>
