@@ -15,9 +15,14 @@ function ProgramPage({ program }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (!isAuthenticating && !(user || user.stripeRole === 'basic'))
+    const isFutureProgram = new Date(program.date) > new Date()
+
+    if (
+      isFutureProgram ||
+      (!isAuthenticating && !(user || user.stripeRole === 'basic'))
+    )
       router.push('/')
-  }, [isAuthenticating, user])
+  }, [isAuthenticating, program, user])
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
