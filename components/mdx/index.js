@@ -14,8 +14,8 @@ const mdxComponents = {
       {children}
     </WorkoutBlock>
   ),
-  PercentageRepWork,
-  PercentageWeightWork,
+  PercentageRep: PercentageRepWork,
+  PercentageWeight: PercentageWeightWork,
   Strength: ({ children, ...props }) => (
     <WorkoutBlock {...props} title="Strength">
       {children}
