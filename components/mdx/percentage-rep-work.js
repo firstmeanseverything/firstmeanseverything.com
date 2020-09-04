@@ -1,4 +1,8 @@
+import { useAuthState } from '../../context/auth'
+
 function PercentageRepWork({ movement, note, percent, scheme }) {
+  const { user } = useAuthState()
+
   if (!(movement || percent || scheme)) return null
 
   const parseMovement = (movement) => {
