@@ -1,7 +1,5 @@
 function PercentageWeightWork({ movement, note, percent, scheme }) {
-  const userWeight = user?.[movement]
-    ? `${Number(user[movement]) * Number(percent / 100)}kg`
-    : `${Number(percent)}%`
+  if (!(movement || percent || scheme)) return null
 
   const parseMovement = (movement) => {
     switch (true) {
@@ -20,7 +18,7 @@ function PercentageWeightWork({ movement, note, percent, scheme }) {
 
   return (
     <div>
-      <h4>{`${scheme} ${parseMovement(movement)} @ ${userWeight}`}</h4>
+      <h4>{`${scheme} ${parseMovement(movement)} @ ${Number(percent)}%`}</h4>
       {note && <span className="text-sm">{note}</span>}
     </div>
   )
