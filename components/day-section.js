@@ -2,6 +2,7 @@ import * as React from 'react'
 import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
 
+import { AuthProvider } from '../context/auth'
 import Badge from './badge'
 import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'
@@ -15,7 +16,10 @@ function DaySection(
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
   const mdxContent = content
-    ? hydrate(content.mdx, { components: mdxComponents })
+    ? hydrate(content.mdx, {
+        components: mdxComponents,
+        provider: { component: AuthProvider },
+      })
     : null
 
   return (

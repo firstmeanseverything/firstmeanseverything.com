@@ -8,7 +8,7 @@ import { graphcmsClient } from 'lib/graphcms'
 import mdxComponents from 'components/mdx'
 import Page from 'components/page'
 import ProgramMeta from 'components/program-meta'
-import { useAuthState } from 'context/auth'
+import { AuthProvider, useAuthState } from 'context/auth'
 
 function ProgramPage({ program }) {
   const { isAuthenticating, user } = useAuthState()
@@ -50,19 +50,19 @@ export async function getStaticPaths() {
   const paths = programs.map(({ category, date }) => ({
     params: {
       category: category.toLowerCase(),
-      date,
-    },
+      date
+    }
   }))
 
   return {
     paths,
-    fallback: false,
+    fallback: false
   }
 }
 
 export async function getStaticProps({ params }) {
   const {
-    programs: [program],
+    programs: [program]
   } = await graphcmsClient.request(
     `
     query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
@@ -83,7 +83,7 @@ export async function getStaticProps({ params }) {
     }`,
     {
       category: params.category.toUpperCase(),
-      date: params.date,
+      date: params.date
     }
   )
 
@@ -97,15 +97,16 @@ export async function getStaticProps({ params }) {
             content: {
               mdx: await renderToString(he.decode(content), {
                 components: mdxComponents,
+                provider: { component: AuthProvider }
               }),
-              markdown: content,
+              markdown: content
             },
-            ...day,
+            ...day
           }))
         ),
-        ...rest,
-      },
-    },
+        ...rest
+      }
+    }
   }
 }
 
