@@ -1,6 +1,5 @@
 import PercentageRepWork from './percentage-rep-work'
 import PercentageWeightWork from './percentage-weight-work'
-import { useAuthState } from '../../context/auth'
 import WorkoutBlock from '../workout-block'
 
 const mdxComponents = {
