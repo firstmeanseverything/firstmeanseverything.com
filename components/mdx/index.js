@@ -1,3 +1,5 @@
+import PercentageRepWork from './percentage-rep-work'
+import PercentageWeightWork from './percentage-weight-work'
 import WorkoutBlock from '../workout-block'
 
 const mdxComponents = {
@@ -11,6 +13,8 @@ const mdxComponents = {
       {children}
     </WorkoutBlock>
   ),
+  PercentageRep: PercentageRepWork,
+  PercentageWeight: PercentageWeightWork,
   Strength: ({ children, ...props }) => (
     <WorkoutBlock {...props} title="Strength">
       {children}
