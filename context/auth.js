@@ -57,7 +57,10 @@ function AuthProvider({ children }) {
   }
 
   const updateUser = (data) => {
-    return firebase.auth().currentUser.updateProfile(data)
+    return firebase
+      .auth()
+      .currentUser.updateProfile(data)
+      .then(async () => setUser(await parseUser({ ...user, ...data })))
   }
 
   useEffect(() => {
