@@ -41,7 +41,7 @@ function Account() {
   }, [isAuthenticating, user])
 
   useEffect(() => {
-    if (!isAuthenticating) setValue('displayName', user.name)
+    if (!isAuthenticating) setValue('displayName', user.displayName)
   }, [isAuthenticating, user])
 
   const onSubmit = async (data) => {

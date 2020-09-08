@@ -233,9 +233,9 @@ function Navigation() {
                 </span>
               </div>
               <div className="ml-3">
-                {user.name && (
+                {user.displayName && (
                   <div className="text-base font-medium leading-none text-white">
-                    {user.name}
+                    {user.displayName}
                   </div>
                 )}
                 <div className="mt-1 text-sm font-medium leading-none text-gray-400">
