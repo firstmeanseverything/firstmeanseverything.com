@@ -81,7 +81,12 @@ function Account() {
                   <div className="mt-5 space-y-6 md:mt-0 md:col-span-2">
                     <div className="grid grid-cols-3 gap-6">
                       <div className="col-span-3 sm:col-span-2">
-                        <FormInput field="displayName" label="Name" />
+                        <FormInput
+                          field="displayName"
+                          label="Name"
+                          placeholder="Your name"
+                          disabled={isAuthenticating || isLoading}
+                        />
                       </div>
                     </div>
                     {isError && (
