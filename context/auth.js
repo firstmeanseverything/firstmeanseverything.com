@@ -56,6 +56,13 @@ function AuthProvider({ children }) {
       .then((response) => handleUser(response.user))
   }
 
+  const updateUser = (data) => {
+    return firebase
+      .auth()
+      .currentUser.updateProfile(data)
+      .then(() => setUser({ ...user, ...data }))
+  }
+
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(handleUser)
 
@@ -63,7 +70,9 @@ function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthDispatchContext.Provider value={{ signIn, signOut, signUp }}>
+    <AuthDispatchContext.Provider
+      value={{ signIn, signOut, signUp, updateUser }}
+    >
       <AuthStateContext.Provider value={{ isAuthenticating, user }}>
         {children}
       </AuthStateContext.Provider>
@@ -75,7 +84,7 @@ async function parseUser(user) {
   return {
     uid: user.uid,
     email: user.email,
-    name: user.displayName,
+    displayName: user.displayName,
     token: user.xa,
     photoUrl: user.photoURL,
     stripeRole: await getStripeRole(),
