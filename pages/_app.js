@@ -10,7 +10,7 @@ import '../styles/index.css'
 function App({ Component, pageProps }) {
   const router = useRouter()
 
-  const isAuthPath = ['/signin', '/signup'].includes(router.pathname)
+  const isAuthPath = ['/forgot', '/signin', '/signup'].includes(router.pathname)
 
   const Layout = isAuthPath ? AuthLayout : DefaultLayout
 

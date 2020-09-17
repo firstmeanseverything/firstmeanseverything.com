@@ -35,6 +35,10 @@ function AuthProvider({ children }) {
     }
   }
 
+  const sendPasswordReset = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email)
+  }
+
   const signIn = (email, password) => {
     return firebase
       .auth()
@@ -71,7 +75,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthDispatchContext.Provider
-      value={{ signIn, signOut, signUp, updateUser }}
+      value={{ sendPasswordReset, signIn, signOut, signUp, updateUser }}
     >
       <AuthStateContext.Provider value={{ isAuthenticating, user }}>
         {children}
