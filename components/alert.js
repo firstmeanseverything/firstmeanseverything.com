@@ -1,5 +1,6 @@
 import cx from 'classnames'
 
+import CheckCircleSVG from '../svgs/icons/check-circle.svg'
 import ExclamationCircleSVG from '../svgs/icons/exclamation-circle.svg'
 import XCircleSVG from '../svgs/icons/x-circle.svg'
 
@@ -9,6 +10,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return 'bg-red-50 text-red-700'
+      case 'success':
+        return 'bg-green-50 text-green-700'
       case 'warn':
         return 'bg-yellow-50 text-yellow-700'
     }
@@ -19,6 +22,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return 'text-red-800'
+      case 'success':
+        return 'text-green-800'
       case 'warn':
         return 'text-yellow-800'
     }
@@ -29,6 +34,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return 'text-red-400'
+      case 'success':
+        return 'text-green-400'
       case 'warn':
         return 'text-yellow-400'
     }
@@ -41,6 +48,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return <XCircleSVG className={baseClass} />
+      case 'success':
+        return <CheckCircleSVG className={baseClass} />
       case 'warn':
         return <ExclamationCircleSVG className={baseClass} />
     }
