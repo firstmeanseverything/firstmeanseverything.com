@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import Link from 'next/link'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from 'yup'
@@ -84,12 +85,11 @@ function SignInForm() {
           </div>
           <div className="mt-6 flex items-center justify-end">
             <div className="text-sm leading-5">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-              >
-                Forgot your password?
-              </a>
+              <Link href="/forgot">
+                <a className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                  Forgot your password?
+                </a>
+              </Link>
             </div>
           </div>
           <div className="mt-6">
