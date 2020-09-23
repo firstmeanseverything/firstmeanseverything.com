@@ -58,7 +58,8 @@ function ResetForm() {
       dispatch({
         type: 'SUCCESS',
         payload: {
-          message: 'Please sign in using your new password',
+          message:
+            'You will now be redirected to sign in using your new password',
         },
       })
 
@@ -81,40 +82,41 @@ function ResetForm() {
           message={state.message}
         />
       )}
-      {isSuccess && (
+      {isSuccess ? (
         <Alert
           type="success"
           title="Password updated successfully"
           message={state.message}
         />
-      )}
-      <div className="mt-6">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <div className="grid grid-cols-1 gap-2 mb-4 gap-y-6 sm:grid-cols-2">
-              <FormInput
-                field="password"
-                type="password"
-                label="Password"
-                placeholder="••••••••"
-                disabled={isLoading}
-              />
-              <FormInput
-                field="confirm"
-                type="password"
-                label="Confirm Password"
-                placeholder="••••••••"
-                disabled={isLoading}
-              />
+      ) : (
+        <div className="mt-6">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <div className="grid grid-cols-1 gap-2 mb-4 gap-y-6 sm:grid-cols-2">
+                <FormInput
+                  field="password"
+                  type="password"
+                  label="Password"
+                  placeholder="••••••••"
+                  disabled={isLoading}
+                />
+                <FormInput
+                  field="confirm"
+                  type="password"
+                  label="Confirm Password"
+                  placeholder="••••••••"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
-          </div>
-          <div className="mt-6">
-            <Button type="submit" size="large" isLoading={isLoading}>
-              Update your password
-            </Button>
-          </div>
-        </form>
-      </div>
+            <div className="mt-6">
+              <Button type="submit" size="large" isLoading={isLoading}>
+                Update your password
+              </Button>
+            </div>
+          </form>
+        </div>
+      )}
     </FormProvider>
   )
 }
