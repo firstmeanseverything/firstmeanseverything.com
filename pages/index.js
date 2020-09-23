@@ -153,9 +153,6 @@ function Index({ product }) {
                         onClick={() =>
                           router.push(
                             program.free
-                              ? '/program/[category]/sample/[id]'
-                              : '/program/[category]/[date]',
-                            program.free
                               ? `/program/${program.category.toLowerCase()}/sample/${
                                   program.id
                                 }`
