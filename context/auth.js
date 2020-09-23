@@ -11,6 +11,10 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [isAuthenticating, setIsAuthenticating] = useState(true)
 
+  const confirmPasswordReset = (code, password) => {
+    return firebase.auth().confirmPasswordReset(code, password)
+  }
+
   const handleUser = async (rawUser) => {
     if (rawUser) {
       const { token, ...user } = await parseUser(rawUser)
@@ -33,6 +37,10 @@ function AuthProvider({ children }) {
 
       return false
     }
+  }
+
+  const sendPasswordReset = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email)
   }
 
   const signIn = (email, password) => {
@@ -63,6 +71,10 @@ function AuthProvider({ children }) {
       .then(() => setUser({ ...user, ...data }))
   }
 
+  const verifyPasswordResetCode = (code) => {
+    return firebase.auth().verifyPasswordResetCode(code)
+  }
+
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(handleUser)
 
@@ -71,7 +83,15 @@ function AuthProvider({ children }) {
 
   return (
     <AuthDispatchContext.Provider
-      value={{ signIn, signOut, signUp, updateUser }}
+      value={{
+        confirmPasswordReset,
+        sendPasswordReset,
+        signIn,
+        signOut,
+        signUp,
+        updateUser,
+        verifyPasswordResetCode,
+      }}
     >
       <AuthStateContext.Provider value={{ isAuthenticating, user }}>
         {children}
