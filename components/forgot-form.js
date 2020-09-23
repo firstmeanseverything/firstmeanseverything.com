@@ -51,7 +51,7 @@ function ForgotForm() {
       await sendPasswordReset(email)
       dispatch({
         type: 'SUCCESS',
-        payload: { message: 'Check your email for instructions' },
+        payload: { message: 'Check your email for further instructions' },
       })
     } catch (error) {
       dispatch({
@@ -69,30 +69,31 @@ function ForgotForm() {
           message={state.message}
         />
       )}
-      {isSuccess && (
+      {isSuccess ? (
         <Alert
           type="success"
-          title="Passowrd reset sent"
+          title="Password reset sent"
           message={state.message}
         />
+      ) : (
+        <div className="mt-6">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <FormInput
+                field="email"
+                label="Email address"
+                placeholder="team@firstmeanseverything.com"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="mt-6">
+              <Button type="submit" size="large" isLoading={isLoading}>
+                Send password reset
+              </Button>
+            </div>
+          </form>
+        </div>
       )}
-      <div className="mt-6">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <FormInput
-              field="email"
-              label="Email address"
-              placeholder="team@firstmeanseverything.com"
-              disabled={isLoading}
-            />
-          </div>
-          <div className="mt-6">
-            <Button type="submit" size="large" isLoading={isLoading}>
-              Send password reset
-            </Button>
-          </div>
-        </form>
-      </div>
     </FormProvider>
   )
 }
