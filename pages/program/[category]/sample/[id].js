@@ -63,9 +63,7 @@ export async function getStaticProps({ params }) {
         category
         days {
           activeRecovery
-          content {
-            markdown
-          }
+          content
           id
           title
         }
@@ -88,7 +86,7 @@ export async function getStaticProps({ params }) {
         days: await Promise.all(
           days.map(async ({ content, ...day }) => ({
             content: {
-              mdx: await renderToString(he.decode(content.markdown), {
+              mdx: await renderToString(he.decode(content), {
                 components: mdxComponents,
               }),
               ...content,
