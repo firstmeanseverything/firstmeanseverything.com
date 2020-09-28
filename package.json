@@ -27,7 +27,7 @@
     "react-hook-form": "6.8.6",
     "react-transition-group": "4.4.1",
     "stripe": "8.102.0",
-    "swr": "0.3.2",
+    "swr": "0.3.5",
     "yup": "0.29.3"
   },
   "devDependencies": {
