@@ -17,10 +17,10 @@ function PercentageWeightWork({ movement, note, percent, scheme }) {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <h4>{`${scheme} ${parseMovement(movement)} @ ${Number(percent)}%`}</h4>
       {note && <span className="text-sm">{note}</span>}
-    </div>
+    </React.Fragment>
   )
 }
 

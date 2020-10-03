@@ -9,10 +9,10 @@ function PercentageRepWork({ movement, note, percent, scheme }) {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <h4>{`${scheme} ${Number(percent)} ${parseMovement(movement)}`}</h4>
       {note && <span className="text-sm">{note}</span>}
-    </div>
+    </React.Fragment>
   )
 }
 
