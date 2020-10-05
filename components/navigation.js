@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import cx from 'classnames'
 
-import FMEMark from '../svgs/fme-mark.svg'
+import APMark from '../svgs/ap-mark.svg'
 import Transition from './transition'
 import { useAuthDispatch, useAuthState } from '../context/auth'
 
@@ -48,7 +48,7 @@ function Navigation() {
               <div className="flex-shrink-0">
                 <Link href="/">
                   <a>
-                    <FMEMark className="h-6 text-white w-auto" />
+                    <APMark className="h-8 text-white w-auto" />
                   </a>
                 </Link>
               </div>
