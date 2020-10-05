@@ -13,10 +13,10 @@ function App({ Component, pageProps }) {
 
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>)
 
-  return getLayout(
+  return (
     <AuthProvider>
       <Elements stripe={stripePromise}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </Elements>
     </AuthProvider>
   )
