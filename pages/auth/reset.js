@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
+import { getLayout as getAuthLayout } from '../../components/layout/auth'
 import ResetForm from '../../components/reset-form'
 import SpinnerSVG from '../../svgs/icons/spinner.svg'
 import { useAuthDispatch, useAuthState } from '../../context/auth'
@@ -52,5 +53,7 @@ function ResetPassword() {
     </React.Fragment>
   )
 }
+
+ResetPassword.getLayout = getAuthLayout
 
 export default ResetPassword

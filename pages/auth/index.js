@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
+import { getLayout as getAuthLayout } from '../../components/layout/auth'
 import SpinnerSVG from '../../svgs/icons/spinner.svg'
 
 function Auth() {
@@ -24,5 +25,7 @@ function Auth() {
     </div>
   )
 }
+
+Auth.getLayout = getAuthLayout
 
 export default Auth

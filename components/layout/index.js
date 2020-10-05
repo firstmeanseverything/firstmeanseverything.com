@@ -1,2 +1,14 @@
-export { default as AuthLayout } from './auth'
-export { default as DefaultLayout } from './default'
+import Navigation from '../navigation'
+
+function Layout({ children }) {
+  return (
+    <div>
+      <Navigation />
+      {children}
+    </div>
+  )
+}
+
+export const getLayout = (page) => <Layout>{page}</Layout>
+
+export default Layout
