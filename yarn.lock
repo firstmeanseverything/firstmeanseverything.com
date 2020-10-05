@@ -6985,10 +6985,10 @@ strip-ansi@^3.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
-stripe@8.102.0:
-  version "8.102.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.102.0.tgz#8616ceec4fb8366c93daf2e6c399f7d67a9e8c66"
-  integrity sha512-0PKpLeMI0Y8smIqLBu/SPKMeNpylnY0rtUL3mBJuKxrxPrud84ehkaMjvyHMh4uQ/hg4EovcQqWZc1yb1rOY4w==
+stripe@8.107.0:
+  version "8.107.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.107.0.tgz#d69b143c19d36bbe77db198fc66f951e01d9daa6"
+  integrity sha512-K0CJUK+f9EJKPys6u3NjO3juFb95q16R7yWGCIUgBLIEh1Vbhk3sp56A4EXSMepIflO9P4C9T67TlPb5fzGn7Q==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
