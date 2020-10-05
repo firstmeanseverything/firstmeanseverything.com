@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { getLayout as getAuthLayout } from '../components/layout/auth'
 import SignInForm from '../components/signin-form'
 import { useAuthState } from '../context/auth'
 
@@ -34,5 +35,7 @@ function SignIn() {
     </React.Fragment>
   )
 }
+
+SignIn.getLayout = getAuthLayout
 
 export default SignIn

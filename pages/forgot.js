@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import ForgotForm from '../components/forgot-form'
+import { getLayout as getAuthLayout } from '../components/layout/auth'
 import { useAuthState } from '../context/auth'
 
 function ForgotPassword() {
@@ -29,5 +30,7 @@ function ForgotPassword() {
     </React.Fragment>
   )
 }
+
+ForgotPassword.getLayout = getAuthLayout
 
 export default ForgotPassword

@@ -20,4 +20,6 @@ function AuthLayout({ children }) {
   )
 }
 
+export const getLayout = (page) => <AuthLayout>{page}</AuthLayout>
+
 export default AuthLayout
