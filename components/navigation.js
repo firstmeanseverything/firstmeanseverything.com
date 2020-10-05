@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { Transition } from '@headlessui/react'
 import cx from 'classnames'
 
 import APMark from '../svgs/ap-mark.svg'
-import Transition from './transition'
 import { useAuthDispatch, useAuthState } from '../context/auth'
 
 function Navigation() {
