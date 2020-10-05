@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { Transition } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
 
 import APMark from '../svgs/ap-mark.svg'
@@ -11,24 +11,9 @@ function Navigation() {
   const { signOut } = useAuthDispatch()
   const { user } = useAuthState()
   const router = useRouter()
-  const [accountPopoverOpen, setAccountPopoverOpen] = useState(false)
   const [navOpen, setNavOpen] = useState(false)
 
-  const toggleAccountPopover = () => setAccountPopoverOpen((open) => !open)
   const toggleNavOpen = () => setNavOpen((open) => !open)
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', () => {
-      setAccountPopoverOpen(false)
-      setNavOpen(false)
-    })
-
-    return () =>
-      router.events.off('routeChangeStart', () => {
-        setAccountPopoverOpen(false)
-        setNavOpen(false)
-      })
-  }, [])
 
   const primaryLinks = []
 
@@ -38,6 +23,12 @@ function Navigation() {
       label: 'Your Account',
     },
   ]
+
+  const MenuLink = ({ children, href, ...rest }) => (
+    <Link href={href}>
+      <a {...rest}>{children}</a>
+    </Link>
+  )
 
   return (
     <nav className="bg-gray-800">
@@ -83,62 +74,89 @@ function Navigation() {
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
                 <div className="ml-3 relative">
-                  <div>
-                    <button
-                      onClick={toggleAccountPopover}
-                      className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
-                      id="user-menu"
-                      aria-label="User menu"
-                      aria-haspopup="true"
-                    >
-                      <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
-                        <svg
-                          className="h-full w-full text-gray-300"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-
                   {user && (
-                    <Transition
-                      show={accountPopoverOpen}
-                      enter="transition ease-out duration-100 transform"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="transition ease-in duration-75 transform"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
-                        <div className="rounded-md bg-white shadow-xs">
-                          <div className="px-4 py-3">
-                            <p className="text-sm leading-5">Signed in as</p>
-                            <p className="text-sm leading-5 font-medium text-gray-900 truncate">
-                              {user.email}
-                            </p>
-                          </div>
-                          <div className="border-t border-gray-100"></div>
-                          <div className="py-1">
-                            <Link href="/account">
-                              <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Your Account
-                              </a>
-                            </Link>
-                            <a
-                              href="#"
-                              onClick={signOut}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    <Menu>
+                      {({ open }) => (
+                        <React.Fragment>
+                          <Menu.Button
+                            id="test"
+                            className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+                          >
+                            <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
+                              <svg
+                                className="h-full w-full text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            </span>
+                          </Menu.Button>
+                          <Transition
+                            show={open}
+                            enter="transition ease-out duration-100 transform"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="transition ease-in duration-75 transform"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                          >
+                            <Menu.Items
+                              static
+                              className="origin-top-right absolute right-0 mt-2 w-56 bg-white
+                            border border-gray-200 divide-y divide-gray-100
+                            rounded-md shadow-lg outline-none"
                             >
-                              Sign out
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </Transition>
+                              <div className="px-4 py-3">
+                                <p className="text-sm leading-5">
+                                  Signed in as
+                                </p>
+                                <p className="text-sm leading-5 font-medium text-gray-900 truncate">
+                                  {user.email}
+                                </p>
+                              </div>
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <MenuLink
+                                      href="/account"
+                                      className={cx(
+                                        'block px-4 py-2 text-sm hover:bg-gray-100',
+                                        {
+                                          'bg-gray-100 text-gray-900': active,
+                                          'text-gray-700': !active,
+                                        }
+                                      )}
+                                    >
+                                      Your Account
+                                    </MenuLink>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      onClick={signOut}
+                                      className={cx(
+                                        'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100',
+                                        {
+                                          'bg-gray-100 text-gray-900': active,
+                                          'text-gray-700': !active,
+                                        }
+                                      )}
+                                    >
+                                      Sign out
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                            </Menu.Items>
+                          </Transition>
+                        </React.Fragment>
+                      )}
+                    </Menu>
                   )}
                 </div>
               </div>
