@@ -1,11 +1,11 @@
-import APHorizontal from '../../svgs/ap-horizontal.svg'
+import { APHorizontalSVG } from 'svgs'
 
 function AuthLayout({ children }) {
   return (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 w-full sm:px-6 lg:flex-none lg:px-20 lg:w-1/2 xl:px-24">
         <div className="mx-auto w-full max-w-sm">
-          <APHorizontal className="h-16 text-gray-900 w-auto" />
+          <APHorizontalSVG className="h-16 text-gray-900 w-auto" />
           {children}
         </div>
       </div>

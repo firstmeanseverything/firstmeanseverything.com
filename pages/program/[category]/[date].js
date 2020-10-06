@@ -3,12 +3,12 @@ import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
-import DaySection from '../../../components/day-section'
-import { graphcmsClient } from '../../../lib/graphcms'
-import mdxComponents from '../../../components/mdx'
-import Page from '../../../components/page'
-import ProgramMeta from '../../../components/program-meta'
-import { useAuthState } from '../../../context/auth'
+import DaySection from 'components/day-section'
+import { graphcmsClient } from 'lib/graphcms'
+import mdxComponents from 'components/mdx'
+import Page from 'components/page'
+import ProgramMeta from 'components/program-meta'
+import { useAuthState } from 'context/auth'
 
 function ProgramPage({ program }) {
   const { isAuthenticating, user } = useAuthState()

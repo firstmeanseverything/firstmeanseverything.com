@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import cookie from 'js-cookie'
 
-import firebase from '../lib/firebase'
-import { createUser } from '../lib/db'
+import firebase from 'lib/firebase'
+import { createUser } from 'lib/db'
 
 const AuthDispatchContext = createContext()
 const AuthStateContext = createContext()

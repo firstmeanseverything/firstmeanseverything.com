@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { getLayout as getAuthLayout } from '../../components/layout/auth'
-import SpinnerSVG from '../../svgs/icons/spinner.svg'
+import { getLayout as getAuthLayout } from 'components/layout/auth'
+import { SpinnerSVG } from 'svgs/icons'
 
 function Auth() {
   const router = useRouter()

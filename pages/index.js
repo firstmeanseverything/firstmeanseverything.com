@@ -3,13 +3,13 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
 
-import Badge from '../components/badge'
-import { graphcmsClient } from '../lib/graphcms'
-import { getProduct } from '../lib/db-admin'
-import Page from '../components/page'
-import SkeletonRow from '../components/skeleton-row'
-import SubscriptionCTA from '../components/subscription-cta'
-import { useAuthState } from '../context/auth'
+import Badge from 'components/badge'
+import { graphcmsClient } from 'lib/graphcms'
+import { getProduct } from 'lib/db-admin'
+import Page from 'components/page'
+import SkeletonRow from 'components/skeleton-row'
+import SubscriptionCTA from 'components/subscription-cta'
+import { useAuthState } from 'context/auth'
 
 function Index({ product }) {
   const { isAuthenticating, user } = useAuthState()

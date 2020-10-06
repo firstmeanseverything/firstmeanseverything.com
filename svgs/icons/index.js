@@ -1,0 +1,5 @@
+export { default as CheckCircleSVG } from './check-circle.svg'
+export { default as DocumentDownloadSVG } from './document-download.svg'
+export { default as ExclamationCircleSVG } from './exclamation-circle.svg'
+export { default as SpinnerSVG } from './spinner.svg'
+export { default as XCircleSVG } from './x-circle.svg'

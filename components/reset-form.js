@@ -1,13 +1,13 @@
 import { useReducer } from 'react'
+import { useRouter } from 'next/router'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import Alert from './alert'
-import Button from './button'
-import { FormInput } from './form'
-import { useAuthDispatch } from '../context/auth'
-import { useRouter } from 'next/router'
+import Alert from 'components/alert'
+import Button from 'components/button'
+import { FormInput } from 'components/form'
+import { useAuthDispatch } from 'context/auth'
 
 function reducer(state, { payload, type }) {
   switch (type) {

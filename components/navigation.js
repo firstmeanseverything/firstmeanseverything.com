@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
 
-import APMark from '../svgs/ap-mark.svg'
-import { useAuthDispatch, useAuthState } from '../context/auth'
+import { APMarkSVG } from 'svgs'
+import { useAuthDispatch, useAuthState } from 'context/auth'
 
 function Navigation() {
   const { signOut } = useAuthDispatch()
@@ -39,7 +39,7 @@ function Navigation() {
               <div className="flex-shrink-0">
                 <Link href="/">
                   <a>
-                    <APMark className="h-8 text-white w-auto" />
+                    <APMarkSVG className="h-8 text-white w-auto" />
                   </a>
                 </Link>
               </div>
