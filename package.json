@@ -27,7 +27,7 @@
     "react-dom": "16.13.1",
     "react-hook-form": "6.9.6",
     "stripe": "8.114.0",
-    "swr": "0.3.5",
+    "swr": "0.3.6",
     "yup": "0.29.3"
   },
   "devDependencies": {
