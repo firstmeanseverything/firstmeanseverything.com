@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { APHorizontalSVG } from 'svgs'
 
 function AuthLayout({ children }) {
@@ -10,9 +12,11 @@ function AuthLayout({ children }) {
         </div>
       </div>
       <div className="hidden lg:block relative w-0 flex-1">
-        <img
+        <Image
           className="absolute inset-0 h-full w-full object-cover"
           src="/images/auth-bg.jpg"
+          layout="fill"
+          priority={true}
           alt=""
         />
       </div>
