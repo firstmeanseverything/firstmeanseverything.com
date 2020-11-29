@@ -20,8 +20,8 @@ function Navigation() {
   const secondaryLinks = [
     {
       href: '/account',
-      label: 'Your Account',
-    },
+      label: 'Your Account'
+    }
   ]
 
   const MenuLink = ({ children, href, ...rest }) => (
@@ -57,7 +57,7 @@ function Navigation() {
                                 'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                                 {
                                   'text-white bg-gray-900': isActive,
-                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
                                 }
                               )}
                             >
@@ -124,7 +124,7 @@ function Navigation() {
                                         'block px-4 py-2 text-sm hover:bg-gray-100',
                                         {
                                           'bg-gray-100 text-gray-900': active,
-                                          'text-gray-700': !active,
+                                          'text-gray-700': !active
                                         }
                                       )}
                                     >
@@ -143,7 +143,7 @@ function Navigation() {
                                         'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100',
                                         {
                                           'bg-gray-100 text-gray-900': active,
-                                          'text-gray-700': !active,
+                                          'text-gray-700': !active
                                         }
                                       )}
                                     >
@@ -169,7 +169,7 @@ function Navigation() {
                 <svg
                   className={cx('h-6 w-6', {
                     hidden: navOpen,
-                    block: !navOpen,
+                    block: !navOpen
                   })}
                   stroke="currentColor"
                   fill="none"
@@ -185,7 +185,7 @@ function Navigation() {
                 <svg
                   className={cx('h-6 w-6', {
                     hidden: !navOpen,
-                    block: navOpen,
+                    block: navOpen
                   })}
                   stroke="currentColor"
                   fill="none"
@@ -206,7 +206,7 @@ function Navigation() {
       <div
         className={cx('border-b border-gray-700 md:hidden', {
           hidden: !navOpen,
-          block: navOpen,
+          block: navOpen
         })}
       >
         {primaryLinks.length ? (
@@ -221,7 +221,7 @@ function Navigation() {
                       'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                       {
                         'text-white bg-gray-900': isActive,
-                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive,
+                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
                       }
                     )}
                   >
@@ -235,7 +235,7 @@ function Navigation() {
         {user && (
           <div
             className={cx('pt-4 pb-3 border-gray-700', {
-              'border-t': primaryLinks.length,
+              'border-t': primaryLinks.length
             })}
           >
             <div className="flex items-center px-5">
@@ -277,7 +277,7 @@ function Navigation() {
                         'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                         {
                           'text-white bg-gray-900': isActive,
-                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive,
+                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive
                         }
                       )}
                       role="menuitem"

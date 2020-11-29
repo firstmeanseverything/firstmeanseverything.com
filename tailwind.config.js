@@ -2,13 +2,13 @@ module.exports = {
   purge: ['./components/**/*.js', './pages/**/*.js'],
   future: {
     purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
+    removeDeprecatedGapUtilities: true
   },
   theme: {
-    extend: {},
+    extend: {}
   },
   variants: {
-    padding: ['first', 'responsive'],
+    padding: ['first', 'responsive']
   },
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/ui')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/ui')]
 }

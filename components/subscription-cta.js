@@ -117,7 +117,7 @@ function SubscriptionCTA({ description, name, prices }) {
                 style: 'currency',
                 currency: activePrice.currency,
                 maximumFractionDigits: 0,
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 0
               }).format(activePrice.unit_amount / 100)}
             </span>
             <span className="ml-3 text-xl leading-7 font-medium text-gray-300">
