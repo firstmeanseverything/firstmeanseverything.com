@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from 'components/layout/auth'
@@ -10,17 +10,17 @@ function ResetPassword() {
   const { verifyPasswordResetCode } = useAuthDispatch()
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
-  const [verifyingCode, setVerifyingCode] = useState(true)
+  const [verifyingCode, setVerifyingCode] = React.useState(true)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating && user) router.push('/')
   }, [isAuthenticating, user])
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!router.query.oobCode) router.push('/forgot')
   }, [router])
 
-  useEffect(() => {
+  React.useEffect(() => {
     const verifyCode = async (code) => {
       try {
         await verifyPasswordResetCode(code)

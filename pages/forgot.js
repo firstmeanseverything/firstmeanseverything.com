@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 
 import ForgotForm from 'components/forgot-form'
@@ -9,7 +9,7 @@ function ForgotPassword() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating && user) router.push('/')
   }, [isAuthenticating, user])
 

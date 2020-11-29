@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
@@ -11,7 +11,7 @@ function Navigation() {
   const { signOut } = useAuthDispatch()
   const { user } = useAuthState()
   const router = useRouter()
-  const [navOpen, setNavOpen] = useState(false)
+  const [navOpen, setNavOpen] = React.useState(false)
 
   const toggleNavOpen = () => setNavOpen((open) => !open)
 

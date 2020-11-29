@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import * as React from 'react'
 
 import Button from 'components/button'
 import { createCheckoutSession } from 'lib/db'
@@ -6,8 +6,8 @@ import { useAuthState } from 'context/auth'
 
 function SubscriptionCTA({ description, name, prices }) {
   const { isAuthenticating, user } = useAuthState()
-  const [activeBillingInterval, setBillingInterval] = useState('month')
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [activeBillingInterval, setBillingInterval] = React.useState('month')
+  const [checkoutLoading, setCheckoutLoading] = React.useState(false)
 
   const activePrice = prices.find(
     (price) => price.interval === activeBillingInterval

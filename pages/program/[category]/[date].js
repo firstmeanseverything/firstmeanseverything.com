@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
@@ -14,7 +14,7 @@ function ProgramPage({ program }) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
-  useEffect(() => {
+  React.useEffect(() => {
     const isFutureProgram = new Date(program.date) > new Date()
 
     if (

@@ -1,15 +1,15 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import * as React from 'react'
 import cookie from 'js-cookie'
 
 import firebase from 'lib/firebase'
 import { createUser } from 'lib/db'
 
-const AuthDispatchContext = createContext()
-const AuthStateContext = createContext()
+const AuthDispatchContext = React.createContext()
+const AuthStateContext = React.createContext()
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
-  const [isAuthenticating, setIsAuthenticating] = useState(true)
+  const [user, setUser] = React.useState(null)
+  const [isAuthenticating, setIsAuthenticating] = React.useState(true)
 
   const confirmPasswordReset = (code, password) => {
     return firebase.auth().confirmPasswordReset(code, password)
@@ -75,7 +75,7 @@ function AuthProvider({ children }) {
     return firebase.auth().verifyPasswordResetCode(code)
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(handleUser)
 
     return () => listener()
@@ -119,7 +119,7 @@ async function getStripeRole() {
 }
 
 function useAuthDispatch() {
-  const context = useContext(AuthDispatchContext)
+  const context = React.useContext(AuthDispatchContext)
 
   if (context === undefined)
     throw new Error('useAuthDispatch must be used within an AuthProvider')
@@ -128,7 +128,7 @@ function useAuthDispatch() {
 }
 
 function useAuthState() {
-  const context = useContext(AuthStateContext)
+  const context = React.useContext(AuthStateContext)
 
   if (context === undefined)
     throw new Error('useAuthState must be used within an AuthProvider')

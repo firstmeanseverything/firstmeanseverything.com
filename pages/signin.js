@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -10,7 +10,7 @@ function SignIn() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating && user) router.push('/')
   }, [isAuthenticating, user])
 

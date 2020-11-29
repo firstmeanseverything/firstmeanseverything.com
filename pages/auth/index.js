@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from 'components/layout/auth'
@@ -7,7 +7,7 @@ import { SpinnerSVG } from 'svgs/icons'
 function Auth() {
   const router = useRouter()
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!router.query.mode) router.push('/signin')
 
     switch (router.query.mode) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
@@ -14,9 +14,9 @@ import { useAuthState } from 'context/auth'
 function Index({ product }) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
-  const [activeCategory, setActiveCategory] = useState('RX')
+  const [activeCategory, setActiveCategory] = React.useState('RX')
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
 

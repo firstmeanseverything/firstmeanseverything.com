@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import * as React from 'react'
 import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
 
@@ -10,7 +10,7 @@ function DaySection(
   { activeRecovery = false, content, rest = false, title },
   index
 ) {
-  const [dayOpen, setDayOpen] = useState(index === 0)
+  const [dayOpen, setDayOpen] = React.useState(index === 0)
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
