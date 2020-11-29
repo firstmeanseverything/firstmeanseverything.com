@@ -37,7 +37,7 @@ function Index({ product }) {
               }
             }`,
             activeCategory,
-            hasSubscription,
+            hasSubscription
           ]
         : [
             `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
@@ -51,21 +51,21 @@ function Index({ product }) {
               }
             }`,
             activeCategory,
-            hasSubscription,
+            hasSubscription
           ]
       : null,
     (query, activeCategory, hasSubscription) =>
       graphcmsClient.request(query, {
         category: activeCategory,
         date: new Date().toDateString(),
-        free: !hasSubscription,
+        free: !hasSubscription
       }),
     { revalidateOnFocus: false }
   )
 
   const programCategories = [
     { label: 'RX', value: 'RX' },
-    { label: 'Scaled', value: 'SCALED' },
+    { label: 'Scaled', value: 'SCALED' }
   ]
 
   const HeaderControls = () => {
@@ -81,7 +81,7 @@ function Index({ product }) {
                 'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
                   activeCategory === category.value,
                 'text-gray-500 hover:text-gray-700 focus:text-indigo-600 focus:bg-indigo-50':
-                  activeCategory !== category.value,
+                  activeCategory !== category.value
               }
             )}
             aria-current={activeCategory === category.value ? 'page' : 'false'}
@@ -130,7 +130,7 @@ function Index({ product }) {
                           cells={hasSubscription ? 4 : 3}
                           style={{
                             animationFillMode: 'backwards',
-                            animationDelay: `${index * 150}ms`,
+                            animationDelay: `${index * 150}ms`
                           }}
                           isEvenRow={isEvenRow}
                         />
@@ -171,7 +171,7 @@ function Index({ product }) {
                             {isNew && <Badge label="New" theme="orange" />}
                             <div
                               className={cx({
-                                'ml-4': isNew || !hasSubscription,
+                                'ml-4': isNew || !hasSubscription
                               })}
                             >
                               <div className="text-sm leading-5 font-medium text-gray-900">
@@ -189,7 +189,7 @@ function Index({ product }) {
                               weekday: 'long',
                               year: 'numeric',
                               month: 'long',
-                              day: 'numeric',
+                              day: 'numeric'
                             }).format(new Date(program.date))}
                           </td>
                         )}
@@ -214,8 +214,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      product,
-    },
+      product
+    }
   }
 }
 

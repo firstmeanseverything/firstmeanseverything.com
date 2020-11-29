@@ -29,13 +29,13 @@ function SignInForm() {
           .string()
           .required('Email address is required')
           .email('Email is not valid'),
-        password: yup.string().required('Password is required'),
+        password: yup.string().required('Password is required')
       })
-    ),
+    )
   })
   const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
-    message: null,
+    message: null
   })
 
   const isError = state.formState === 'error'
@@ -44,14 +44,14 @@ function SignInForm() {
   const onSubmit = async ({ email, password }) => {
     dispatch({
       type: 'LOADING',
-      payload: { message: 'Signing you in' },
+      payload: { message: 'Signing you in' }
     })
     try {
       await signIn(email, password)
     } catch (error) {
       dispatch({
         type: 'ERROR',
-        payload: { message: error.message },
+        payload: { message: error.message }
       })
     }
   }

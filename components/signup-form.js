@@ -35,13 +35,13 @@ function SignUpForm() {
         confirm: yup
           .string()
           .required('Password confirmation is required')
-          .oneOf([yup.ref('password'), null], 'Passwords do not match'),
+          .oneOf([yup.ref('password'), null], 'Passwords do not match')
       })
-    ),
+    )
   })
   const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
-    message: null,
+    message: null
   })
 
   const isError = state.formState === 'error'
@@ -50,14 +50,14 @@ function SignUpForm() {
   const onSubmit = async ({ email, password }) => {
     dispatch({
       type: 'LOADING',
-      payload: { message: 'Creating your account' },
+      payload: { message: 'Creating your account' }
     })
     try {
       await signUp(email, password)
     } catch (error) {
       dispatch({
         type: 'ERROR',
-        payload: { message: error.message },
+        payload: { message: error.message }
       })
     }
   }

@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
       setUser({ token, ...user })
 
       cookie.set('first-means-everything', true, {
-        expires: 1,
+        expires: 1
       })
 
       setIsAuthenticating(false)
@@ -90,7 +90,7 @@ function AuthProvider({ children }) {
         signOut,
         signUp,
         updateUser,
-        verifyPasswordResetCode,
+        verifyPasswordResetCode
       }}
     >
       <AuthStateContext.Provider value={{ isAuthenticating, user }}>
@@ -107,7 +107,7 @@ async function parseUser(user) {
     displayName: user.displayName,
     token: user.xa,
     photoUrl: user.photoURL,
-    stripeRole: await getStripeRole(),
+    stripeRole: await getStripeRole()
   }
 }
 

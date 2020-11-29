@@ -14,7 +14,7 @@ function Auth() {
       case 'resetPassword':
         router.push({
           pathname: '/auth/reset',
-          query: { oobCode: router.query.oobCode },
+          query: { oobCode: router.query.oobCode }
         })
     }
   }, [router])

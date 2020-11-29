@@ -34,13 +34,13 @@ function ResetForm() {
         confirm: yup
           .string()
           .required('Password confirmation is required')
-          .oneOf([yup.ref('password'), null], 'Passwords do not match'),
+          .oneOf([yup.ref('password'), null], 'Passwords do not match')
       })
-    ),
+    )
   })
   const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
-    message: null,
+    message: null
   })
   const router = useRouter()
 
@@ -51,7 +51,7 @@ function ResetForm() {
   const onSubmit = async ({ password }) => {
     dispatch({
       type: 'LOADING',
-      payload: { message: 'Saving your new password' },
+      payload: { message: 'Saving your new password' }
     })
     try {
       await confirmPasswordReset(router.query.oobCode, password)
@@ -59,8 +59,8 @@ function ResetForm() {
         type: 'SUCCESS',
         payload: {
           message:
-            'You will now be redirected to sign in using your new password',
-        },
+            'You will now be redirected to sign in using your new password'
+        }
       })
 
       setTimeout(() => {
@@ -69,7 +69,7 @@ function ResetForm() {
     } catch (error) {
       dispatch({
         type: 'ERROR',
-        payload: { message: error.message },
+        payload: { message: error.message }
       })
     }
   }

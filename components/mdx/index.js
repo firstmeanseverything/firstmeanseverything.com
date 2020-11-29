@@ -19,7 +19,7 @@ const mdxComponents = {
     <WorkoutBlock {...props} title="Strength">
       {children}
     </WorkoutBlock>
-  ),
+  )
 }
 
 export default mdxComponents

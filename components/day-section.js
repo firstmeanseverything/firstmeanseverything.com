@@ -26,7 +26,7 @@ function DaySection(
           className={cx(
             'text-left w-full flex justify-between items-start text-gray-400 focus:outline-none focus:text-gray-900',
             {
-              'cursor-default': rest,
+              'cursor-default': rest
             }
           )}
         >
@@ -38,7 +38,7 @@ function DaySection(
               <svg
                 className={cx('h-6 w-6 transform', {
                   '-rotate-180': dayOpen,
-                  'rotate-0': !dayOpen,
+                  'rotate-0': !dayOpen
                 })}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -58,7 +58,7 @@ function DaySection(
       {!rest && (
         <dd
           className={cx('border-t mt-6 pr-12 pt-6 space-y-6', {
-            hidden: !dayOpen,
+            hidden: !dayOpen
           })}
         >
           {activeRecovery ? (

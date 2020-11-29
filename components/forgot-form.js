@@ -29,13 +29,13 @@ function ForgotForm() {
         email: yup
           .string()
           .required('Email address is required')
-          .email('Email is not valid'),
+          .email('Email is not valid')
       })
-    ),
+    )
   })
   const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
-    message: null,
+    message: null
   })
 
   const isError = state.formState === 'error'
@@ -45,18 +45,18 @@ function ForgotForm() {
   const onSubmit = async ({ email }) => {
     dispatch({
       type: 'LOADING',
-      payload: { message: 'Sending a password reset' },
+      payload: { message: 'Sending a password reset' }
     })
     try {
       await sendPasswordReset(email)
       dispatch({
         type: 'SUCCESS',
-        payload: { message: 'Check your email for further instructions' },
+        payload: { message: 'Check your email for further instructions' }
       })
     } catch (error) {
       dispatch({
         type: 'ERROR',
-        payload: { message: error.message },
+        payload: { message: error.message }
       })
     }
   }

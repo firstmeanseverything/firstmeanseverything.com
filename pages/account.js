@@ -28,7 +28,7 @@ function Account() {
   const { handleSubmit, setValue, ...methods } = useForm()
   const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
-    message: null,
+    message: null
   })
   const router = useRouter()
   const [billingLoading, setBillingLoading] = React.useState(false)
@@ -47,17 +47,17 @@ function Account() {
   const onSubmit = async (data) => {
     dispatch({
       type: 'LOADING',
-      payload: { message: 'Updating your profile' },
+      payload: { message: 'Updating your profile' }
     })
     try {
       await updateUser(data)
       dispatch({
-        type: 'SUCCESS',
+        type: 'SUCCESS'
       })
     } catch (error) {
       dispatch({
         type: 'ERROR',
-        payload: { message: error.message },
+        payload: { message: error.message }
       })
     }
   }

@@ -14,13 +14,13 @@ function SkeletonRow({ cells = 3, isEvenRow, ...props }) {
                 <div
                   className={cx('rounded bg-gray-100', {
                     'w-1/3 h-4': isEvenRow,
-                    'w-3/5 h-3': !isEvenRow,
+                    'w-3/5 h-3': !isEvenRow
                   })}
                 />
                 <div
                   className={cx({
                     'w-1/2 h-3': isEvenRow,
-                    'w-2/5 h-4': !isEvenRow,
+                    'w-2/5 h-4': !isEvenRow
                   })}
                 >
                   <div className="h-full rounded bg-gray-200" />
