@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -26,21 +26,21 @@ function Account() {
   const { updateUser } = useAuthDispatch()
   const { isAuthenticating, user } = useAuthState()
   const { handleSubmit, setValue, ...methods } = useForm()
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
     message: null,
   })
   const router = useRouter()
-  const [billingLoading, setBillingLoading] = useState(false)
+  const [billingLoading, setBillingLoading] = React.useState(false)
 
   const isError = state.formState === 'error'
   const isLoading = state.formState === 'loading'
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating && !user) router.push('/signin')
   }, [isAuthenticating, user])
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAuthenticating) setValue('displayName', user.displayName)
   }, [isAuthenticating, user])
 

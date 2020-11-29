@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -38,7 +38,7 @@ function ResetForm() {
       })
     ),
   })
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
     message: null,
   })

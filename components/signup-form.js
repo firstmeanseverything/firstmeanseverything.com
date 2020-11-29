@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import * as React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -39,7 +39,7 @@ function SignUpForm() {
       })
     ),
   })
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = React.useReducer(reducer, {
     formState: null,
     message: null,
   })
