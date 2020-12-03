@@ -1,11 +1,13 @@
-import * as React from 'react'
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { gql } from 'graphql-request'
 
 import { graphcmsClient } from '@lib/graphcms'
 
 function Store({ categories }) {
-  const [category, setCategory] = React.useState('Sweatshirts')
+  const router = useRouter()
+
+  const { category } = router.query
   const { data, error } = useSWR(
     [
       gql`
