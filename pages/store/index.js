@@ -12,7 +12,7 @@ function Store({ categories }) {
     [
       gql`
         query ProductQuery($category: String) {
-          products(where: { categories_every: { name: $category } }) {
+          products(where: { categories_every: { slug: $category } }) {
             id
             images {
               id
@@ -43,6 +43,7 @@ export async function getStaticProps() {
       categories {
         id
         name
+        slug
       }
     }
   `)
