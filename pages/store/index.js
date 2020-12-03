@@ -8,25 +8,45 @@ function Store({ categories }) {
   const router = useRouter()
 
   const { category } = router.query
+
   const { data, error } = useSWR(
-    [
-      gql`
-        query ProductQuery($category: String) {
-          products(where: { categories_every: { slug: $category } }) {
-            id
-            images {
-              id
-              height
-              url
-              width
+    category
+      ? [
+          gql`
+            query ProductQuery($category: String) {
+              products(where: { categories_every: { slug: $category } }) {
+                id
+                images {
+                  id
+                  height
+                  url
+                  width
+                }
+                name
+                slug
+              }
             }
-            name
-            slug
-          }
-        }
-      `,
-      category
-    ],
+          `,
+          category
+        ]
+      : [
+          gql`
+            {
+              products {
+                id
+                images {
+                  id
+                  height
+                  url
+                  width
+                }
+                name
+                slug
+              }
+            }
+          `,
+          category
+        ],
     (query, category) => graphcmsClient.request(query, { category })
   )
 
