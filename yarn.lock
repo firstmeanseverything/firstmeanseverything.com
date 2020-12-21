@@ -1527,10 +1527,10 @@
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-0.2.0.tgz#a31f90892d736243ba91c1474f534b3256d0c538"
   integrity sha512-YV+vF+QhTRcspydPdHF3ZXe+FkOiJpRdqMjjFIIX9bSdT2O2T7GurgKQdGgamNUM+B99MZBOTRqxS8Dlh485eg==
 
-"@hookform/resolvers@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-1.1.2.tgz#3e3521a71e701ae133f02d53a6994a1037b0ef22"
-  integrity sha512-I3kYtdj1QX9VkNq4GtC2ZNfoBV13GpoxZCsoA9F3CyAmkQmiznJt6HG8Oc9/R3PLqPrw98FiIzyVs/rG0FnGAA==
+"@hookform/resolvers@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-1.2.0.tgz#3a429b4bd3ec9981764fcdcc2491202f9f72d847"
+  integrity sha512-YCKEj/3Kdo3uNt+zrWKV8txaiuATtvgHyz+KYmun3n5JDjxdI0HcVQgfcmJabmkBXBzKuIIrYfxaV8sRuAPZ8w==
 
 "@mdx-js/mdx@^1.6.16":
   version "1.6.16"
