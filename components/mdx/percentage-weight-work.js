@@ -1,7 +1,7 @@
 import { useAuthState } from '../../context/auth'
 
 function PercentageWeightWork({ movement, note, percent, scheme }) {
-  const user = useAuthState()
+  const { user } = useAuthState()
 
   if (!(movement || percent || scheme)) return null
 
