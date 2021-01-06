@@ -18,7 +18,7 @@ function DaySection(
   const mdxContent = content
     ? hydrate(content.mdx, {
         components: mdxComponents,
-        provider: { component: AuthProvider },
+        provider: { component: AuthProvider }
       })
     : null
 
