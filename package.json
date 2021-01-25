@@ -14,7 +14,7 @@
     "@stripe/react-stripe-js": "1.1.2",
     "@stripe/stripe-js": "1.11.0",
     "classnames": "2.2.6",
-    "firebase": "8.2.2",
+    "firebase": "8.2.4",
     "firebase-admin": "9.4.2",
     "graphql": "15.4.0",
     "graphql-request": "3.4.0",
