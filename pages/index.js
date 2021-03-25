@@ -1,20 +1,22 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
 
+import { AvailablePrograms, AvailableFreePrograms } from '@/queries/programs'
 import Badge from '@/components/badge'
-import { graphcmsClient } from '@/lib/graphcms'
+import graphCmsClient from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
 import Page from '@/components/page'
-import SkeletonRow from '@/components/skeleton-row'
 import SubscriptionCTA from '@/components/subscription-cta'
+import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
+import { usePaginationQueryParams } from '@/hooks/data'
+import { usePaginatedTable } from '@/hooks/table'
 
 function Index({ product }) {
   const { user } = useAuthState()
-  const router = useRouter()
+  const pagination = usePaginationQueryParams()
   const [activeCategory, setActiveCategory] = React.useState('RX')
 
   useAuthenticatedPage()
@@ -25,42 +27,77 @@ function Index({ product }) {
     user
       ? hasSubscription
         ? [
-            `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-              programs: programWeeks(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
-                bias
-                date
-                category
-                free
-                id
-                title
-              }
-            }`,
+            AvailablePrograms,
             activeCategory,
-            hasSubscription
+            pagination.limit,
+            pagination.offset
           ]
         : [
-            `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
-              programs: programWeeks(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
-                bias
-                date
-                category
-                free
-                id
-                title
-              }
-            }`,
+            AvailableFreePrograms,
             activeCategory,
-            hasSubscription
+            pagination.limit,
+            pagination.offset
           ]
       : null,
-    (query, activeCategory, hasSubscription) =>
-      graphcmsClient.request(query, {
+    (query, activeCategory, limit, offset) =>
+      graphCmsClient.request(query, {
         category: activeCategory,
-        date: new Date().toDateString(),
-        free: !hasSubscription
+        date: new Date(),
+        limit,
+        offset
       }),
     { revalidateOnFocus: false }
   )
+
+  const { setHiddenColumns, ...programTable } = usePaginatedTable({
+    columns: React.useMemo(
+      () => [
+        {
+          id: 'title',
+          Header: 'Title',
+          accessor: 'node.title'
+        },
+        {
+          id: 'bias',
+          Header: 'Bias',
+          accessor: 'node.bias',
+          Cell: ({ value }) => <Badge label={value} theme="green" />
+        },
+        {
+          id: 'date',
+          Header: 'Date',
+          accessor: 'node.date',
+          Cell: ({ value }) =>
+            new Intl.DateTimeFormat('en-GB', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }).format(new Date(value))
+        },
+        {
+          id: 'category',
+          Header: 'Category',
+          accessor: 'node.category',
+          Cell: ({ value }) => <Badge label={value} theme="green" />
+        }
+      ],
+      []
+    ),
+    data: data?.programs.edges,
+    initialState: {
+      hiddenColumns: ['date']
+    },
+    pagination: {
+      totalPages:
+        Math.ceil(data?.programs.aggregate.count / pagination.limit) || null,
+      ...pagination
+    }
+  })
+
+  React.useEffect(() => {
+    if (hasSubscription) setHiddenColumns(null)
+  }, [hasSubscription])
 
   const programCategories = [
     { label: 'RX', value: 'RX' },
@@ -98,109 +135,7 @@ function Index({ product }) {
       <div className="flex flex-col">
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div className="align-middle inline-block min-w-full overflow-hidden rounded sm:rounded-lg shadow">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    Bias
-                  </th>
-                  {hasSubscription && (
-                    <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                  )}
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                    Category
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {!data ? (
-                  <React.Fragment>
-                    {Array.from(Array(4), (_, index) => {
-                      const isEvenRow = Boolean(index % 2)
-
-                      return (
-                        <SkeletonRow
-                          key={index}
-                          cells={hasSubscription ? 4 : 3}
-                          style={{
-                            animationFillMode: 'backwards',
-                            animationDelay: `${index * 150}ms`
-                          }}
-                          isEvenRow={isEvenRow}
-                        />
-                      )
-                    })}
-                  </React.Fragment>
-                ) : (
-                  data.programs.map((program) => {
-                    const dateDiff = Math.floor(
-                      (new Date() - new Date(program.date)) /
-                        (1000 * 60 * 60 * 24)
-                    )
-                    const isNew = dateDiff <= 7
-                    const formattedBias =
-                      program.bias[0] + program.bias.slice(1).toLowerCase()
-
-                    return (
-                      <tr
-                        key={program.id}
-                        onClick={() =>
-                          router.push(
-                            program.free
-                              ? `/program/${program.category.toLowerCase()}/sample/${
-                                  program.id
-                                }`
-                              : `/program/${program.category.toLowerCase()}/${
-                                  program.date
-                                }`
-                          )
-                        }
-                        className="cursor-pointer hover:bg-gray-50"
-                      >
-                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <div className="flex items-center">
-                            {!hasSubscription && (
-                              <Badge label="Free" theme="orange" />
-                            )}
-                            {isNew && <Badge label="New" theme="orange" />}
-                            <div
-                              className={cx({
-                                'ml-4': isNew || !hasSubscription
-                              })}
-                            >
-                              <div className="text-sm leading-5 font-medium text-gray-900">
-                                {program.title}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <Badge label={formattedBias} theme="green" />
-                        </td>
-                        {hasSubscription && (
-                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
-                            {new Intl.DateTimeFormat('en-GB', {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            }).format(new Date(program.date))}
-                          </td>
-                        )}
-                        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <Badge label={program.category} theme="green" />
-                        </td>
-                      </tr>
-                    )
-                  })
-                )}
-              </tbody>
-            </table>
+            <Table loading={!data} {...programTable} />
           </div>
         </div>
       </div>

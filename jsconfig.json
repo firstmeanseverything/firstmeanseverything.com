@@ -7,7 +7,9 @@
       "@/hooks/*": ["hooks/*"],
       "@/icons": ["components/icons/index.js"],
       "@/lib/*": ["lib/*"],
-      "@/svgs": ["components/svgs/index.js"]
+      "@/queries/*": ["graphql/queries/*"],
+      "@/svgs": ["components/svgs/index.js"],
+      "@/ui/*": ["components/ui/*"]
     }
   }
 }
