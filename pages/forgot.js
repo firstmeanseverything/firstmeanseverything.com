@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 
-import ForgotForm from 'components/forgot-form'
-import { getLayout as getAuthLayout } from 'components/layout/auth'
-import { useAuthState } from 'context/auth'
+import ForgotForm from '@/components/forgot-form'
+import { getLayout as getAuthLayout } from '@/components/layout/auth'
+import { useAuthState } from '@/context/auth'
 
 function ForgotPassword() {
   const { isAuthenticating, user } = useAuthState()

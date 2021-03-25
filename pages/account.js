@@ -2,12 +2,12 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import Alert from 'components/alert'
-import Button from 'components/button'
-import { FormInput } from 'components/form'
-import { goToBillingPortal } from 'lib/db'
-import Page from 'components/page'
-import { useAuthDispatch, useAuthState } from 'context/auth'
+import Alert from '@/components/alert'
+import Button from '@/components/button'
+import { FormInput } from '@/components/form'
+import { goToBillingPortal } from '@/lib/db'
+import Page from '@/components/page'
+import { useAuthDispatch, useAuthState } from '@/context/auth'
 
 function reducer(state, { payload, type }) {
   switch (type) {

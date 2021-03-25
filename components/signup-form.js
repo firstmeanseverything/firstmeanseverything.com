@@ -3,10 +3,10 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import Alert from 'components/alert'
-import Button from 'components/button'
-import { FormInput } from 'components/form'
-import { useAuthDispatch } from 'context/auth'
+import Alert from '@/components/alert'
+import Button from '@/components/button'
+import { FormInput } from '@/components/form'
+import { useAuthDispatch } from '@/context/auth'
 
 function reducer(state, { payload, type }) {
   switch (type) {

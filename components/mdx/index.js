@@ -1,6 +1,6 @@
-import PercentageRepWork from 'components/mdx/percentage-rep-work'
-import PercentageWeightWork from 'components/mdx/percentage-weight-work'
-import WorkoutBlock from 'components/workout-block'
+import PercentageRepWork from '@/components/mdx/percentage-rep-work'
+import PercentageWeightWork from '@/components/mdx/percentage-weight-work'
+import WorkoutBlock from '@/components/workout-block'
 
 const mdxComponents = {
   Gymnastics: ({ children, ...props }) => (

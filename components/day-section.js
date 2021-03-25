@@ -2,7 +2,7 @@ import * as React from 'react'
 import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
 
-import { AuthProvider } from '../context/auth'
+import { AuthProvider } from '@/context/auth'
 import Badge from './badge'
 import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'

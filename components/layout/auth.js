@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { APHorizontalSVG } from 'components/svgs'
+import { APHorizontalSVG } from '@/svgs'
 
 function AuthLayout({ children }) {
   return (

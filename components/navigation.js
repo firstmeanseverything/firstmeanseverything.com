@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
 
-import { APMarkSVG } from 'components/svgs'
-import { useAuthDispatch, useAuthState } from 'context/auth'
+import { APMarkSVG } from '@/svgs'
+import { useAuthDispatch, useAuthState } from '@/context/auth'
 
 function Navigation() {
   const { signOut } = useAuthDispatch()
