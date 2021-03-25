@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import Alert from '@/components/alert'
@@ -8,6 +7,7 @@ import { FormInput } from '@/components/form'
 import { goToBillingPortal } from '@/lib/db'
 import Page from '@/components/page'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
+import { useAuthenticatedPage } from '@/hooks/auth'
 
 function reducer(state, { payload, type }) {
   switch (type) {
@@ -30,15 +30,12 @@ function Account() {
     formState: null,
     message: null
   })
-  const router = useRouter()
   const [billingLoading, setBillingLoading] = React.useState(false)
 
   const isError = state.formState === 'error'
   const isLoading = state.formState === 'loading'
 
-  React.useEffect(() => {
-    if (!isAuthenticating && !user) router.push('/signin')
-  }, [isAuthenticating, user])
+  useAuthenticatedPage()
 
   React.useEffect(() => {
     if (!isAuthenticating) setValue('displayName', user.displayName)

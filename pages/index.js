@@ -10,15 +10,14 @@ import Page from '@/components/page'
 import SkeletonRow from '@/components/skeleton-row'
 import SubscriptionCTA from '@/components/subscription-cta'
 import { useAuthState } from '@/context/auth'
+import { useAuthenticatedPage } from '@/hooks/auth'
 
 function Index({ product }) {
-  const { isAuthenticating, user } = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = React.useState('RX')
 
-  React.useEffect(() => {
-    if (!isAuthenticating && !user) router.push('/signin')
-  }, [isAuthenticating, user])
+  useAuthenticatedPage()
 
   const hasSubscription = user?.stripeRole === 'basic'
 
