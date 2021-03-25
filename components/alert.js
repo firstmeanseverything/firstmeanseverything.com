@@ -1,8 +1,8 @@
 import cx from 'classnames'
 
-import { CheckCircleSVG } from 'svgs/icons'
-import { ExclamationCircleSVG } from 'svgs/icons'
-import { XCircleSVG } from 'svgs/icons'
+import { CheckCircleSVG } from 'components/icons'
+import { ExclamationCircleSVG } from 'components/icons'
+import { XCircleSVG } from 'components/icons'
 
 function Alert({ message, title, type = 'error' }) {
   const themeClass = (type) => {

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from 'components/layout/auth'
 import ResetForm from 'components/reset-form'
-import { SpinnerSVG } from 'svgs/icons'
+import { SpinnerSVG } from 'components/icons'
 import { useAuthDispatch, useAuthState } from 'context/auth'
 
 function ResetPassword() {

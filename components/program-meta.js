@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import Badge from './badge'
 
 function ProgramMeta({ bias, category, date }) {
