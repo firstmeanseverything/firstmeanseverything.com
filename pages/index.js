@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import cx from 'classnames'
 
+import { AvailablePrograms, AvailableFreePrograms } from '@/queries/programs'
 import Badge from '@/components/badge'
-import { graphcmsClient } from '@/lib/graphcms'
+import graphCmsClient from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
 import Page from '@/components/page'
 import SkeletonRow from '@/components/skeleton-row'
@@ -24,40 +25,13 @@ function Index({ product }) {
   const { data, error } = useSWR(
     user
       ? hasSubscription
-        ? [
-            `query AvailablePrograms($category: ProgramCategory!, $date: Date!, $free: Boolean!) {
-              programs: programWeeks(orderBy: date_DESC, where: { date_lt: $date, category: $category, free: $free }) {
-                bias
-                date
-                category
-                free
-                id
-                title
-              }
-            }`,
-            activeCategory,
-            hasSubscription
-          ]
-        : [
-            `query AvailablePrograms($category: ProgramCategory!, $free: Boolean!) {
-              programs: programWeeks(orderBy: createdAt_DESC, where: { category: $category, free: $free }) {
-                bias
-                date
-                category
-                free
-                id
-                title
-              }
-            }`,
-            activeCategory,
-            hasSubscription
-          ]
+        ? [AvailablePrograms, activeCategory]
+        : [AvailableFreePrograms, activeCategory]
       : null,
-    (query, activeCategory, hasSubscription) =>
-      graphcmsClient.request(query, {
+    (query, activeCategory) =>
+      graphCmsClient.request(query, {
         category: activeCategory,
-        date: new Date().toDateString(),
-        free: !hasSubscription
+        date: new Date()
       }),
     { revalidateOnFocus: false }
   )

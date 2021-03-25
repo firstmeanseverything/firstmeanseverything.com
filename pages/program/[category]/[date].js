@@ -4,7 +4,7 @@ import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
 import DaySection from '@/components/day-section'
-import { graphcmsClient } from '@/lib/graphcms'
+import graphCmsClient from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
@@ -38,7 +38,7 @@ function ProgramPage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await graphcmsClient.request(`
+  const { programs } = await graphCmsClient.request(`
     {
       programs: programWeeks(where: { free: false }) {
         date
