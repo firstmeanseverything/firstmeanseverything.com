@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useAuthState } from '../../context/auth'
+import { useAuthState } from '@/context/auth'
 
 function PercentageWeightWork({ movement, note, percent, scheme }) {
   const { user } = useAuthState()

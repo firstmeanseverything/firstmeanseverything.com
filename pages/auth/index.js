@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 
-import { getLayout as getAuthLayout } from 'components/layout/auth'
-import { SpinnerSVG } from 'components/icons'
+import { getLayout as getAuthLayout } from '@/components/layout/auth'
+import { SpinnerSVG } from '@/icons'
 
 function Auth() {
   const router = useRouter()

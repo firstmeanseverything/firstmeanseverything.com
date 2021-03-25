@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import Button from 'components/button'
-import { createCheckoutSession } from 'lib/db'
-import { useAuthState } from 'context/auth'
+import Button from '@/components/button'
+import { createCheckoutSession } from '@/lib/db'
+import { useAuthState } from '@/context/auth'
 
 function SubscriptionCTA({ description, name, prices }) {
   const { isAuthenticating, user } = useAuthState()
