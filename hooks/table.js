@@ -2,7 +2,13 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { usePagination, useTable } from 'react-table'
 
-function usePaginatedTable({ columns = [], data, pagination, ...rest } = {}) {
+function usePaginatedTable({
+  columns = [],
+  data,
+  initialState,
+  pagination,
+  ...rest
+} = {}) {
   if (!(columns && pagination)) return null
 
   const router = useRouter()
@@ -13,7 +19,8 @@ function usePaginatedTable({ columns = [], data, pagination, ...rest } = {}) {
       data: React.useMemo(() => (data ? data : []), [data]),
       initialState: {
         pageIndex: Math.ceil(pagination.offset / pagination.limit),
-        pageSize: pagination.limit
+        pageSize: pagination.limit,
+        ...initialState
       },
       manualPagination: true,
       pageCount: pagination.totalPages,
