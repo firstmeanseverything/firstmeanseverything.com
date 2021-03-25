@@ -8,7 +8,8 @@
       "@/icons": ["components/icons/index.js"],
       "@/lib/*": ["lib/*"],
       "@/queries/*": ["graphql/queries/*"],
-      "@/svgs": ["components/svgs/index.js"]
+      "@/svgs": ["components/svgs/index.js"],
+      "@/ui/*": ["components/ui/*"]
     }
   }
 }
