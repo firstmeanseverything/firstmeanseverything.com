@@ -1,6 +1,6 @@
 import cx from 'classnames'
 
-import { SpinnerSVG } from 'svgs/icons'
+import { SpinnerSVG } from 'components/icons'
 
 function Button({
   children,

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from 'components/layout/auth'
-import { SpinnerSVG } from 'svgs/icons'
+import { SpinnerSVG } from 'components/icons'
 
 function Auth() {
   const router = useRouter()
