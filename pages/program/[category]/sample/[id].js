@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
@@ -8,15 +7,11 @@ import { graphcmsClient } from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
-import { AuthProvider, useAuthState } from '@/context/auth'
+import { AuthProvider } from '@/context/auth'
+import { useAuthenticatedPage } from '@/hooks/auth'
 
 function SamplePage({ program }) {
-  const { isAuthenticating, user } = useAuthState()
-  const router = useRouter()
-
-  React.useEffect(() => {
-    if (!isAuthenticating && !user) router.push('/')
-  }, [isAuthenticating, user])
+  useAuthenticatedPage()
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>

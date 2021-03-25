@@ -4,17 +4,15 @@ import { useRouter } from 'next/router'
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
 import ResetForm from '@/components/reset-form'
 import { SpinnerSVG } from '@/icons'
-import { useAuthDispatch, useAuthState } from '@/context/auth'
+import { useAuthDispatch } from '@/context/auth'
+import { useUnauthenticatedPage } from '@/hooks/auth'
 
 function ResetPassword() {
   const { verifyPasswordResetCode } = useAuthDispatch()
-  const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
   const [verifyingCode, setVerifyingCode] = React.useState(true)
 
-  React.useEffect(() => {
-    if (!isAuthenticating && user) router.push('/')
-  }, [isAuthenticating, user])
+  useUnauthenticatedPage()
 
   React.useEffect(() => {
     if (!router.query.oobCode) router.push('/forgot')

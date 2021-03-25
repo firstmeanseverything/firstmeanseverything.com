@@ -1,18 +1,12 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
 import SignUpForm from '@/components/signup-form'
-import { useAuthState } from '@/context/auth'
+import { useUnauthenticatedPage } from '@/hooks/auth'
 
 function SignUp() {
-  const { isAuthenticating, user } = useAuthState()
-  const router = useRouter()
-
-  React.useEffect(() => {
-    if (!isAuthenticating && user) router.push('/')
-  }, [isAuthenticating, user])
+  useUnauthenticatedPage()
 
   return (
     <React.Fragment>
