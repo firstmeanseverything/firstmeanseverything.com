@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { AuthProvider } from '@/context/auth'
 import Layout from '@/components/layout'
 
-import 'styles/index.css'
+import 'tailwindcss/tailwind.css'
 
 function App({ Component, pageProps }) {
   const stripePromise = loadStripe(
@@ -16,7 +16,9 @@ function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Elements stripe={stripePromise}>
-        {getLayout(<Component {...pageProps} />)}
+        <div className="bg-gray-200 min-h-screen">
+          {getLayout(<Component {...pageProps} />)}
+        </div>
       </Elements>
     </AuthProvider>
   )

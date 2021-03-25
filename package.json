@@ -1,5 +1,4 @@
 {
-  "name": "next.firstmeanseverything.com",
   "private": true,
   "author": "Jonathan Steele <jonathan@steele.pro> (https://steele.pro)",
   "license": "MIT",
@@ -32,8 +31,9 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.4.0",
-    "postcss-preset-env": "6.7.0",
+    "autoprefixer": "10.2.5",
+    "postcss": "8.2.8",
     "prettier": "2.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "2.0.4"
   }
 }
