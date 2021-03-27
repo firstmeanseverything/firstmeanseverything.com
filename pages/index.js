@@ -96,7 +96,7 @@ function Index({ product }) {
   })
 
   React.useEffect(() => {
-    if (hasSubscription) setHiddenColumns(null)
+    if (hasSubscription) setHiddenColumns([])
   }, [hasSubscription])
 
   const programCategories = [
