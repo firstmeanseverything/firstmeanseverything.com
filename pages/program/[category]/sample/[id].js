@@ -50,7 +50,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const {
     programs: [program]
-  } = await graphcmsClient.request(
+  } = await graphCmsClient.request(
     `
     query SamplePageQuery($category: ProgramCategory!, $id: ID!) {
       programs: programWeeks(where: { category: $category, id: $id }) {
