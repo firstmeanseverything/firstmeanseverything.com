@@ -3,15 +3,16 @@ import { gql } from '@/lib/graphcms'
 const AvailablePrograms = gql`
   query AvailablePrograms(
     $category: ProgramCategory!
-    $date: Date!
+    $from: Date!
     $limit: Int!
     $offset: Int!
+    $to: Date!
   ) {
     programs: programWeeksConnection(
       first: $limit
       orderBy: date_DESC
       skip: $offset
-      where: { date_lt: $date, category: $category }
+      where: { category: $category, date_gt: $from, date_lt: $to }
     ) {
       aggregate {
         count

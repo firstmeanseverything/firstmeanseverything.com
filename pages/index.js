@@ -1,6 +1,7 @@
 import * as React from 'react'
 import useSWR from 'swr'
 import cx from 'classnames'
+import format from 'date-fns/format'
 
 import { AvailablePrograms, AvailableFreePrograms } from '@/queries/programs'
 import Badge from '@/components/badge'
@@ -30,7 +31,8 @@ function Index({ product }) {
             AvailablePrograms,
             activeCategory,
             pagination.limit,
-            pagination.offset
+            pagination.offset,
+            user.accessDate
           ]
         : [
             AvailableFreePrograms,
@@ -39,12 +41,13 @@ function Index({ product }) {
             pagination.offset
           ]
       : null,
-    (query, activeCategory, limit, offset) =>
+    (query, activeCategory, limit, offset, accessDate) =>
       graphCmsClient.request(query, {
         category: activeCategory,
-        date: new Date(),
         limit,
-        offset
+        offset,
+        to: format(new Date(), 'yyyy-MM-dd'),
+        ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
       }),
     { revalidateOnFocus: false }
   )
