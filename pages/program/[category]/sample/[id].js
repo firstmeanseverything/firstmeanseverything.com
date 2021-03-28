@@ -9,6 +9,7 @@ import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
+import { ProgramsPathsQuery, SampleProgramPageQuery } from '@/queries/program'
 
 function SamplePage({ program }) {
   useAuthenticatedPage()
@@ -25,14 +26,9 @@ function SamplePage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await graphCmsClient.request(`
-    {
-      programs: programWeeks(where: { free: true }) {
-        category
-        id
-      }
-    }
-  `)
+  const { programs } = await graphCmsClient.request(ProgramsPathsQuery, {
+    free: true
+  })
 
   const paths = programs.map(({ category, id }) => ({
     params: {
@@ -50,28 +46,10 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const {
     programs: [program]
-  } = await graphCmsClient.request(
-    `
-    query SamplePageQuery($category: ProgramCategory!, $id: ID!) {
-      programs: programWeeks(where: { category: $category, id: $id }) {
-        bias
-        category
-        days {
-          activeRecovery
-          content
-          id
-          title
-        }
-        free
-        id
-        title
-      }
-    }`,
-    {
-      category: params.category.toUpperCase(),
-      id: params.id
-    }
-  )
+  } = await graphCmsClient.request(SampleProgramPageQuery, {
+    category: params.category.toUpperCase(),
+    id: params.id
+  })
 
   const { days, ...rest } = program
 

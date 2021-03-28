@@ -12,6 +12,16 @@ function useAuthenticatedPage() {
   }, [isAuthenticating, user])
 }
 
+function useProtectedPage({ permittedRoles = ['basic'] } = {}) {
+  const { isAuthenticating, user } = useAuthState()
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
+      router.push('/')
+  }, [isAuthenticating, user])
+}
+
 function useUnauthenticatedPage() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
@@ -21,4 +31,4 @@ function useUnauthenticatedPage() {
   }, [isAuthenticating, user])
 }
 
-export { useAuthenticatedPage, useUnauthenticatedPage }
+export { useAuthenticatedPage, useProtectedPage, useUnauthenticatedPage }

@@ -9,20 +9,22 @@ import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider, useAuthState } from '@/context/auth'
+import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/program'
+import { useAuthenticatedPage, useProtectedPage } from '@/hooks/auth'
 
 function ProgramPage({ program }) {
-  const { isAuthenticating, user } = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
+
+  useAuthenticatedPage()
+  useProtectedPage()
 
   React.useEffect(() => {
     const isFutureProgram = new Date(program.date) > new Date()
+    const isInaccessibleProgam = user?.accessDate > new Date(program.date)
 
-    if (
-      isFutureProgram ||
-      (!isAuthenticating && !(user || user.stripeRole === 'basic'))
-    )
-      router.push('/')
-  }, [isAuthenticating, program, user])
+    if (isFutureProgram || isInaccessibleProgam) router.push('/')
+  }, [program, user])
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
@@ -38,14 +40,9 @@ function ProgramPage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await graphCmsClient.request(`
-    {
-      programs: programWeeks(where: { free: false }) {
-        date
-        category
-      }
-    }
-  `)
+  const { programs } = await graphCmsClient.request(ProgramsPathsQuery, {
+    free: false
+  })
 
   const paths = programs.map(({ category, date }) => ({
     params: {
@@ -63,29 +60,10 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const {
     programs: [program]
-  } = await graphCmsClient.request(
-    `
-    query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
-      programs: programWeeks(where: { date: $date, category: $category }) {
-        bias
-        category
-        days {
-          activeRecovery
-          content
-          id
-          title
-        }
-        date
-        free
-        id
-        title
-      }
-    }`,
-    {
-      category: params.category.toUpperCase(),
-      date: params.date
-    }
-  )
+  } = await graphCmsClient.request(ProgramPageQuery, {
+    category: params.category.toUpperCase(),
+    date: params.date
+  })
 
   const { days, ...rest } = program
 
