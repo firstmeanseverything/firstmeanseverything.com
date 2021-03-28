@@ -10,20 +10,21 @@ import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider, useAuthState } from '@/context/auth'
 import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/program'
+import { useAuthenticatedPage, useProtectedPage } from '@/hooks/auth'
 
 function ProgramPage({ program }) {
-  const { isAuthenticating, user } = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
+
+  useAuthenticatedPage()
+  useProtectedPage()
 
   React.useEffect(() => {
     const isFutureProgram = new Date(program.date) > new Date()
+    const isInaccessibleProgam = user?.accessDate > new Date(program.date)
 
-    if (
-      isFutureProgram ||
-      (!isAuthenticating && !(user || user.stripeRole === 'basic'))
-    )
-      router.push('/')
-  }, [isAuthenticating, program, user])
+    if (isFutureProgram || isInaccessibleProgam) router.push('/')
+  }, [program, user])
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
