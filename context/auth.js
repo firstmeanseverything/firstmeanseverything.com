@@ -1,8 +1,9 @@
 import * as React from 'react'
 import cookie from 'js-cookie'
+import sub from 'date-fns/sub'
 
 import firebase from '@/lib/firebase'
-import { createUser } from '@/lib/db'
+import { createUser, getLatestActiveSubscription } from '@/lib/db'
 
 const AuthDispatchContext = React.createContext()
 const AuthStateContext = React.createContext()
@@ -101,13 +102,18 @@ function AuthProvider({ children }) {
 }
 
 async function parseUser(user) {
+  const { subscription } = await getLatestActiveSubscription(user.uid)
+
   return {
     uid: user.uid,
     email: user.email,
     displayName: user.displayName,
     token: user.xa,
     photoUrl: user.photoURL,
-    stripeRole: await getStripeRole()
+    stripeRole: await getStripeRole(),
+    accessDate: subscription
+      ? sub(subscription.created.toDate(), { days: 7 })
+      : null
   }
 }
 
