@@ -9,7 +9,7 @@ import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider, useAuthState } from '@/context/auth'
-import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/programs'
+import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/program'
 
 function ProgramPage({ program }) {
   const { isAuthenticating, user } = useAuthState()

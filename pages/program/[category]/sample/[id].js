@@ -9,7 +9,7 @@ import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
-import { ProgramsPathsQuery, SampleProgramPageQuery } from '@/queries/programs'
+import { ProgramsPathsQuery, SampleProgramPageQuery } from '@/queries/program'
 
 function SamplePage({ program }) {
   useAuthenticatedPage()
