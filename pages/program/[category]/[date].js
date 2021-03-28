@@ -9,6 +9,7 @@ import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
 import { AuthProvider, useAuthState } from '@/context/auth'
+import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/programs'
 
 function ProgramPage({ program }) {
   const { isAuthenticating, user } = useAuthState()
@@ -38,14 +39,9 @@ function ProgramPage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await graphCmsClient.request(`
-    {
-      programs: programWeeks(where: { free: false }) {
-        date
-        category
-      }
-    }
-  `)
+  const { programs } = await graphCmsClient.request(ProgramsPathsQuery, {
+    free: false
+  })
 
   const paths = programs.map(({ category, date }) => ({
     params: {
@@ -63,29 +59,10 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const {
     programs: [program]
-  } = await graphCmsClient.request(
-    `
-    query ProgramPageQuery($date: Date!, $category: ProgramCategory!) {
-      programs: programWeeks(where: { date: $date, category: $category }) {
-        bias
-        category
-        days {
-          activeRecovery
-          content
-          id
-          title
-        }
-        date
-        free
-        id
-        title
-      }
-    }`,
-    {
-      category: params.category.toUpperCase(),
-      date: params.date
-    }
-  )
+  } = await graphCmsClient.request(ProgramPageQuery, {
+    category: params.category.toUpperCase(),
+    date: params.date
+  })
 
   const { days, ...rest } = program
 

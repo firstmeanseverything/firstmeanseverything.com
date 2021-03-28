@@ -3,7 +3,10 @@ import useSWR from 'swr'
 import cx from 'classnames'
 import format from 'date-fns/format'
 
-import { AvailablePrograms, AvailableFreePrograms } from '@/queries/programs'
+import {
+  AvailableProgramsQuery,
+  AvailableSampleProgramsQuery
+} from '@/queries/programs'
 import Badge from '@/components/badge'
 import graphCmsClient from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
@@ -28,14 +31,14 @@ function Index({ product }) {
     user
       ? hasSubscription
         ? [
-            AvailablePrograms,
+            AvailableProgramsQuery,
             activeCategory,
             pagination.limit,
             pagination.offset,
             user.accessDate
           ]
         : [
-            AvailableFreePrograms,
+            AvailableSampleProgramsQuery,
             activeCategory,
             pagination.limit,
             pagination.offset
