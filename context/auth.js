@@ -51,6 +51,13 @@ function AuthProvider({ children }) {
       .then((response) => handleUser(response.user))
   }
 
+  const signInWithFacebook = () => {
+    return firebase
+      .auth()
+      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then((response) => handleUser(response.user))
+  }
+
   const signOut = () => {
     return firebase
       .auth()
@@ -88,6 +95,7 @@ function AuthProvider({ children }) {
         confirmPasswordReset,
         sendPasswordReset,
         signIn,
+        signInWithFacebook,
         signOut,
         signUp,
         updateUser,
