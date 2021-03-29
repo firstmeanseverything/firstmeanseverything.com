@@ -44,10 +44,17 @@ function AuthProvider({ children }) {
     return firebase.auth().sendPasswordResetEmail(email)
   }
 
-  const signIn = (email, password) => {
+  const signInWithEmail = (email, password) => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((response) => handleUser(response.user))
+  }
+
+  const signInWithFacebook = () => {
+    return firebase
+      .auth()
+      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((response) => handleUser(response.user))
   }
 
@@ -87,7 +94,8 @@ function AuthProvider({ children }) {
       value={{
         confirmPasswordReset,
         sendPasswordReset,
-        signIn,
+        signInWithEmail,
+        signInWithFacebook,
         signOut,
         signUp,
         updateUser,
