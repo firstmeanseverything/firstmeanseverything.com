@@ -8,19 +8,7 @@ import Alert from '@/components/alert'
 import Button from '@/components/button'
 import { FormInput } from '@/components/form'
 import { useAuthDispatch } from '@/context/auth'
-
-function reducer(state, { payload, type }) {
-  switch (type) {
-    case 'ERROR':
-      return { ...state, formState: 'error', ...payload }
-    case 'LOADING':
-      return { ...state, formState: 'loading', ...payload }
-    case 'SUCCESS':
-      return { ...state, formState: 'success', ...payload }
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
-  }
-}
+import { useFormReducer } from '@/hooks/form'
 
 function ResetForm() {
   const { confirmPasswordReset } = useAuthDispatch()
@@ -38,55 +26,46 @@ function ResetForm() {
       })
     )
   })
-  const [state, dispatch] = React.useReducer(reducer, {
-    formState: null,
-    message: null
-  })
+  const {
+    formError,
+    formLoading,
+    formState,
+    formSuccess,
+    setFormError,
+    setFormLoading,
+    setFormSuccess
+  } = useFormReducer()
   const router = useRouter()
 
-  const isError = state.formState === 'error'
-  const isLoading = state.formState === 'loading'
-  const isSuccess = state.formState === 'success'
-
   const onSubmit = async ({ password }) => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Saving your new password' }
-    })
+    setFormLoading({ message: 'Saving your new password' })
     try {
       await confirmPasswordReset(router.query.oobCode, password)
-      dispatch({
-        type: 'SUCCESS',
-        payload: {
-          message:
-            'You will now be redirected to sign in using your new password'
-        }
+      setFormSuccess({
+        message: 'You will now be redirected to sign in using your new password'
       })
 
       setTimeout(() => {
         router.push('/signin')
       }, 3000)
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
   return (
     <FormProvider {...methods}>
-      {isError && (
+      {formError && (
         <Alert
           title="There was a problem saving your new password"
-          message={state.message}
+          message={formState.message}
         />
       )}
-      {isSuccess ? (
+      {formSuccess ? (
         <Alert
           type="success"
           title="Password updated successfully"
-          message={state.message}
+          message={formState.message}
         />
       ) : (
         <div className="mt-6">
@@ -98,19 +77,19 @@ function ResetForm() {
                   type="password"
                   label="Password"
                   placeholder="••••••••"
-                  disabled={isLoading}
+                  disabled={formLoading}
                 />
                 <FormInput
                   field="confirm"
                   type="password"
                   label="Confirm Password"
                   placeholder="••••••••"
-                  disabled={isLoading}
+                  disabled={formLoading}
                 />
               </div>
             </div>
             <div className="mt-6">
-              <Button type="submit" size="large" isLoading={isLoading}>
+              <Button type="submit" size="large" isLoading={formLoading}>
                 Update your password
               </Button>
             </div>

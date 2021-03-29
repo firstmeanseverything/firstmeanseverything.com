@@ -8,32 +8,21 @@ import { goToBillingPortal } from '@/lib/db'
 import Page from '@/components/page'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
-
-function reducer(state, { payload, type }) {
-  switch (type) {
-    case 'ERROR':
-      return { ...state, formState: 'error', ...payload }
-    case 'LOADING':
-      return { ...state, formState: 'loading', ...payload }
-    case 'SUCCESS':
-      return { ...state, formState: null }
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
-  }
-}
+import { useFormReducer } from '@/hooks/form'
 
 function Account() {
   const { updateUser } = useAuthDispatch()
   const { isAuthenticating, user } = useAuthState()
   const { handleSubmit, setValue, ...methods } = useForm()
-  const [state, dispatch] = React.useReducer(reducer, {
-    formState: null,
-    message: null
-  })
+  const {
+    formError,
+    formLoading,
+    formState,
+    setFormError,
+    setFormLoading,
+    setFormSuccess
+  } = useFormReducer()
   const [billingLoading, setBillingLoading] = React.useState(false)
-
-  const isError = state.formState === 'error'
-  const isLoading = state.formState === 'loading'
 
   useAuthenticatedPage()
 
@@ -42,20 +31,12 @@ function Account() {
   }, [isAuthenticating, user])
 
   const onSubmit = async (data) => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Updating your profile' }
-    })
+    setFormLoading({ message: 'Updating your profile' })
     try {
       await updateUser(data)
-      dispatch({
-        type: 'SUCCESS'
-      })
+      setFormSuccess()
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
@@ -82,14 +63,14 @@ function Account() {
                           field="displayName"
                           label="Name"
                           placeholder="Your name"
-                          disabled={isAuthenticating || isLoading}
+                          disabled={isAuthenticating || formLoading}
                         />
                       </div>
                     </div>
-                    {isError && (
+                    {formError && (
                       <Alert
                         title="There was a problem updating your profile"
-                        message={state.message}
+                        message={formState.message}
                       />
                     )}
                   </div>
@@ -100,7 +81,7 @@ function Account() {
                   <Button
                     type="submit"
                     isDisabled={isAuthenticating}
-                    isLoading={isLoading}
+                    formLoading={formLoading}
                   >
                     Save
                   </Button>
@@ -129,7 +110,7 @@ function Account() {
                     goToBillingPortal()
                   }}
                   isDisabled={isAuthenticating}
-                  isLoading={billingLoading}
+                  formLoading={billingLoading}
                 >
                   Manage billing
                 </Button>
