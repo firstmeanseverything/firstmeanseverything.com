@@ -23,7 +23,7 @@ function reducer(state, { payload, type }) {
 }
 
 function SignInForm() {
-  const { signIn, signInWithFacebook } = useAuthDispatch()
+  const { signInWithEmail, signInWithFacebook } = useAuthDispatch()
   const { handleSubmit, ...methods } = useForm({
     resolver: yupResolver(
       yup.object().shape({
@@ -64,7 +64,7 @@ function SignInForm() {
       payload: { message: 'Signing you in' }
     })
     try {
-      await signIn(email, password)
+      await signInWithEmail(email, password)
     } catch (error) {
       dispatch({
         type: 'ERROR',
