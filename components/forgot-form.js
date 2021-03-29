@@ -7,19 +7,7 @@ import Alert from '@/components/alert'
 import Button from '@/components/button'
 import { FormInput } from '@/components/form'
 import { useAuthDispatch } from '@/context/auth'
-
-function reducer(state, { payload, type }) {
-  switch (type) {
-    case 'ERROR':
-      return { ...state, formState: 'error', ...payload }
-    case 'LOADING':
-      return { ...state, formState: 'loading', ...payload }
-    case 'SUCCESS':
-      return { ...state, formState: 'success', ...payload }
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
-  }
-}
+import { useFormReducer } from '@/hooks/form'
 
 function ForgotForm() {
   const { sendPasswordReset } = useAuthDispatch()
@@ -33,47 +21,39 @@ function ForgotForm() {
       })
     )
   })
-  const [state, dispatch] = React.useReducer(reducer, {
-    formState: null,
-    message: null
-  })
-
-  const isError = state.formState === 'error'
-  const isLoading = state.formState === 'loading'
-  const isSuccess = state.formState === 'success'
+  const {
+    formError,
+    formLoading,
+    formState,
+    formSuccess,
+    setFormError,
+    setFormLoading,
+    setFormSuccess
+  } = useFormReducer()
 
   const onSubmit = async ({ email }) => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Sending a password reset' }
-    })
+    setFormLoading({ message: 'Sending a password reset' })
     try {
       await sendPasswordReset(email)
-      dispatch({
-        type: 'SUCCESS',
-        payload: { message: 'Check your email for further instructions' }
-      })
+      setFormSuccess({ message: 'Check your email for further instructions' })
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
   return (
     <FormProvider {...methods}>
-      {isError && (
+      {formError && (
         <Alert
           title="There was a problem sending a password reset"
-          message={state.message}
+          message={formState.message}
         />
       )}
-      {isSuccess ? (
+      {formSuccess ? (
         <Alert
           type="success"
           title="Password reset sent"
-          message={state.message}
+          message={formState.message}
         />
       ) : (
         <div className="mt-6">
@@ -83,11 +63,11 @@ function ForgotForm() {
                 field="email"
                 label="Email address"
                 placeholder="team@firstmeanseverything.com"
-                disabled={isLoading}
+                disabled={formLoading}
               />
             </div>
             <div className="mt-6">
-              <Button type="submit" size="large" isLoading={isLoading}>
+              <Button type="submit" size="large" isLoading={formLoading}>
                 Send password reset
               </Button>
             </div>

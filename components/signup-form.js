@@ -7,17 +7,7 @@ import Alert from '@/components/alert'
 import Button from '@/components/button'
 import { FormInput } from '@/components/form'
 import { useAuthDispatch } from '@/context/auth'
-
-function reducer(state, { payload, type }) {
-  switch (type) {
-    case 'ERROR':
-      return { ...state, formState: 'error', ...payload }
-    case 'LOADING':
-      return { ...state, formState: 'loading', ...payload }
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
-  }
-}
+import { useFormReducer } from '@/hooks/form'
 
 function SignUpForm() {
   const { signUp } = useAuthDispatch()
@@ -39,35 +29,29 @@ function SignUpForm() {
       })
     )
   })
-  const [state, dispatch] = React.useReducer(reducer, {
-    formState: null,
-    message: null
-  })
-
-  const isError = state.formState === 'error'
-  const isLoading = state.formState === 'loading'
+  const {
+    formError,
+    formLoading,
+    formState,
+    setFormLoading,
+    setFormError
+  } = useFormReducer()
 
   const onSubmit = async ({ email, password }) => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Creating your account' }
-    })
+    setFormLoading({ message: 'Creating your account' })
     try {
       await signUp(email, password)
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
   return (
     <FormProvider {...methods}>
-      {isError && (
+      {formError && (
         <Alert
           title="There was a problem creating your account"
-          message={state.message}
+          message={formState.message}
         />
       )}
       <div className="mt-6">
@@ -77,7 +61,7 @@ function SignUpForm() {
               field="email"
               label="Email address"
               placeholder="team@firstmeanseverything.com"
-              disabled={isLoading}
+              disabled={formLoading}
             />
           </div>
           <div className="mt-6">
@@ -87,19 +71,19 @@ function SignUpForm() {
                 type="password"
                 label="Password"
                 placeholder="••••••••"
-                disabled={isLoading}
+                disabled={formLoading}
               />
               <FormInput
                 field="confirm"
                 type="password"
                 label="Confirm Password"
                 placeholder="••••••••"
-                disabled={isLoading}
+                disabled={formLoading}
               />
             </div>
           </div>
           <div className="mt-6">
-            <Button type="submit" size="large" isLoading={isLoading}>
+            <Button type="submit" size="large" formLoading={formLoading}>
               Sign up
             </Button>
           </div>

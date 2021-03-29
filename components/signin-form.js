@@ -10,17 +10,7 @@ import Button from '@/components/button'
 import { FacebookSVG } from '@/components/icons'
 import { FormInput } from '@/components/form'
 import { useAuthDispatch } from '@/context/auth'
-
-function reducer(state, { payload, type }) {
-  switch (type) {
-    case 'ERROR':
-      return { ...state, formState: 'error', ...payload }
-    case 'LOADING':
-      return { ...state, formState: 'loading', ...payload }
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
-  }
-}
+import { useFormReducer } from '@/hooks/form'
 
 function SignInForm() {
   const { signInWithEmail, signInWithFacebook } = useAuthDispatch()
@@ -35,50 +25,38 @@ function SignInForm() {
       })
     )
   })
-  const [state, dispatch] = React.useReducer(reducer, {
-    formState: null,
-    message: null
-  })
-
-  const isError = state.formState === 'error'
-  const isLoading = state.formState === 'loading'
+  const {
+    formError,
+    formLoading,
+    formState,
+    setFormError,
+    setFormLoading
+  } = useFormReducer()
 
   const facebookSignIn = async () => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Signing you in' }
-    })
+    setFormLoading({ message: 'Signing you in' })
     try {
       await signInWithFacebook()
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
   const emailSignIn = async ({ email, password }) => {
-    dispatch({
-      type: 'LOADING',
-      payload: { message: 'Signing you in' }
-    })
+    setFormLoading({ message: 'Signing you in' })
     try {
       await signInWithEmail(email, password)
     } catch (error) {
-      dispatch({
-        type: 'ERROR',
-        payload: { message: error.message }
-      })
+      setFormError({ message: error.message })
     }
   }
 
   return (
     <React.Fragment>
-      {isError && (
+      {formError && (
         <Alert
           title="There was a problem signing you in"
-          message={state.message}
+          message={formState.message}
         />
       )}
       <div className="space-y-6">
@@ -90,11 +68,11 @@ function SignInForm() {
                 className={cx(
                   'w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
                   {
-                    'cursor-not-allowed opacity-50': isLoading
+                    'cursor-not-allowed opacity-50': formLoading
                   }
                 )}
                 onClick={facebookSignIn}
-                disabled={isLoading}
+                disabled={formLoading}
               >
                 <span className="sr-only">Sign in with Facebook</span>
                 <FacebookSVG className="h-5 w-5" aria-hidden="true" />
@@ -125,7 +103,7 @@ function SignInForm() {
                 field="email"
                 label="Email address"
                 placeholder="team@firstmeanseverything.com"
-                disabled={isLoading}
+                disabled={formLoading}
               />
             </div>
             <div className="mt-6">
@@ -134,7 +112,7 @@ function SignInForm() {
                 type="password"
                 label="Password"
                 placeholder="••••••••"
-                disabled={isLoading}
+                disabled={formLoading}
               />
             </div>
             <div className="mt-6 flex items-center justify-end">
@@ -147,7 +125,7 @@ function SignInForm() {
               </div>
             </div>
             <div className="mt-6">
-              <Button type="submit" size="large" isLoading={isLoading}>
+              <Button type="submit" size="large" formLoading={formLoading}>
                 Sign in
               </Button>
             </div>
