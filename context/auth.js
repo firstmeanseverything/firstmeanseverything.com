@@ -116,7 +116,7 @@ async function parseUser(user) {
     uid: user.uid,
     email: user.email,
     displayName: user.displayName,
-    token: user.xa,
+    token: await user.getIdToken(),
     photoUrl: user.photoURL,
     stripeRole: await getStripeRole(),
     accessDate: subscription
