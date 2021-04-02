@@ -81,7 +81,7 @@ function Account() {
                   <Button
                     type="submit"
                     isDisabled={isAuthenticating}
-                    formLoading={formLoading}
+                    isLoading={formLoading}
                   >
                     Save
                   </Button>
@@ -110,7 +110,7 @@ function Account() {
                     goToBillingPortal()
                   }}
                   isDisabled={isAuthenticating}
-                  formLoading={billingLoading}
+                  isLoading={billingLoading}
                 >
                   Manage billing
                 </Button>
