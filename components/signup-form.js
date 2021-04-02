@@ -83,7 +83,7 @@ function SignUpForm() {
             </div>
           </div>
           <div className="mt-6">
-            <Button type="submit" size="large" formLoading={formLoading}>
+            <Button type="submit" size="large" isLoading={formLoading}>
               Sign up
             </Button>
           </div>
