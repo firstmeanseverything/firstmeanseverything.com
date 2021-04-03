@@ -40,6 +40,20 @@ function AuthProvider({ children }) {
     }
   }
 
+  const linkAuthProvider = (provider) => {
+    return firebase
+      .auth()
+      .currentUser.linkWithPopup(provider)
+      .then((response) => handleUser(response.user))
+  }
+
+  const unlinkAuthProvider = (provider) => {
+    return firebase
+      .auth()
+      .currentUser.unlink(provider)
+      .then((response) => handleUser(response.user))
+  }
+
   const sendPasswordReset = (email) => {
     return firebase.auth().sendPasswordResetEmail(email)
   }
@@ -93,11 +107,13 @@ function AuthProvider({ children }) {
     <AuthDispatchContext.Provider
       value={{
         confirmPasswordReset,
+        linkAuthProvider,
         sendPasswordReset,
         signInWithEmail,
         signInWithFacebook,
         signOut,
         signUp,
+        unlinkAuthProvider,
         updateUser,
         verifyPasswordResetCode
       }}
