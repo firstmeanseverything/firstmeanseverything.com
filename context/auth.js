@@ -18,10 +18,10 @@ function AuthProvider({ children }) {
 
   const handleUser = async (rawUser) => {
     if (rawUser) {
-      const { token, ...user } = await parseUser(rawUser)
+      const { providerData, token, ...user } = await parseUser(rawUser)
 
       createUser(user.uid, user)
-      setUser({ token, ...user })
+      setUser({ providerData, token, ...user })
 
       cookie.set('first-means-everything', true, {
         expires: 1
@@ -118,6 +118,7 @@ async function parseUser(user) {
     displayName: user.displayName,
     token: await user.getIdToken(),
     photoUrl: user.photoURL,
+    providerData: user.providerData,
     stripeRole: await getStripeRole(),
     accessDate: subscription
       ? sub(subscription.created.toDate(), { days: 7 })
