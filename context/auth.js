@@ -2,8 +2,9 @@ import * as React from 'react'
 import cookie from 'js-cookie'
 import sub from 'date-fns/sub'
 
-import firebase from '@/lib/firebase'
 import { createUser, getLatestActiveSubscription } from '@/lib/db'
+import { FacebookSVG } from '@/components/icons'
+import firebase from '@/lib/firebase'
 
 const AuthDispatchContext = React.createContext()
 const AuthStateContext = React.createContext()
@@ -18,10 +19,10 @@ function AuthProvider({ children }) {
 
   const handleUser = async (rawUser) => {
     if (rawUser) {
-      const { token, ...user } = await parseUser(rawUser)
+      const { providerData, token, ...user } = await parseUser(rawUser)
 
       createUser(user.uid, user)
-      setUser({ token, ...user })
+      setUser({ providerData, token, ...user })
 
       cookie.set('first-means-everything', true, {
         expires: 1
@@ -40,6 +41,20 @@ function AuthProvider({ children }) {
     }
   }
 
+  const linkAuthProvider = (provider) => {
+    return firebase
+      .auth()
+      .currentUser.linkWithPopup(provider)
+      .then((response) => handleUser(response.user))
+  }
+
+  const unlinkAuthProvider = (provider) => {
+    return firebase
+      .auth()
+      .currentUser.unlink(provider)
+      .then((response) => handleUser(response.user))
+  }
+
   const sendPasswordReset = (email) => {
     return firebase.auth().sendPasswordResetEmail(email)
   }
@@ -51,10 +66,10 @@ function AuthProvider({ children }) {
       .then((response) => handleUser(response.user))
   }
 
-  const signInWithFacebook = () => {
+  const signInWithProvider = (provider) => {
     return firebase
       .auth()
-      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .signInWithPopup(provider)
       .then((response) => handleUser(response.user))
   }
 
@@ -83,6 +98,21 @@ function AuthProvider({ children }) {
     return firebase.auth().verifyPasswordResetCode(code)
   }
 
+  const availableAuthProviders = React.useMemo(
+    () => [
+      {
+        id: 'facebook.com',
+        connected: user?.providerData?.some(
+          (provider) => provider.providerId === 'facebook.com'
+        ),
+        icon: FacebookSVG,
+        instance: new firebase.auth.FacebookAuthProvider(),
+        name: 'Facebook'
+      }
+    ],
+    [user]
+  )
+
   React.useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(handleUser)
 
@@ -93,16 +123,20 @@ function AuthProvider({ children }) {
     <AuthDispatchContext.Provider
       value={{
         confirmPasswordReset,
+        linkAuthProvider,
         sendPasswordReset,
         signInWithEmail,
-        signInWithFacebook,
+        signInWithProvider,
         signOut,
         signUp,
+        unlinkAuthProvider,
         updateUser,
         verifyPasswordResetCode
       }}
     >
-      <AuthStateContext.Provider value={{ isAuthenticating, user }}>
+      <AuthStateContext.Provider
+        value={{ availableAuthProviders, isAuthenticating, user }}
+      >
         {children}
       </AuthStateContext.Provider>
     </AuthDispatchContext.Provider>
@@ -118,6 +152,7 @@ async function parseUser(user) {
     displayName: user.displayName,
     token: await user.getIdToken(),
     photoUrl: user.photoURL,
+    providerData: user.providerData,
     stripeRole: await getStripeRole(),
     accessDate: subscription
       ? sub(subscription.created.toDate(), { days: 7 })
