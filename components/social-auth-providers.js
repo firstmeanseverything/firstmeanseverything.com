@@ -40,27 +40,27 @@ function SocialAuthProviders() {
   return (
     <div className="mt-5 space-y-6">
       <div className="space-y-3 sm:flex-shrink-0 sm:flex sm:items-center sm:space-x-3 sm:space-y-0">
-        {availableAuthProviders.map((social, index) => {
-          const IconSVG = social.icon
+        {availableAuthProviders.map((provider, index) => {
+          const IconSVG = provider.icon
 
           return (
             <Button
               key={index}
               onClick={
-                social.connected
-                  ? () => unlinkProvider(social.id)
-                  : () => linkProvider(social.provider)
+                provider.connected
+                  ? () => unlinkProvider(provider.id)
+                  : () => linkProvider(provider.instance)
               }
               isDisabled={
                 isAuthenticating ||
-                (user?.providerData?.length <= 1 && social.connected)
+                (user?.providerData?.length <= 1 && provider.connected)
               }
               isLoading={formLoading}
             >
               <IconSVG className="h-5 mr-3 w-5" />
-              {social.connected
-                ? `Disconnect ${social.name}`
-                : `Connect ${social.name}`}
+              {provider.connected
+                ? `Disconnect ${provider.name}`
+                : `Connect ${provider.name}`}
             </Button>
           )
         })}

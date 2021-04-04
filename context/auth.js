@@ -106,8 +106,8 @@ function AuthProvider({ children }) {
           (provider) => provider.providerId === 'facebook.com'
         ),
         icon: FacebookSVG,
-        name: 'Facebook',
-        provider: new firebase.auth.FacebookAuthProvider()
+        instance: new firebase.auth.FacebookAuthProvider(),
+        name: 'Facebook'
       }
     ],
     [user]
