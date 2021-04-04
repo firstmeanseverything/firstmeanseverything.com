@@ -2,8 +2,9 @@ import * as React from 'react'
 import cookie from 'js-cookie'
 import sub from 'date-fns/sub'
 
-import firebase from '@/lib/firebase'
 import { createUser, getLatestActiveSubscription } from '@/lib/db'
+import { FacebookSVG } from '@/components/icons'
+import firebase from '@/lib/firebase'
 
 const AuthDispatchContext = React.createContext()
 const AuthStateContext = React.createContext()
@@ -97,6 +98,21 @@ function AuthProvider({ children }) {
     return firebase.auth().verifyPasswordResetCode(code)
   }
 
+  const availableAuthProviders = React.useMemo(
+    () => [
+      {
+        id: 'facebook.com',
+        connected: user?.providerData?.some(
+          (provider) => provider.providerId === 'facebook.com'
+        ),
+        icon: FacebookSVG,
+        name: 'Facebook',
+        provider: new firebase.auth.FacebookAuthProvider()
+      }
+    ],
+    [user]
+  )
+
   React.useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(handleUser)
 
@@ -118,7 +134,9 @@ function AuthProvider({ children }) {
         verifyPasswordResetCode
       }}
     >
-      <AuthStateContext.Provider value={{ isAuthenticating, user }}>
+      <AuthStateContext.Provider
+        value={{ availableAuthProviders, isAuthenticating, user }}
+      >
         {children}
       </AuthStateContext.Provider>
     </AuthDispatchContext.Provider>

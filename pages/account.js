@@ -6,6 +6,7 @@ import Button from '@/components/button'
 import { FormInput } from '@/components/form'
 import { goToBillingPortal } from '@/lib/db'
 import Page from '@/components/page'
+import SocialAuthProviders from '@/components/social-auth-providers'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
 import { useFormReducer } from '@/hooks/form'
@@ -90,6 +91,20 @@ function Account() {
             </div>
           </form>
         </FormProvider>
+        <div className="bg-white shadow rounded sm:rounded-lg">
+          <div className="px-4 py-5 sm:p-6">
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              Linked accounts
+            </h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500">
+              <p>
+                Link your social profiles with your First Means Everything
+                account to enable sign in and other functionality.
+              </p>
+            </div>
+            <SocialAuthProviders />
+          </div>
+        </div>
         <div className="bg-white shadow rounded sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
