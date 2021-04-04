@@ -7,13 +7,13 @@ import cx from 'classnames'
 
 import Alert from '@/components/alert'
 import Button from '@/components/button'
-import { FacebookSVG } from '@/components/icons'
 import { FormInput } from '@/components/form'
-import { useAuthDispatch } from '@/context/auth'
+import { useAuthDispatch, useAuthState } from '@/context/auth'
 import { useFormReducer } from '@/hooks/form'
 
 function SignInForm() {
-  const { signInWithEmail, signInWithFacebook } = useAuthDispatch()
+  const { signInWithEmail, signInWithProvider } = useAuthDispatch()
+  const { availableAuthProviders } = useAuthState()
   const { handleSubmit, ...methods } = useForm({
     resolver: yupResolver(
       yup.object().shape({
@@ -33,10 +33,10 @@ function SignInForm() {
     setFormLoading
   } = useFormReducer()
 
-  const facebookSignIn = async () => {
+  const providerSignIn = async (provider) => {
     setFormLoading({ message: 'Signing you in' })
     try {
-      await signInWithFacebook()
+      await signInWithProvider(provider)
     } catch (error) {
       setFormError({ message: error.message })
     }
@@ -63,21 +63,29 @@ function SignInForm() {
         <div>
           <p className="text-sm font-medium text-gray-700">Sign in with</p>
           <div className="mt-1 grid grid-cols-1 gap-3">
-            <div>
-              <button
-                className={cx(
-                  'w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
-                  {
-                    'cursor-not-allowed opacity-50': formLoading
-                  }
-                )}
-                onClick={facebookSignIn}
-                disabled={formLoading}
-              >
-                <span className="sr-only">Sign in with Facebook</span>
-                <FacebookSVG className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
+            {availableAuthProviders.map((provider, index) => {
+              const IconSVG = provider.icon
+
+              return (
+                <div key={index}>
+                  <button
+                    className={cx(
+                      'w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
+                      {
+                        'cursor-not-allowed opacity-50': formLoading
+                      }
+                    )}
+                    onClick={() => providerSignIn(provider.instance)}
+                    disabled={formLoading}
+                  >
+                    <span className="sr-only">
+                      Sign in with {provider.name}
+                    </span>
+                    <IconSVG className="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+              )
+            })}
           </div>
         </div>
 

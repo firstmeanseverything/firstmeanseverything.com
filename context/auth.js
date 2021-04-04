@@ -66,10 +66,10 @@ function AuthProvider({ children }) {
       .then((response) => handleUser(response.user))
   }
 
-  const signInWithFacebook = () => {
+  const signInWithProvider = (provider) => {
     return firebase
       .auth()
-      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .signInWithPopup(provider)
       .then((response) => handleUser(response.user))
   }
 
@@ -126,7 +126,7 @@ function AuthProvider({ children }) {
         linkAuthProvider,
         sendPasswordReset,
         signInWithEmail,
-        signInWithFacebook,
+        signInWithProvider,
         signOut,
         signUp,
         unlinkAuthProvider,
