@@ -11,8 +11,9 @@ function useAccessiblePage({ programDate }) {
     const isFutureProgram = new Date(programDate) > new Date()
     const isInaccessibleProgam = user?.accessDate > new Date(programDate)
 
-    if (isFutureProgram || isInaccessibleProgam) router.push('/')
-  }, [programDate, user])
+    if (!router.isPreview && (isFutureProgram || isInaccessibleProgam))
+      router.push('/')
+  }, [programDate, router.isPreview, user])
 }
 
 function useAuthenticatedPage() {
