@@ -22,6 +22,14 @@ function usePaginatedTable({
         pageSize: pagination.limit,
         ...initialState
       },
+      useControlledState: (state) =>
+        React.useMemo(
+          () => ({
+            ...state,
+            pageIndex: Math.ceil(pagination.offset / pagination.limit)
+          }),
+          [state, pagination]
+        ),
       manualPagination: true,
       pageCount: pagination.totalPages,
       ...rest
@@ -29,10 +37,8 @@ function usePaginatedTable({
     usePagination
   )
 
-  React.useEffect(() => {
-    const offset = table.state.pageIndex * table.state.pageSize
-
-    if (offset === pagination.offset) return
+  const previousPage = () => {
+    const offset = table.state.pageIndex - 1 * table.state.pageSize
 
     router.replace({
       pathname: router.pathname,
@@ -41,18 +47,18 @@ function usePaginatedTable({
         offset
       }
     })
-  }, [table.state.pageIndex])
+  }
 
-  React.useEffect(() => {
-    if (table.state.pageSize === pagination.limit) return
+  const nextPage = () => {
+    const offset = table.state.pageIndex + 1 * table.state.pageSize
 
     router.replace({
       pathname: router.pathname,
-      query: { ...router.query, limit: table.state.pageSize }
+      query: { ...router.query, offset }
     })
-  }, [table.state.pageSize])
+  }
 
-  return table
+  return { ...table, nextPage, previousPage }
 }
 
 export { usePaginatedTable }
