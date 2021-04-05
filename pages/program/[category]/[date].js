@@ -18,11 +18,11 @@ import {
 function ProgramPage({ program }) {
   const router = useRouter()
 
+  if (router.isFallback) return <div>Loading...</div>
+
   useAuthenticatedPage()
   useProtectedPage()
   useAccessiblePage({ programDate: program.date })
-
-  if (router.isFallback) return <div>Loading...</div>
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
@@ -38,7 +38,7 @@ function ProgramPage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await getProgramsPaths({ free: true })
+  const { programs } = await getProgramsPaths({ free: false })
 
   const paths = programs.map(({ category, date }) => ({
     params: {
@@ -63,6 +63,12 @@ export async function getStaticProps({ params, preview = false }) {
     },
     preview
   )
+
+  if (!program) {
+    return {
+      notFound: true
+    }
+  }
 
   const { days, ...rest } = program
 

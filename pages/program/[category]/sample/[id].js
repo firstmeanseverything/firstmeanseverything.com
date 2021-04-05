@@ -14,9 +14,9 @@ import { useAuthenticatedPage } from '@/hooks/auth'
 function SamplePage({ program }) {
   const router = useRouter()
 
-  useAuthenticatedPage()
-
   if (router.isFallback) return <div>Loading...</div>
+
+  useAuthenticatedPage()
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
@@ -55,6 +55,12 @@ export async function getStaticProps({ params, preview = false }) {
     },
     preview
   )
+
+  if (!program) {
+    return {
+      notFound: true
+    }
+  }
 
   const { days, ...rest } = program
 
