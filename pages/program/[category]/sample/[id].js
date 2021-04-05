@@ -24,7 +24,7 @@ function SamplePage({ program }) {
   )
 }
 
-export async function getStaticPaths({ preview }) {
+export async function getStaticPaths({ preview = false }) {
   const { programs } = await getProgramsPaths({ free: true }, preview)
 
   const paths = programs.map(({ category, id }) => ({
@@ -40,7 +40,7 @@ export async function getStaticPaths({ preview }) {
   }
 }
 
-export async function getStaticProps({ params, preview }) {
+export async function getStaticProps({ params, preview = false }) {
   const {
     programs: [program]
   } = await getSampleProgramPage(

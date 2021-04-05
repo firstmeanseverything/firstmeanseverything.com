@@ -38,7 +38,7 @@ function ProgramPage({ program }) {
   )
 }
 
-export async function getStaticPaths({ preview }) {
+export async function getStaticPaths({ preview = false }) {
   const { programs } = await getProgramsPaths({ free: false }, preview)
 
   const paths = programs.map(({ category, date }) => ({
@@ -54,7 +54,7 @@ export async function getStaticPaths({ preview }) {
   }
 }
 
-export async function getStaticProps({ params, preview }) {
+export async function getStaticProps({ params, preview = false }) {
   const {
     programs: [program]
   } = await getProgramPage(

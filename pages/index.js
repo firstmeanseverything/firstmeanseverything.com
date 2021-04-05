@@ -148,7 +148,7 @@ function Index({ preview, product }) {
   )
 }
 
-export async function getStaticProps({ preview }) {
+export async function getStaticProps({ preview = false }) {
   const { product } = await getProduct(process.env.STRIPE_PRODUCT_ID)
 
   return {
