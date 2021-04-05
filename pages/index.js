@@ -3,9 +3,8 @@ import useSWR from 'swr'
 import cx from 'classnames'
 import format from 'date-fns/format'
 
-import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import Badge from '@/components/badge'
-import graphCmsClient from '@/lib/graphcms'
+import { getProgramsList, getSampleProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
 import Page from '@/components/page'
 import SubscriptionCTA from '@/components/subscription-cta'
@@ -15,7 +14,7 @@ import { useAuthenticatedPage } from '@/hooks/auth'
 import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
-function Index({ product }) {
+function Index({ preview, product }) {
   const { user } = useAuthState()
   const pagination = usePaginationQueryParams()
   const [activeCategory, setActiveCategory] = React.useState('RX')
@@ -28,27 +27,30 @@ function Index({ product }) {
     user
       ? hasSubscription
         ? [
-            ProgramsListQuery,
+            getProgramsList,
             activeCategory,
             pagination.limit,
             pagination.offset,
             user.accessDate
           ]
         : [
-            SampleProgramsListQuery,
+            getSampleProgramsList,
             activeCategory,
             pagination.limit,
             pagination.offset
           ]
       : null,
     (query, activeCategory, limit, offset, accessDate) =>
-      graphCmsClient.request(query, {
-        category: activeCategory,
-        limit,
-        offset,
-        to: format(new Date(), 'yyyy-MM-dd'),
-        ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
-      }),
+      query(
+        {
+          category: activeCategory,
+          limit,
+          offset,
+          to: format(new Date(), 'yyyy-MM-dd'),
+          ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
+        },
+        preview
+      ),
     { revalidateOnFocus: false }
   )
 
@@ -146,11 +148,12 @@ function Index({ product }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ preview }) {
   const { product } = await getProduct(process.env.STRIPE_PRODUCT_ID)
 
   return {
     props: {
+      preview,
       product
     }
   }
