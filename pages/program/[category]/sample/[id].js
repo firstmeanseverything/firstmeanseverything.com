@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
@@ -11,7 +12,11 @@ import { AuthProvider } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
 
 function SamplePage({ program }) {
+  const router = useRouter()
+
   useAuthenticatedPage()
+
+  if (router.isFallback) return <div>Loading...</div>
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>
@@ -24,8 +29,8 @@ function SamplePage({ program }) {
   )
 }
 
-export async function getStaticPaths({ preview = false }) {
-  const { programs } = await getProgramsPaths({ free: true }, preview)
+export async function getStaticPaths() {
+  const { programs } = await getProgramsPaths({ free: true })
 
   const paths = programs.map(({ category, id }) => ({
     params: {
@@ -36,7 +41,7 @@ export async function getStaticPaths({ preview = false }) {
 
   return {
     paths,
-    fallback: false
+    fallback: true
   }
 }
 

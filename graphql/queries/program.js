@@ -54,8 +54,8 @@ const ProgramsListQuery = gql`
 `
 
 const ProgramsPathsQuery = gql`
-  query ProgramsPathsQuery($free: Boolean!, $stage: Stage!) {
-    programs: programWeeks(stage: $stage, where: { free: $free }) {
+  query ProgramsPathsQuery($free: Boolean!) {
+    programs: programWeeks(where: { free: $free }) {
       id
       date
       category
