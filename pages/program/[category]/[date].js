@@ -1,29 +1,23 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
-import { AuthProvider, useAuthState } from '@/context/auth'
+import { AuthProvider } from '@/context/auth'
 import DaySection from '@/components/day-section'
 import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
-import { useAuthenticatedPage, useProtectedPage } from '@/hooks/auth'
+import {
+  useAccessiblePage,
+  useAuthenticatedPage,
+  useProtectedPage
+} from '@/hooks/auth'
 
 function ProgramPage({ program }) {
-  const { user } = useAuthState()
-  const router = useRouter()
-
   useAuthenticatedPage()
   useProtectedPage()
-
-  React.useEffect(() => {
-    const isFutureProgram = new Date(program.date) > new Date()
-    const isInaccessibleProgam = user?.accessDate > new Date(program.date)
-
-    if (isFutureProgram || isInaccessibleProgam) router.push('/')
-  }, [program, user])
+  useAccessiblePage({ programDate: program.date })
 
   return (
     <Page title={program.title} meta={<ProgramMeta {...program} />}>

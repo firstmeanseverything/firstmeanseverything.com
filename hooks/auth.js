@@ -3,6 +3,19 @@ import { useRouter } from 'next/router'
 
 import { useAuthState } from '@/context/auth'
 
+function useAccessiblePage({ programDate }) {
+  const { user } = useAuthState()
+  const router = useRouter()
+
+  React.useEffect(() => {
+    const isFutureProgram = new Date(programDate) > new Date()
+    const isInaccessibleProgam = user?.accessDate > new Date(programDate)
+
+    if (!router.isPreview && (isFutureProgram || isInaccessibleProgam))
+      router.push('/')
+  }, [programDate, router.isPreview, user])
+}
+
 function useAuthenticatedPage() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
@@ -13,13 +26,12 @@ function useAuthenticatedPage() {
 }
 
 function useProtectedPage({ permittedRoles = ['basic'] } = {}) {
-  const { isAuthenticating, user } = useAuthState()
+  const { user } = useAuthState()
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
-      router.push('/')
-  }, [isAuthenticating, user])
+    if (!permittedRoles.includes(user?.stripeRole)) router.push('/')
+  }, [user])
 }
 
 function useUnauthenticatedPage() {
@@ -31,4 +43,9 @@ function useUnauthenticatedPage() {
   }, [isAuthenticating, user])
 }
 
-export { useAuthenticatedPage, useProtectedPage, useUnauthenticatedPage }
+export {
+  useAccessiblePage,
+  useAuthenticatedPage,
+  useProtectedPage,
+  useUnauthenticatedPage
+}
