@@ -45,8 +45,8 @@ function Index({ preview, product }) {
       query(
         {
           category: activeCategory,
-          limit,
-          offset,
+          limit: Number(limit),
+          offset: Number(offset),
           to: format(new Date(), 'yyyy-MM-dd'),
           ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
         },

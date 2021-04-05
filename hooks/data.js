@@ -1,17 +1,30 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 
-function usePaginationQueryParams() {
-  const { query } = useRouter()
-  const [limit, setLimit] = React.useState(25)
-  const [offset, setOffset] = React.useState(0)
+function queryParamsReducer(state, { payload, type }) {
+  switch (type) {
+    case 'UPDATE':
+      return { ...state, ...payload }
+    default:
+      throw new Error(`Unhandled action type: ${type}`)
+  }
+}
+
+function usePaginationQueryParams({ limit = 25, offset = 0 } = {}) {
+  const [queryParamsState, queryParamsDispatch] = React.useReducer(
+    queryParamsReducer,
+    {
+      limit,
+      offset
+    }
+  )
+  const router = useRouter()
 
   React.useEffect(() => {
-    if (query?.limit) setLimit(Number(query.limit))
-    if (query?.offset) setOffset(Number(query.offset))
-  }, [query.limit, query.offset])
+    queryParamsDispatch({ type: 'UPDATE', payload: router.query })
+  }, [router.query])
 
-  return { limit, offset }
+  return queryParamsState
 }
 
 export { usePaginationQueryParams }
