@@ -1,10 +1,10 @@
 import { getProgramPreviewPage } from '@/lib/graphcms'
 
 async function handler(req, res) {
-  if (
-    !(req.query.secret === process.env.GRAPHCMS_PREVIEW_TOKEN || req.query.id)
-  )
-    return res.status(401).json({ message: 'Invalid token' })
+  if (!req.query.id)
+    return res
+      .status(401)
+      .json({ status: 401, message: 'No ID query parameter found' })
 
   const { program } = await getProgramPreviewPage(req.query.id)
 
