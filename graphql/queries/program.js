@@ -20,8 +20,8 @@ const ProgramPageQuery = gql`
 `
 
 const ProgramPreviewPageQuery = gql`
-  query ProgramPreviewPageQuery($id: ID!) {
-    program: programWeek(where: { id: $id }) {
+  query ProgramPreviewPageQuery($id: ID!, $stage: Stage!) {
+    program: programWeek(stage: $stage, where: { id: $id }) {
       id
       category
       date
