@@ -1,5 +1,6 @@
 import * as React from 'react'
 import useSWR from 'swr'
+import Link from 'next/link'
 import cx from 'classnames'
 import format from 'date-fns/format'
 
@@ -85,6 +86,26 @@ function Index({ preview, product }) {
           Header: 'Category',
           accessor: 'node.category',
           Cell: ({ value }) => <Badge label={value} theme="green" />
+        },
+        {
+          id: 'view',
+          accessor: 'node',
+          Cell: ({ value: program }) => (
+            <Link
+              href={
+                program.free
+                  ? `/program/${program.category.toLowerCase()}/sample/${
+                      program.id
+                    }`
+                  : `/program/${program.category.toLowerCase()}/${program.date}`
+              }
+            >
+              <a className="text-gray-500 text-lg">
+                <span className="sr-only">View program</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </Link>
+          )
         }
       ],
       []
