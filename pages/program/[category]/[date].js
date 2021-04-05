@@ -38,7 +38,7 @@ function ProgramPage({ program }) {
 }
 
 export async function getStaticPaths() {
-  const { programs } = await getProgramsPaths({ free: true })
+  const { programs } = await getProgramsPaths({ free: false })
 
   const paths = programs.map(({ category, date }) => ({
     params: {
