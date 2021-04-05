@@ -3,13 +3,12 @@ import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
+import { AuthProvider, useAuthState } from '@/context/auth'
 import DaySection from '@/components/day-section'
-import graphCmsClient from '@/lib/graphcms'
+import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
 import Page from '@/components/page'
 import ProgramMeta from '@/components/program-meta'
-import { AuthProvider, useAuthState } from '@/context/auth'
-import { ProgramPageQuery, ProgramsPathsQuery } from '@/queries/program'
 import { useAuthenticatedPage, useProtectedPage } from '@/hooks/auth'
 
 function ProgramPage({ program }) {
@@ -39,10 +38,8 @@ function ProgramPage({ program }) {
   )
 }
 
-export async function getStaticPaths() {
-  const { programs } = await graphCmsClient.request(ProgramsPathsQuery, {
-    free: false
-  })
+export async function getStaticPaths({ preview = false }) {
+  const { programs } = await getProgramsPaths({ free: false }, preview)
 
   const paths = programs.map(({ category, date }) => ({
     params: {
@@ -57,13 +54,16 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, preview = false }) {
   const {
     programs: [program]
-  } = await graphCmsClient.request(ProgramPageQuery, {
-    category: params.category.toUpperCase(),
-    date: params.date
-  })
+  } = await getProgramPage(
+    {
+      category: params.category.toUpperCase(),
+      date: params.date
+    },
+    preview
+  )
 
   const { days, ...rest } = program
 
