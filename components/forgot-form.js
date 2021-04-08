@@ -61,6 +61,7 @@ function ForgotForm() {
             <div>
               <FormInput
                 field="email"
+                type="email"
                 label="Email address"
                 placeholder="team@firstmeanseverything.com"
                 disabled={formLoading}
