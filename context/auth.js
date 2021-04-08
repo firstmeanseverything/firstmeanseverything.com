@@ -114,7 +114,7 @@ function AuthProvider({ children }) {
   )
 
   React.useEffect(() => {
-    const listener = firebase.auth().onAuthStateChanged(handleUser)
+    const listener = firebase.auth().onIdTokenChanged(handleUser)
 
     return () => listener()
   }, [])
