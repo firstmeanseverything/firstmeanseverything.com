@@ -174,7 +174,7 @@ export async function getStaticProps({ preview = false }) {
 
   return {
     props: {
-      preview,
+      preview: process.env.NODE_ENV === 'development' ? true : preview,
       product
     }
   }

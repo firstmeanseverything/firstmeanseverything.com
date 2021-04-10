@@ -53,7 +53,7 @@ export async function getStaticProps({ params, preview = false }) {
       category: params.category.toUpperCase(),
       id: params.id
     },
-    preview
+    process.env.NODE_ENV === 'development' ? true : preview
   )
 
   if (!program) {
