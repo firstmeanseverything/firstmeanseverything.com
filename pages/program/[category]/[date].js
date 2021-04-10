@@ -4,18 +4,16 @@ import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
 import { AuthProvider } from '@/context/auth'
-import DaySection from '@/components/day-section'
 import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
-import Page from '@/components/page'
-import ProgramMeta from '@/components/program-meta'
+import ProgramPage from '@/components/program-page'
 import {
   useAccessiblePage,
   useAuthenticatedPage,
   useProtectedPage
 } from '@/hooks/auth'
 
-function ProgramPage({ program }) {
+function SubscribedProgramPage({ program }) {
   const router = useRouter()
 
   if (router.isFallback) return <div>Loading...</div>
@@ -24,17 +22,7 @@ function ProgramPage({ program }) {
   useProtectedPage()
   useAccessiblePage({ programDate: program.date })
 
-  return (
-    <Page title={program.title} meta={<ProgramMeta {...program} />}>
-      <div className="bg-white shadow rounded sm:rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <dl className="divide-y space-y-6">
-            {[...program.days, { rest: true, title: 'Sunday' }].map(DaySection)}
-          </dl>
-        </div>
-      </div>
-    </Page>
-  )
+  return <ProgramPage program={program} />
 }
 
 export async function getStaticPaths() {
@@ -93,4 +81,4 @@ export async function getStaticProps({ params, preview = false }) {
   }
 }
 
-export default ProgramPage
+export default SubscribedProgramPage

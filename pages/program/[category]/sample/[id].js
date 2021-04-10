@@ -3,12 +3,10 @@ import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
 
-import DaySection from '@/components/day-section'
+import { AuthProvider } from '@/context/auth'
 import { getProgramsPaths, getSampleProgramPage } from '@/lib/graphcms'
 import mdxComponents from '@/components/mdx'
-import Page from '@/components/page'
-import ProgramMeta from '@/components/program-meta'
-import { AuthProvider } from '@/context/auth'
+import ProgramPage from '@/components/program-page'
 import { useAuthenticatedPage } from '@/hooks/auth'
 
 function SamplePage({ program }) {
@@ -18,15 +16,7 @@ function SamplePage({ program }) {
 
   useAuthenticatedPage()
 
-  return (
-    <Page title={program.title} meta={<ProgramMeta {...program} />}>
-      <div className="bg-white shadow rounded sm:rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <dl className="divide-y space-y-6">{program.days.map(DaySection)}</dl>
-        </div>
-      </div>
-    </Page>
-  )
+  return <ProgramPage program={program} />
 }
 
 export async function getStaticPaths() {
