@@ -22,6 +22,10 @@ const ProgramPageFragment = gql`
   fragment ProgramPageFragment on ProgramWeek {
     bias
     category
+    createdBy {
+      name
+      picture
+    }
     days {
       activeRecovery
       content
@@ -30,6 +34,7 @@ const ProgramPageFragment = gql`
     }
     free
     id
+    notes
     title
   }
 `
