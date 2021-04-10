@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { useAuthState } from '@/context/auth'
 
-function useAccessiblePage({ programDate }) {
+function useAccessiblePage({ programDate } = {}) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
