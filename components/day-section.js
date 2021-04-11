@@ -23,12 +23,12 @@ function DaySection(
     : null
 
   return (
-    <div key={title} className="pt-6 first:pt-0">
-      <dt className="text-2xl leading-7">
+    <div key={title}>
+      <dt className="px-4 py-4 text-lg leading-7 sm:py-5 sm:px-6">
         <button
           {...(!rest && { onClick: () => toggleDayOpen() })}
           className={cx(
-            'text-left w-full flex justify-between items-start text-gray-400 focus:outline-none focus:text-gray-900',
+            'text-left w-full flex justify-between items-center text-gray-400 focus:outline-none focus:text-gray-900',
             {
               'cursor-default': rest
             }
@@ -40,10 +40,13 @@ function DaySection(
           ) : (
             <span className="ml-6 h-7 flex items-center">
               <svg
-                className={cx('h-6 w-6 transform', {
-                  '-rotate-180': dayOpen,
-                  'rotate-0': !dayOpen
-                })}
+                className={cx(
+                  'h-6 w-6 transform transition-transform duration-100',
+                  {
+                    '-rotate-180': dayOpen,
+                    'rotate-0': !dayOpen
+                  }
+                )}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -60,17 +63,22 @@ function DaySection(
         </button>
       </dt>
       {!rest && (
-        <dd
-          className={cx('border-t mt-6 pr-12 pt-6 space-y-6', {
-            hidden: !dayOpen
-          })}
-        >
-          {activeRecovery ? (
-            <WorkoutBlock title="Active Recovery">{mdxContent}</WorkoutBlock>
-          ) : (
-            mdxContent
+        <div
+          className={cx(
+            'border-b border-t border-gray-200 bg-gray-50 px-4 py-6 sm:px-6 sm:py-8',
+            {
+              hidden: !dayOpen
+            }
           )}
-        </dd>
+        >
+          <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6">
+            {activeRecovery ? (
+              <WorkoutBlock title="Active Recovery">{mdxContent}</WorkoutBlock>
+            ) : (
+              mdxContent
+            )}
+          </ul>
+        </div>
       )}
     </div>
   )
