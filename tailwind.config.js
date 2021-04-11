@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ecstasy: '#fb751c',
         saffron: '#f3c43d',
         shark: '#262629'
       }

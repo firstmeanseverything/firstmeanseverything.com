@@ -47,7 +47,7 @@ function ProgramPage({ program }) {
                   A breakdown of your weekly work.
                 </p>
               </div>
-              <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+              <div className="border-t border-gray-200">
                 <dl className="sm:divide-y sm:divide-gray-200">
                   {[...program.days, { rest: true, title: 'Sunday' }].map(
                     DaySection

@@ -1,26 +1,34 @@
 import cx from 'classnames'
 
-function WorkoutBlock({ children, title }) {
-  const styleClass = (title) => {
-    switch (title) {
-      case 'Active Recovery':
-        return 'bg-yellow-50 border-yellow-200 text-yellow-500'
-      case 'Gymnastics':
-        return 'bg-indigo-50 border-indigo-200 text-indigo-500'
-      case 'Strength':
-        return 'bg-green-50 border-green-200 text-green-500'
-      case 'Metcon':
-        return 'bg-orange-50 border-orange-200 text-orange-500'
+function WorkoutBlock({ children, title, type }) {
+  const styleClass = (type) => {
+    switch (type) {
+      case 'recovery':
+        return 'bg-yellow-50'
+      case 'gymnastics':
+        return 'bg-ecstasy'
+      case 'strength':
+        return 'bg-saffron'
+      case 'metcon':
+        return 'bg-shark'
     }
   }
 
   return (
-    <div className={cx('border p-3 rounded', styleClass(title))}>
-      <h3 className="font-bold mb-4 text-lg tracking-tight uppercase">
-        {title}
-      </h3>
-      <div className="prose">{children}</div>
-    </div>
+    <li className="col-span-1 flex shadow-sm rounded-md">
+      <div
+        className={cx(
+          'flex-shrink-0 flex items-center justify-center w-8 text-white text-sm font-medium rounded-l-md',
+          styleClass(type)
+        )}
+      ></div>
+      <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+        <div className="flex-1 px-4 py-6 text-sm truncate">
+          <h3 className="text-lg font-medium">{title}</h3>
+          <div className="prose prose-sm sm:prose">{children}</div>
+        </div>
+      </div>
+    </li>
   )
 }
 
