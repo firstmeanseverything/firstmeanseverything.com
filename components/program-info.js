@@ -76,7 +76,7 @@ function ProgramInfo({ program }) {
       aria-labelledby="information-title"
       className="lg:col-start-3 lg:col-span-1 order-first lg:order-last"
     >
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg lg:sticky lg:top-10">
         <div className="px-4 py-5 sm:px-6">
           <h2
             id="information-title"
