@@ -60,8 +60,22 @@ function Index({ preview, product }) {
       () => [
         {
           id: 'title',
-          Header: 'Title',
-          accessor: 'node.title'
+          accessor: ({ node }) => ({
+            date: node?.date,
+            title: node.title
+          }),
+          Cell: ({ value: { date, title } }) => (
+            <div>
+              <div className="font-medium text-gray-900">{title}</div>
+              {date ? (
+                <div className="text-gray-500">
+                  {new Intl.DateTimeFormat('en-GB', {
+                    dateStyle: 'full'
+                  }).format(new Date(date))}
+                </div>
+              ) : null}
+            </div>
+          )
         },
         {
           id: 'bias',
@@ -73,18 +87,6 @@ function Index({ preview, product }) {
             ) : (
               <React.Fragment>&mdash;</React.Fragment>
             )
-        },
-        {
-          id: 'date',
-          Header: 'Date',
-          accessor: 'node.date',
-          Cell: ({ value }) =>
-            new Intl.DateTimeFormat('en-GB', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            }).format(new Date(value))
         },
         {
           id: 'category',
@@ -116,19 +118,12 @@ function Index({ preview, product }) {
       []
     ),
     data: data?.programs.edges,
-    initialState: {
-      hiddenColumns: ['date']
-    },
     pagination: {
       totalPages:
         Math.ceil(data?.programs.aggregate.count / pagination.limit) || null,
       ...pagination
     }
   })
-
-  React.useEffect(() => {
-    if (hasSubscription) setHiddenColumns([])
-  }, [hasSubscription])
 
   const programCategories = [
     { label: 'RX', value: 'RX' },
