@@ -33,8 +33,7 @@ function Index({ preview, product }) {
             ProgramsListQuery,
             activeCategory,
             pagination.limit,
-            pagination.offset,
-            user.accessDate
+            pagination.offset
           ]
         : [
             SampleProgramsListQuery,
@@ -43,7 +42,7 @@ function Index({ preview, product }) {
             pagination.offset
           ]
       : null,
-    (query, activeCategory, limit, offset, accessDate) =>
+    (query, activeCategory, limit, offset) =>
       getProgramsList(
         query,
         {
@@ -51,7 +50,9 @@ function Index({ preview, product }) {
           limit: Number(limit),
           offset: Number(offset),
           to: format(new Date(), 'yyyy-MM-dd'),
-          ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
+          ...(hasSubscription && {
+            from: format(user.accessDate, 'yyyy-MM-dd')
+          })
         },
         preview
       ),
