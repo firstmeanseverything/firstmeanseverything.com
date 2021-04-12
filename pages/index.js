@@ -6,9 +6,10 @@ import cx from 'classnames'
 import format from 'date-fns/format'
 
 import Badge from '@/components/badge'
-import { getProgramsList, getSampleProgramsList } from '@/lib/graphcms'
+import { getProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
 import Page from '@/components/page'
+import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
@@ -29,21 +30,22 @@ function Index({ preview, product }) {
     user
       ? hasSubscription
         ? [
-            getProgramsList,
+            ProgramsListQuery,
             activeCategory,
             pagination.limit,
             pagination.offset,
             user.accessDate
           ]
         : [
-            getSampleProgramsList,
+            SampleProgramsListQuery,
             activeCategory,
             pagination.limit,
             pagination.offset
           ]
       : null,
     (query, activeCategory, limit, offset, accessDate) =>
-      query(
+      getProgramsList(
+        query,
         {
           category: activeCategory,
           limit: Number(limit),
