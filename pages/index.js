@@ -67,7 +67,12 @@ function Index({ preview, product }) {
           id: 'bias',
           Header: 'Bias',
           accessor: 'node.bias',
-          Cell: ({ value }) => <Badge label={value} theme="green" />
+          Cell: ({ value }) =>
+            value ? (
+              <Badge label={value} theme="green" />
+            ) : (
+              <React.Fragment>&mdash;</React.Fragment>
+            )
         },
         {
           id: 'date',
