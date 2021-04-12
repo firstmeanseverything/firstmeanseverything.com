@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
 
-import { APMarkSVG } from '@/svgs'
+import { FMEMarkSVG } from '@/svgs'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
 
 function Navigation() {
@@ -39,7 +39,7 @@ function Navigation() {
               <div className="flex-shrink-0">
                 <Link href="/">
                   <a>
-                    <APMarkSVG className="h-8 text-white w-auto" />
+                    <FMEMarkSVG className="h-6 w-auto text-saffron" />
                   </a>
                 </Link>
               </div>

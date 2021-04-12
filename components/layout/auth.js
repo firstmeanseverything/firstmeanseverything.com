@@ -1,13 +1,13 @@
 import Image from 'next/image'
 
-import { APHorizontalSVG } from '@/svgs'
+import { FMEHorizontalSVG } from '@/svgs'
 
 function AuthLayout({ children }) {
   return (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 w-full sm:px-6 lg:flex-none lg:px-20 lg:w-1/2 xl:px-24">
         <div className="mx-auto w-full max-w-sm">
-          <APHorizontalSVG className="h-16 text-gray-900 w-auto" />
+          <FMEHorizontalSVG className="h-16 w-auto text-shark" />
           {children}
         </div>
       </div>
@@ -17,7 +17,6 @@ function AuthLayout({ children }) {
           src="/images/auth-bg.jpg"
           layout="fill"
           priority={true}
-          alt=""
         />
       </div>
     </div>
