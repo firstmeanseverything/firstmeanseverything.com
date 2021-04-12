@@ -1,5 +1,6 @@
 import * as React from 'react'
 import useSWR from 'swr'
+import Image from 'next/image'
 import Link from 'next/link'
 import cx from 'classnames'
 import format from 'date-fns/format'
@@ -93,6 +94,27 @@ function Index({ preview, product }) {
           Header: 'Category',
           accessor: 'node.category',
           Cell: ({ value }) => <Badge label={value} theme="green" />
+        },
+        {
+          id: 'author',
+          Header: 'Author',
+          accessor: 'node.createdBy',
+          Cell: ({ value }) => (
+            <div className="flex items-center">
+              <div className="flex-shrink-0 relative h-10 w-10">
+                <Image
+                  className="rounded-full"
+                  src={value.picture}
+                  layout="fill"
+                />
+              </div>
+              <div className="ml-4">
+                <div className="text-sm font-medium text-gray-900">
+                  {value.name}
+                </div>
+              </div>
+            </div>
+          )
         },
         {
           id: 'view',
