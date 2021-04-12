@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
 
-import { APMarkSVG } from '@/svgs'
+import { FMEMarkSVG } from '@/svgs'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
 
 function Navigation() {
@@ -31,7 +31,7 @@ function Navigation() {
   )
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-shark">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="border-b border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-0">
@@ -39,7 +39,7 @@ function Navigation() {
               <div className="flex-shrink-0">
                 <Link href="/">
                   <a>
-                    <APMarkSVG className="h-8 text-white w-auto" />
+                    <FMEMarkSVG className="h-6 w-auto text-saffron" />
                   </a>
                 </Link>
               </div>

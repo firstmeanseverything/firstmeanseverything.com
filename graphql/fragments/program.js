@@ -8,6 +8,10 @@ const ProgramListFragment = gql`
     edges {
       node {
         bias
+        createdBy {
+          name
+          picture
+        }
         date
         category
         free

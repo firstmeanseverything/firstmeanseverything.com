@@ -1,13 +1,15 @@
 import * as React from 'react'
 import useSWR from 'swr'
+import Image from 'next/image'
 import Link from 'next/link'
 import cx from 'classnames'
 import format from 'date-fns/format'
 
 import Badge from '@/components/badge'
-import { getProgramsList, getSampleProgramsList } from '@/lib/graphcms'
+import { getProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
 import Page from '@/components/page'
+import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
@@ -28,27 +30,29 @@ function Index({ preview, product }) {
     user
       ? hasSubscription
         ? [
-            getProgramsList,
+            ProgramsListQuery,
             activeCategory,
             pagination.limit,
-            pagination.offset,
-            user.accessDate
+            pagination.offset
           ]
         : [
-            getSampleProgramsList,
+            SampleProgramsListQuery,
             activeCategory,
             pagination.limit,
             pagination.offset
           ]
       : null,
-    (query, activeCategory, limit, offset, accessDate) =>
-      query(
+    (query, activeCategory, limit, offset) =>
+      getProgramsList(
+        query,
         {
           category: activeCategory,
           limit: Number(limit),
           offset: Number(offset),
           to: format(new Date(), 'yyyy-MM-dd'),
-          ...(hasSubscription && { from: format(accessDate, 'yyyy-MM-dd') })
+          ...(hasSubscription && {
+            from: format(user.accessDate, 'yyyy-MM-dd')
+          })
         },
         preview
       ),
@@ -60,32 +64,60 @@ function Index({ preview, product }) {
       () => [
         {
           id: 'title',
-          Header: 'Title',
-          accessor: 'node.title'
+          accessor: ({ node }) => ({
+            date: node?.date,
+            title: node.title
+          }),
+          Cell: ({ value: { date, title } }) => (
+            <div>
+              <div className="font-medium text-gray-900">{title}</div>
+              {date ? (
+                <div className="text-gray-500">
+                  {new Intl.DateTimeFormat('en-GB', {
+                    dateStyle: 'full'
+                  }).format(new Date(date))}
+                </div>
+              ) : null}
+            </div>
+          )
         },
         {
           id: 'bias',
           Header: 'Bias',
           accessor: 'node.bias',
-          Cell: ({ value }) => <Badge label={value} theme="green" />
-        },
-        {
-          id: 'date',
-          Header: 'Date',
-          accessor: 'node.date',
           Cell: ({ value }) =>
-            new Intl.DateTimeFormat('en-GB', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            }).format(new Date(value))
+            value ? (
+              <Badge label={value} theme="green" />
+            ) : (
+              <React.Fragment>&mdash;</React.Fragment>
+            )
         },
         {
           id: 'category',
           Header: 'Category',
           accessor: 'node.category',
           Cell: ({ value }) => <Badge label={value} theme="green" />
+        },
+        {
+          id: 'author',
+          Header: 'Author',
+          accessor: 'node.createdBy',
+          Cell: ({ value }) => (
+            <div className="flex items-center">
+              <div className="flex-shrink-0 relative h-10 w-10">
+                <Image
+                  className="rounded-full"
+                  src={value.picture}
+                  layout="fill"
+                />
+              </div>
+              <div className="ml-4">
+                <div className="text-sm font-medium text-gray-900">
+                  {value.name}
+                </div>
+              </div>
+            </div>
+          )
         },
         {
           id: 'view',
@@ -111,19 +143,12 @@ function Index({ preview, product }) {
       []
     ),
     data: data?.programs.edges,
-    initialState: {
-      hiddenColumns: ['date']
-    },
     pagination: {
       totalPages:
         Math.ceil(data?.programs.aggregate.count / pagination.limit) || null,
       ...pagination
     }
   })
-
-  React.useEffect(() => {
-    if (hasSubscription) setHiddenColumns([])
-  }, [hasSubscription])
 
   const programCategories = [
     { label: 'RX', value: 'RX' },
