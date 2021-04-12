@@ -58,7 +58,7 @@ export async function getStaticProps({ params, preview = false }) {
     }
   }
 
-  const { days, ...rest } = program
+  const { days, notes, ...rest } = program
 
   return {
     props: {
@@ -75,6 +75,13 @@ export async function getStaticProps({ params, preview = false }) {
             ...day
           }))
         ),
+        notes: {
+          mdx: await renderToString(he.decode(notes), {
+            components: mdxComponents,
+            provider: { component: AuthProvider }
+          }),
+          markdown: notes
+        },
         ...rest
       }
     }
