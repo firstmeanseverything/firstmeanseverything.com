@@ -19,12 +19,16 @@ import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
 function Index({ preview, product }) {
-  const { user, userHasSubscription } = useAuthState()
+  const { isAuthenticating, user, userHasSubscription } = useAuthState()
   const pagination = usePaginationQueryParams()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = React.useState('rx')
 
   useAuthenticatedPage()
+
+  const showSubscriptionCta =
+    !(isAuthenticating || userHasSubscription) &&
+    ['rx', 'scaled'].includes(activeCategory)
 
   const { data, error } = useSWR(
     user
@@ -270,9 +274,7 @@ function Index({ preview, product }) {
               </div>
             </div>
             <div className="align-middle inline-block min-w-full border-b border-gray-200">
-              {user &&
-              !userHasSubscription &&
-              ['rx', 'scaled'].includes(activeCategory) ? (
+              {showSubscriptionCta ? (
                 <SubscriptionCTA {...product} />
               ) : (
                 <Table
