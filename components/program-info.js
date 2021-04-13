@@ -21,10 +21,8 @@ function ProgramInfo({ program }) {
         ? [
             {
               className: 'sm:col-span-1',
-              label: 'Published date',
-              value: new Intl.DateTimeFormat('en-GB', {
-                dateStyle: 'long'
-              }).format(new Date(program.date))
+              label: 'Dates',
+              value: program.dateRange
             }
           ]
         : []),
