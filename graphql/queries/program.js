@@ -64,18 +64,13 @@ const ProgramsPathsQuery = gql`
 `
 
 const SampleProgramsListQuery = gql`
-  query SampleProgramsListQuery(
-    $category: ProgramCategory!
-    $limit: Int!
-    $offset: Int!
-    $stage: Stage!
-  ) {
+  query SampleProgramsListQuery($limit: Int!, $offset: Int!, $stage: Stage!) {
     programs: programWeeksConnection(
       first: $limit
-      orderBy: createdAt_DESC
+      orderBy: createdAt_ASC
       skip: $offset
       stage: $stage
-      where: { category: $category, free: true }
+      where: { free: true }
     ) {
       ...ProgramListFragment
     }

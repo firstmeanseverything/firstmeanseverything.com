@@ -38,12 +38,12 @@ function Table({
   columns,
   getTableProps,
   getTableBodyProps,
-  headerGroups,
   loading,
   nextPage,
   page,
   prepareRow,
   previousPage,
+  rowOnClick,
   visibleColumns
 }) {
   if (!columns) return null
@@ -54,21 +54,6 @@ function Table({
         {...getTableProps()}
         className="min-w-full divide-y divide-gray-200"
       >
-        <thead className="bg-gray-50">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  scope="col"
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
         <tbody
           {...getTableBodyProps()}
           className="bg-white divide-y divide-gray-200"
@@ -96,11 +81,23 @@ function Table({
               prepareRow(row)
 
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  className="group"
+                  {...(rowOnClick && {
+                    onClick: () => rowOnClick(row.original)
+                  })}
+                >
                   {row.cells.map((cell) => (
                     <td
-                      {...cell.getCellProps()}
-                      className="px-6 py-4 whitespace-nowrap text-sm"
+                      {...cell.getCellProps([
+                        {
+                          className: [
+                            cell.column.className,
+                            'px-6 py-4 whitespace-nowrap text-sm cursor-pointer'
+                          ].join(' ')
+                        }
+                      ])}
                     >
                       {cell.render('Cell')}
                     </td>
@@ -113,23 +110,51 @@ function Table({
       </table>
       {!loading ? (
         <nav
-          className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+          className="border-t border-gray-200 pb-4 px-4 flex items-center justify-between"
           aria-label="Pagination"
         >
-          <div className="flex-1 flex justify-between sm:justify-end">
+          <div className="-mt-px w-0 flex-1 flex">
             <button
-              className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
+              <svg
+                className="mr-3 h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
               Previous
             </button>
+          </div>
+          <div className="-mt-px w-0 flex-1 flex justify-end">
             <button
-              className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >
               Next
+              <svg
+                className="ml-3 h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </button>
           </div>
         </nav>

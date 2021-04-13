@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import renderToString from 'next-mdx-remote/render-to-string'
 import he from 'he'
+import addDays from 'date-fns/addDays'
 
 import { AuthProvider } from '@/context/auth'
 import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
@@ -63,6 +64,9 @@ export async function getStaticProps({ params, preview = false }) {
   return {
     props: {
       program: {
+        dateRange: new Intl.DateTimeFormat('en-GB', {
+          dateStyle: 'long'
+        }).formatRange(new Date(rest.date), addDays(new Date(rest.date), 6)),
         days: await Promise.all(
           days.map(async ({ content, ...day }) => ({
             content: {

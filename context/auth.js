@@ -113,6 +113,11 @@ function AuthProvider({ children }) {
     [user]
   )
 
+  const userHasSubscription = React.useMemo(
+    () => ['basic'].includes(user?.stripeRole),
+    [user]
+  )
+
   React.useEffect(() => {
     const listener = firebase.auth().onIdTokenChanged(handleUser)
 
@@ -135,7 +140,12 @@ function AuthProvider({ children }) {
       }}
     >
       <AuthStateContext.Provider
-        value={{ availableAuthProviders, isAuthenticating, user }}
+        value={{
+          availableAuthProviders,
+          isAuthenticating,
+          user,
+          userHasSubscription
+        }}
       >
         {children}
       </AuthStateContext.Provider>

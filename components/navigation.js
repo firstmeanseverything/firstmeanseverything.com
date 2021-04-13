@@ -103,7 +103,7 @@ function Navigation() {
                           >
                             <Menu.Items
                               static
-                              className="origin-top-right absolute right-0 mt-2 w-56 bg-white
+                              className="origin-top-right absolute z-10 right-0 mt-2 w-56 bg-white
                             border border-gray-200 divide-y divide-gray-100
                             rounded-md shadow-lg outline-none"
                             >

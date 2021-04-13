@@ -21,10 +21,8 @@ function ProgramInfo({ program }) {
         ? [
             {
               className: 'sm:col-span-1',
-              label: 'Published date',
-              value: new Intl.DateTimeFormat('en-GB', {
-                dateStyle: 'long'
-              }).format(new Date(program.date))
+              label: 'Dates',
+              value: program.dateRange
             }
           ]
         : []),
@@ -99,7 +97,7 @@ function ProgramInfo({ program }) {
           </p>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-2">
             {information.map(({ className, label, value }, index) => (
               <div key={index} className={cx(className)}>
                 <dt className="text-sm font-medium text-gray-500">{label}</dt>

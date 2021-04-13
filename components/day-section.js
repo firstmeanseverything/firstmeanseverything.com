@@ -65,7 +65,7 @@ function DaySection(
       {!rest && (
         <div
           className={cx(
-            'border-b border-t border-gray-200 bg-gray-50 px-4 py-6 sm:px-6 sm:py-8',
+            'border-b border-t border-gray-200 bg-gray-50 px-4 py-6 sm:border-b-0 sm:px-6 sm:py-8',
             {
               hidden: !dayOpen
             }
