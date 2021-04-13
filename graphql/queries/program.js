@@ -67,7 +67,7 @@ const SampleProgramsListQuery = gql`
   query SampleProgramsListQuery($limit: Int!, $offset: Int!, $stage: Stage!) {
     programs: programWeeksConnection(
       first: $limit
-      orderBy: createdAt_DESC
+      orderBy: createdAt_ASC
       skip: $offset
       stage: $stage
       where: { free: true }

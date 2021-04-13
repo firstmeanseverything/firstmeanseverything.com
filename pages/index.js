@@ -102,13 +102,12 @@ function Index({ preview, product }) {
         {
           id: 'category',
           accessor: 'node.category',
-          className: 'hidden sm:table-cell',
           Cell: ({ value }) => <Badge label={value} theme="green" />
         },
         {
           id: 'author',
           accessor: 'node.createdBy',
-          className: 'hidden sm:table-cell',
+          className: 'hidden md:table-cell',
           Cell: ({ value }) => (
             <div className="flex items-center">
               <div className="flex-shrink-0 relative h-10 w-10">
@@ -148,9 +147,6 @@ function Index({ preview, product }) {
       ],
       []
     ),
-    initialState: {
-      hiddenColumns: ['category']
-    },
     data: data?.programs.edges,
     pagination: {
       totalPages:
@@ -166,7 +162,9 @@ function Index({ preview, product }) {
   }, [router.query.category])
 
   React.useEffect(() => {
-    if (activeCategory === 'samples') setHiddenColumns([])
+    if (activeCategory === 'samples') return setHiddenColumns([])
+
+    return setHiddenColumns(['category'])
   }, [activeCategory])
 
   const viewProgram = ({ node: program }) =>
@@ -206,7 +204,7 @@ function Index({ preview, product }) {
                 <select
                   id="tabs"
                   name="tabs"
-                  className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md"
+                  className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-shark focus:border-shark sm:text-sm rounded-md"
                   value={activeCategory}
                   onChange={(e) => setActiveCategory(e.target.value)}
                 >
