@@ -19,26 +19,23 @@ import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
 function Index({ preview, product }) {
-  const { user } = useAuthState()
+  const { user, userHasSubscription } = useAuthState()
   const pagination = usePaginationQueryParams()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = React.useState('rx')
 
   useAuthenticatedPage()
 
-  const hasSubscription = user?.stripeRole === 'basic'
-  const showSamplePrograms = activeCategory === 'samples'
-
   const { data, error } = useSWR(
     user
-      ? showSamplePrograms
+      ? activeCategory === 'samples'
         ? [
             SampleProgramsListQuery,
             activeCategory,
             pagination.limit,
             pagination.offset
           ]
-        : hasSubscription
+        : userHasSubscription
         ? [
             ProgramsListQuery,
             activeCategory,
@@ -53,7 +50,7 @@ function Index({ preview, product }) {
         {
           limit: Number(limit),
           offset: Number(offset),
-          ...(hasSubscription && {
+          ...(userHasSubscription && {
             category: activeCategory.toUpperCase(),
             from: format(user.accessDate, 'yyyy-MM-dd'),
             to: format(new Date(), 'yyyy-MM-dd')
@@ -273,7 +270,9 @@ function Index({ preview, product }) {
               </div>
             </div>
             <div className="align-middle inline-block min-w-full border-b border-gray-200">
-              {!hasSubscription && ['rx', 'scaled'].includes(activeCategory) ? (
+              {user &&
+              !userHasSubscription &&
+              ['rx', 'scaled'].includes(activeCategory) ? (
                 <SubscriptionCTA {...product} />
               ) : (
                 <Table
