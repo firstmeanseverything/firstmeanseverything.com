@@ -31,19 +31,21 @@ function Index({ preview, product }) {
 
   const { data, error } = useSWR(
     user
-      ? hasSubscription
+      ? showSamplePrograms
+        ? [
+            SampleProgramsListQuery,
+            activeCategory,
+            pagination.limit,
+            pagination.offset
+          ]
+        : hasSubscription
         ? [
             ProgramsListQuery,
             activeCategory,
             pagination.limit,
             pagination.offset
           ]
-        : [
-            SampleProgramsListQuery,
-            activeCategory,
-            pagination.limit,
-            pagination.offset
-          ]
+        : null
       : null,
     (query, activeCategory, limit, offset) =>
       getProgramsList(
