@@ -1,14 +1,15 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
-import Link from 'next/link'
 import cx from 'classnames'
 import format from 'date-fns/format'
 
+import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
-import Page from '@/components/page'
 import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
@@ -20,11 +21,13 @@ import { usePaginatedTable } from '@/hooks/table'
 function Index({ preview, product }) {
   const { user } = useAuthState()
   const pagination = usePaginationQueryParams()
-  const [activeCategory, setActiveCategory] = React.useState('RX')
+  const router = useRouter()
+  const [activeCategory, setActiveCategory] = React.useState('rx')
 
   useAuthenticatedPage()
 
   const hasSubscription = user?.stripeRole === 'basic'
+  const showSamplePrograms = activeCategory === 'samples'
 
   const { data, error } = useSWR(
     user
@@ -46,12 +49,12 @@ function Index({ preview, product }) {
       getProgramsList(
         query,
         {
-          category: activeCategory,
           limit: Number(limit),
           offset: Number(offset),
-          to: format(new Date(), 'yyyy-MM-dd'),
           ...(hasSubscription && {
-            from: format(user.accessDate, 'yyyy-MM-dd')
+            category: activeCategory.toUpperCase(),
+            from: format(user.accessDate, 'yyyy-MM-dd'),
+            to: format(new Date(), 'yyyy-MM-dd')
           })
         },
         preview
@@ -68,6 +71,7 @@ function Index({ preview, product }) {
             date: node?.date,
             title: node.title
           }),
+          className: 'max-w-0 w-full',
           Cell: ({ value: { date, title } }) => (
             <div>
               <div className="font-medium text-gray-900">{title}</div>
@@ -83,8 +87,8 @@ function Index({ preview, product }) {
         },
         {
           id: 'bias',
-          Header: 'Bias',
           accessor: 'node.bias',
+          className: 'hidden md:table-cell',
           Cell: ({ value }) =>
             value ? (
               <Badge label={value} theme="green" />
@@ -94,14 +98,14 @@ function Index({ preview, product }) {
         },
         {
           id: 'category',
-          Header: 'Category',
           accessor: 'node.category',
+          className: 'hidden sm:table-cell',
           Cell: ({ value }) => <Badge label={value} theme="green" />
         },
         {
           id: 'author',
-          Header: 'Author',
           accessor: 'node.createdBy',
+          className: 'hidden sm:table-cell',
           Cell: ({ value }) => (
             <div className="flex items-center">
               <div className="flex-shrink-0 relative h-10 w-10">
@@ -120,28 +124,30 @@ function Index({ preview, product }) {
           )
         },
         {
-          id: 'view',
-          accessor: 'node',
-          Cell: ({ value: program }) => (
-            <Link
-              href={
-                program.free
-                  ? `/program/${program.category.toLowerCase()}/sample/${
-                      program.id
-                    }`
-                  : `/program/${program.category.toLowerCase()}/${program.date}`
-              }
+          id: 'icon',
+          className: 'text-gray-500 group-hover:text-gray-700',
+          Cell: () => (
+            <svg
+              className="h-5 w-5 "
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
             >
-              <a className="text-gray-500 text-lg">
-                <span className="sr-only">View program</span>
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-            </Link>
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
           )
         }
       ],
       []
     ),
+    initialState: {
+      hiddenColumns: ['category']
+    },
     data: data?.programs.edges,
     pagination: {
       totalPages:
@@ -150,47 +156,135 @@ function Index({ preview, product }) {
     }
   })
 
-  const programCategories = [
-    { label: 'RX', value: 'RX' },
-    { label: 'Scaled', value: 'SCALED' }
-  ]
+  React.useEffect(() => {
+    if (!router.query.category) return setActiveCategory('rx')
 
-  const HeaderControls = () => {
-    return (
-      <nav className="flex space-x-4">
-        {programCategories.map((category, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveCategory(category.value)}
-            className={cx(
-              'px-3 py-2 font-medium text-sm leading-5 rounded-md focus:outline-none',
-              {
-                'text-indigo-700 bg-indigo-100 focus:text-indigo-800 focus:bg-indigo-200':
-                  activeCategory === category.value,
-                'text-gray-500 hover:text-gray-700 focus:text-indigo-600 focus:bg-indigo-50':
-                  activeCategory !== category.value
-              }
-            )}
-            aria-current={activeCategory === category.value ? 'page' : 'false'}
-          >
-            {category.label}
-          </button>
-        ))}
-      </nav>
-    )
-  }
+    return setActiveCategory(router.query.category)
+  }, [router.query.category])
+
+  React.useEffect(() => {
+    if (activeCategory === 'samples') setHiddenColumns([])
+  }, [activeCategory])
+
+  const viewProgram = ({ node: program }) =>
+    program.free
+      ? router.push(
+          `/program/${program.category.toLowerCase()}/sample/${program.id}`
+        )
+      : router.push(
+          `/program/${program.category.toLowerCase()}/${program.date}`
+        )
 
   return (
-    <Page title="Program" controls={<HeaderControls />}>
-      {user && !hasSubscription && <SubscriptionCTA {...product} />}
-      <div className="flex flex-col">
-        <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-          <div className="align-middle inline-block min-w-full overflow-hidden rounded sm:rounded-lg shadow">
-            <Table loading={!data} {...programTable} />
+    <main className="py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
+        <div className="flex items-center space-x-5">
+          <div className="flex-shrink-0">
+            <span className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-saffron">
+              <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
+            </span>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Athlete Program
+            </h1>
           </div>
         </div>
+        <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"></div>
       </div>
-    </Page>
+      <div className="mt-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <section>
+          <div className="bg-white shadow sm:rounded-lg">
+            <div className="border-b border-gray-200 px-4 sm:px-0">
+              <div className="py-4 sm:hidden">
+                <label htmlFor="tabs" className="sr-only">
+                  Select a tab
+                </label>
+                <select
+                  id="tabs"
+                  name="tabs"
+                  className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md"
+                  value={activeCategory}
+                  onChange={(e) => setActiveCategory(e.target.value)}
+                >
+                  <option value="rx">RX</option>
+                  <option value="scaled">Scaled</option>
+                  <option value="samples">Samples</option>
+                </select>
+              </div>
+              <div className="hidden sm:block">
+                <div className="sm:px-4">
+                  <nav className="mt-2 -mb-px flex space-x-8">
+                    <Link
+                      href={{
+                        pathname: router.pathname,
+                        query: { ...router.query, category: 'rx' }
+                      }}
+                    >
+                      <a
+                        className={cx(
+                          'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                          activeCategory === 'rx'
+                            ? 'border-saffron text-shark'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                        )}
+                      >
+                        RX
+                      </a>
+                    </Link>
+                    <Link
+                      href={{
+                        pathname: router.pathname,
+                        query: { ...router.query, category: 'scaled' }
+                      }}
+                    >
+                      <a
+                        className={cx(
+                          'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                          activeCategory === 'scaled'
+                            ? 'border-saffron text-shark'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                        )}
+                      >
+                        Scaled
+                      </a>
+                    </Link>
+                    <Link
+                      href={{
+                        pathname: router.pathname,
+                        query: { ...router.query, category: 'samples' }
+                      }}
+                    >
+                      <a
+                        className={cx(
+                          'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                          activeCategory === 'samples'
+                            ? 'border-saffron text-shark'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                        )}
+                      >
+                        Samples
+                      </a>
+                    </Link>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div className="align-middle inline-block min-w-full border-b border-gray-200">
+              {!hasSubscription && ['rx', 'scaled'].includes(activeCategory) ? (
+                <SubscriptionCTA {...product} />
+              ) : (
+                <Table
+                  loading={!data}
+                  rowOnClick={viewProgram}
+                  {...programTable}
+                />
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
   )
 }
 
