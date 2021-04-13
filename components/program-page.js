@@ -20,6 +20,16 @@ function ProgramPage({ program }) {
             <h1 className="text-2xl font-bold text-gray-900">
               {program.title}
             </h1>
+            {program.date ? (
+              <p className="text-sm font-medium text-gray-500">
+                Week beginning{' '}
+                <time className="text-gray-900" dateTime={program.date}>
+                  {new Intl.DateTimeFormat('en-GB', {
+                    dateStyle: 'full'
+                  }).format(new Date(program.date))}
+                </time>
+              </p>
+            ) : null}
           </div>
         </div>
         <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
