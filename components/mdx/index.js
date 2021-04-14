@@ -3,6 +3,11 @@ import PercentageWeightWork from '@/components/mdx/percentage-weight-work'
 import WorkoutBlock from '@/components/workout-block'
 
 const mdxComponents = {
+  Conditioning: ({ children, ...props }) => (
+    <WorkoutBlock {...props} title="Conditioning" type="conditioning">
+      {children}
+    </WorkoutBlock>
+  ),
   Gymnastics: ({ children, ...props }) => (
     <WorkoutBlock {...props} title="Gymnastics" type="gymnastics">
       {children}

@@ -3,10 +3,13 @@ import cx from 'classnames'
 function WorkoutBlock({ children, title, type }) {
   const styleClass = (type) => {
     switch (type) {
-      case 'recovery':
-        return 'bg-yellow-50'
+      case 'conditioning':
+        return 'bg-screamin'
       case 'gymnastics':
         return 'bg-ecstasy'
+      case 'recovery':
+        return 'bg-cornflower'
+      default:
       case 'strength':
         return 'bg-saffron'
       case 'metcon':
