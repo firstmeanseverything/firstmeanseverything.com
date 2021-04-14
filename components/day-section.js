@@ -8,11 +8,8 @@ import Badge from './badge'
 import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'
 
-function DaySection(
-  { activeRecovery = false, content, rest = false, title },
-  index
-) {
-  const [dayOpen, setDayOpen] = React.useState(index === 0)
+function DaySection({ activeRecovery = false, content, rest = false, title }) {
+  const [dayOpen, setDayOpen] = React.useState(false)
 
   const toggleDayOpen = () => setDayOpen((open) => !open)
 
