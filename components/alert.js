@@ -1,8 +1,10 @@
 import cx from 'classnames'
 
-import { CheckCircleSVG } from '@/icons'
-import { ExclamationCircleSVG } from '@/icons'
-import { XCircleSVG } from '@/icons'
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  XCircleIcon
+} from '@heroicons/react/solid'
 
 function Alert({ message, title, type = 'error' }) {
   const themeClass = (type) => {
@@ -47,11 +49,11 @@ function Alert({ message, title, type = 'error' }) {
     switch (type) {
       case 'error':
       default:
-        return <XCircleSVG className={baseClass} />
+        return <XCircleIcon className={baseClass} />
       case 'success':
-        return <CheckCircleSVG className={baseClass} />
+        return <CheckCircleIcon className={baseClass} />
       case 'warn':
-        return <ExclamationCircleSVG className={baseClass} />
+        return <ExclamationCircleIcon className={baseClass} />
     }
   }
 

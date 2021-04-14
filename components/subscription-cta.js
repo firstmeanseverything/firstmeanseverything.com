@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { CheckCircleIcon } from '@heroicons/react/solid'
 
 import Button from '@/components/button'
 import { createCheckoutSession } from '@/lib/db'
@@ -30,17 +31,7 @@ function SubscriptionCTA({ description, name, prices }) {
           <ul className="mt-8 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5">
             <li className="flex items-start lg:col-span-1">
               <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-green-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
                 Weekly program published every Monday
@@ -48,17 +39,7 @@ function SubscriptionCTA({ description, name, prices }) {
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
               <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-green-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
                 RX and scaled tracks available
@@ -66,17 +47,7 @@ function SubscriptionCTA({ description, name, prices }) {
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
               <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-green-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
                 8 week cycles switching focus between conditioning,
@@ -85,17 +56,7 @@ function SubscriptionCTA({ description, name, prices }) {
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
               <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-green-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
                 Access to private Facebook community

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import hydrate from 'next-mdx-remote/hydrate'
 import cx from 'classnames'
+import { ChevronDownIcon } from '@heroicons/react/outline'
 
 import { AuthProvider } from '@/context/auth'
 import Badge from './badge'
@@ -39,7 +40,7 @@ function DaySection(
             <Badge label="Rest" theme="green" />
           ) : (
             <span className="ml-6 h-7 flex items-center">
-              <svg
+              <ChevronDownIcon
                 className={cx(
                   'h-6 w-6 transform transition-transform duration-100',
                   {
@@ -47,17 +48,7 @@ function DaySection(
                     'rotate-0': !dayOpen
                   }
                 )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              />
             </span>
           )}
         </button>
