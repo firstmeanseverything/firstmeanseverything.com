@@ -61,7 +61,9 @@ function DaySection({ activeRecovery = false, content, rest = false, title }) {
         >
           <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6">
             {activeRecovery ? (
-              <WorkoutBlock title="Active Recovery">{mdxContent}</WorkoutBlock>
+              <WorkoutBlock title="Active Recovery" type="recovery">
+                {mdxContent}
+              </WorkoutBlock>
             ) : (
               mdxContent
             )}

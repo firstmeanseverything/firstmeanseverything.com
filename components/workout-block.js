@@ -4,7 +4,7 @@ function WorkoutBlock({ children, title, type }) {
   const styleClass = (type) => {
     switch (type) {
       case 'recovery':
-        return 'bg-yellow-50'
+        return 'bg-cornflower'
       case 'gymnastics':
         return 'bg-ecstasy'
       case 'strength':
