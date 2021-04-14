@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'classnames'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { UserIcon } from '@heroicons/react/solid'
 
 import { FMEMarkSVG } from '@/svgs'
 import { useAuthDispatch, useAuthState } from '@/context/auth'
@@ -83,13 +85,7 @@ function Navigation() {
                             className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
                           >
                             <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
-                              <svg
-                                className="h-full w-full text-gray-300"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                              </svg>
+                              <UserIcon className="h-full w-full text-gray-300" />
                             </span>
                           </Menu.Button>
                           <Transition
@@ -166,38 +162,11 @@ function Navigation() {
                 onClick={toggleNavOpen}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
               >
-                <svg
-                  className={cx('h-6 w-6', {
-                    hidden: navOpen,
-                    block: !navOpen
-                  })}
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-                <svg
-                  className={cx('h-6 w-6', {
-                    hidden: !navOpen,
-                    block: navOpen
-                  })}
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                {navOpen ? (
+                  <XIcon className="h-6 w-6" />
+                ) : (
+                  <MenuIcon className="h-6 w-6" />
+                )}
               </button>
             </div>
           </div>
@@ -241,13 +210,7 @@ function Navigation() {
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
-                  <svg
-                    className="h-full w-full text-gray-300"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
+                  <UserIcon className="h-full w-full text-gray-300" />
                 </span>
               </div>
               <div className="ml-3">

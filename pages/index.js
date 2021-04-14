@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import cx from 'classnames'
 import format from 'date-fns/format'
+import { ChevronRightIcon } from '@heroicons/react/solid'
 
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
@@ -129,19 +130,7 @@ function Index({ preview, product }) {
           id: 'icon',
           className: 'text-gray-500 group-hover:text-gray-700',
           Cell: () => (
-            <svg
-              className="h-5 w-5 "
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
           )
         }
       ],
