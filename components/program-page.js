@@ -64,9 +64,7 @@ function ProgramPage({ program }) {
               </div>
               <div className="border-t border-gray-200">
                 <dl className="sm:divide-y sm:divide-gray-200">
-                  {[...program.days, { rest: true, title: 'Sunday' }].map(
-                    DaySection
-                  )}
+                  {program.days.map(DaySection)}
                 </dl>
               </div>
             </div>
