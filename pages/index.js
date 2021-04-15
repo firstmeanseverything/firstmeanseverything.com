@@ -78,13 +78,13 @@ function Index({ preview, product }) {
           className: 'max-w-0 w-full',
           Cell: ({ value: { date, title } }) => (
             <div>
-              <div className="font-medium text-gray-900">{title}</div>
+              <p className="text-sm font-medium text-gray-900">{title}</p>
               {date ? (
-                <div className="text-gray-500">
+                <p className="text-sm text-gray-500">
                   {new Intl.DateTimeFormat('en-GB', {
                     dateStyle: 'full'
                   }).format(new Date(date))}
-                </div>
+                </p>
               ) : null}
             </div>
           )
@@ -119,9 +119,9 @@ function Index({ preview, product }) {
                 />
               </div>
               <div className="ml-4">
-                <div className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-gray-900">
                   {value.name}
-                </div>
+                </p>
               </div>
             </div>
           )

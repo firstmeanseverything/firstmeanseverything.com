@@ -98,7 +98,7 @@ function Table({
                         {
                           className: [
                             cell.column.className,
-                            'px-6 py-4 whitespace-nowrap text-sm cursor-pointer'
+                            'px-6 py-4 whitespace-nowrap cursor-pointer'
                           ].join(' ')
                         }
                       ])}
