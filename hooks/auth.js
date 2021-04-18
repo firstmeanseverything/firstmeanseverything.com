@@ -8,8 +8,8 @@ function useAccessiblePage({ programDate } = {}) {
   const router = useRouter()
 
   React.useEffect(() => {
-    const isFutureProgram = new Date(programDate) > new Date()
-    const isInaccessibleProgam = user?.accessDate > new Date(programDate)
+    const isFutureProgram = programDate > new Date()
+    const isInaccessibleProgam = user?.accessDate > programDate
 
     if (
       !(isAuthenticating || router.isPreview) &&
