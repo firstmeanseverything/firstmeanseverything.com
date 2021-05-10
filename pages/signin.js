@@ -2,6 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
+import SEO from '@/components/seo'
 import SignInForm from '@/components/signin-form'
 import { useUnauthenticatedPage } from '@/hooks/auth'
 
@@ -10,6 +11,7 @@ function SignIn() {
 
   return (
     <React.Fragment>
+      <SEO title="Sign In" />
       <div>
         <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
           Sign in to your account
