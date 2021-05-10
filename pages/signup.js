@@ -2,6 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
+import SEO from '@/components/seo'
 import SignUpForm from '@/components/signup-form'
 import { useUnauthenticatedPage } from '@/hooks/auth'
 
@@ -10,6 +11,7 @@ function SignUp() {
 
   return (
     <React.Fragment>
+      <SEO title="Sign Up" />
       <div>
         <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
           Sign up for an account

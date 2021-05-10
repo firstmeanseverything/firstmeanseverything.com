@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
 import ResetForm from '@/components/reset-form'
+import SEO from '@/components/seo'
 import { SpinnerSVG } from '@/icons'
 import { useAuthDispatch } from '@/context/auth'
 import { useUnauthenticatedPage } from '@/hooks/auth'
@@ -33,6 +34,7 @@ function ResetPassword() {
 
   return (
     <React.Fragment>
+      <SEO title="Reset Password" />
       <div>
         <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
           Update your password

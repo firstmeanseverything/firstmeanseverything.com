@@ -1,10 +1,12 @@
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import { DefaultSeo } from 'next-seo'
 
 import { AuthProvider } from '@/context/auth'
 import Layout from '@/components/layout'
 
 import 'tailwindcss/tailwind.css'
+import { defaultSeo } from 'next-seo.config'
 
 function App({ Component, pageProps }) {
   const stripePromise = loadStripe(
@@ -16,6 +18,7 @@ function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Elements stripe={stripePromise}>
+        <DefaultSeo {...defaultSeo} />
         <div className="bg-gray-200 min-h-screen">
           {getLayout(<Component {...pageProps} />)}
         </div>

@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import ForgotForm from '@/components/forgot-form'
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
+import SEO from '@/components/seo'
 import { useUnauthenticatedPage } from '@/hooks/auth'
 
 function ForgotPassword() {
@@ -9,6 +10,7 @@ function ForgotPassword() {
 
   return (
     <React.Fragment>
+      <SEO title="Forgot Password" />
       <div>
         <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
           Reset your password
