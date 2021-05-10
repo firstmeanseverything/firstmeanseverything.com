@@ -30,7 +30,7 @@
     "react-table": "7.6.3",
     "stripe": "8.138.0",
     "swr": "0.4.0",
-    "yup": "0.32.8"
+    "yup": "0.32.9"
   },
   "devDependencies": {
     "@tailwindcss/forms": "0.3.2",
