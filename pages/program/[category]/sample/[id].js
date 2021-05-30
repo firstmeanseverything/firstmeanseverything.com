@@ -81,7 +81,8 @@ export async function getStaticProps({ params, preview = false }) {
         }),
         ...rest
       }
-    }
+    },
+    revalidate: 10
   }
 }
 
