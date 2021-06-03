@@ -208,7 +208,7 @@ function Index({ preview, product }) {
                   >
                     <option value="rx">RX</option>
                     <option value="scaled">Scaled</option>
-                    <option value="samples">Samples</option>
+                    <option value="samples">Free Samples</option>
                   </select>
                 </div>
                 <div className="hidden sm:block">
@@ -262,7 +262,7 @@ function Index({ preview, product }) {
                               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
                           )}
                         >
-                          Samples
+                          Free Samples
                         </a>
                       </Link>
                     </nav>
