@@ -199,7 +199,12 @@ function Index({ preview, product }) {
                     name="tabs"
                     className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-shark focus:border-shark sm:text-sm rounded-md"
                     value={activeCategory}
-                    onChange={(e) => setActiveCategory(e.target.value)}
+                    onChange={(e) =>
+                      router.push({
+                        pathname: router.pathname,
+                        query: { ...router.query, category: e.target.value }
+                      })
+                    }
                   >
                     <option value="rx">RX</option>
                     <option value="scaled">Scaled</option>
