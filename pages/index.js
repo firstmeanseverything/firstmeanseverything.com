@@ -151,9 +151,7 @@ function Index({ preview, product }) {
   }, [router.query.category])
 
   React.useEffect(() => {
-    if (activeCategory === 'samples') return setHiddenColumns([])
-
-    return setHiddenColumns(['category'])
+    return setHiddenColumns(activeCategory === 'samples' ? [] : ['category'])
   }, [activeCategory])
 
   const viewProgram = ({ node: program }) =>
