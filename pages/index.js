@@ -147,9 +147,7 @@ function Index({ preview, product }) {
   })
 
   React.useEffect(() => {
-    if (!router.query.category) return setActiveCategory('rx')
-
-    return setActiveCategory(router.query.category)
+    return setActiveCategory(router.query.category ?? 'rx')
   }, [router.query.category])
 
   React.useEffect(() => {
