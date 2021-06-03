@@ -147,15 +147,11 @@ function Index({ preview, product }) {
   })
 
   React.useEffect(() => {
-    if (!router.query.category) return setActiveCategory('rx')
-
-    return setActiveCategory(router.query.category)
+    return setActiveCategory(router.query.category ?? 'rx')
   }, [router.query.category])
 
   React.useEffect(() => {
-    if (activeCategory === 'samples') return setHiddenColumns([])
-
-    return setHiddenColumns(['category'])
+    return setHiddenColumns(activeCategory === 'samples' ? [] : ['category'])
   }, [activeCategory])
 
   const viewProgram = ({ node: program }) =>
@@ -199,11 +195,16 @@ function Index({ preview, product }) {
                     name="tabs"
                     className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-shark focus:border-shark sm:text-sm rounded-md"
                     value={activeCategory}
-                    onChange={(e) => setActiveCategory(e.target.value)}
+                    onChange={(e) =>
+                      router.push({
+                        pathname: router.pathname,
+                        query: { ...router.query, category: e.target.value }
+                      })
+                    }
                   >
                     <option value="rx">RX</option>
                     <option value="scaled">Scaled</option>
-                    <option value="samples">Samples</option>
+                    <option value="samples">Free Samples</option>
                   </select>
                 </div>
                 <div className="hidden sm:block">
@@ -257,7 +258,7 @@ function Index({ preview, product }) {
                               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
                           )}
                         >
-                          Samples
+                          Free Samples
                         </a>
                       </Link>
                     </nav>
