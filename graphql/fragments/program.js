@@ -16,6 +16,7 @@ const ProgramListFragment = gql`
         category
         free
         id
+        test
         title
       }
     }

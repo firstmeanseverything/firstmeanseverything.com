@@ -44,7 +44,12 @@ const ProgramsListQuery = gql`
       orderBy: date_DESC
       skip: $offset
       stage: $stage
-      where: { category: $category, date_gte: $from, date_lte: $to }
+      where: {
+        OR: [
+          { category: $category, date_gte: $from, date_lte: $to }
+          { category: $category, test: true }
+        ]
+      }
     ) {
       ...ProgramListFragment
     }
