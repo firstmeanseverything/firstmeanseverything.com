@@ -1,20 +1,12 @@
 import * as React from 'react'
 import Image from 'next/image'
-import hydrate from 'next-mdx-remote/hydrate'
+import { MDXRemote } from 'next-mdx-remote'
 import cx from 'classnames'
 
-import { AuthProvider } from '@/context/auth'
 import Badge from '@/components/badge'
 import mdxComponents from './mdx'
 
 function ProgramInfo({ program }) {
-  const mdxNotes = program.notes
-    ? hydrate(program.notes.mdx, {
-        components: mdxComponents,
-        provider: { component: AuthProvider }
-      })
-    : null
-
   const information = React.useMemo(
     () => [
       ...(program.date
@@ -71,7 +63,16 @@ function ProgramInfo({ program }) {
             {
               className: 'sm:col-span-2',
               label: 'Notes',
-              value: <div className="prose prose-sm">{mdxNotes}</div>
+              value: (
+                <div className="prose prose-sm">
+                  {program.notes ? (
+                    <MDXRemote
+                      {...program.notes.mdx}
+                      components={mdxComponents}
+                    />
+                  ) : null}
+                </div>
+              )
             }
           ]
         : [])
