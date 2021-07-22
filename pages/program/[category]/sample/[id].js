@@ -1,11 +1,9 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import renderToString from 'next-mdx-remote/render-to-string'
+import { serialize } from 'next-mdx-remote/serialize'
 import he from 'he'
 
-import { AuthProvider } from '@/context/auth'
 import { getProgramsPaths, getSampleProgramPage } from '@/lib/graphcms'
-import mdxComponents from '@/components/mdx'
 import ProgramPage from '@/components/program-page'
 import { useAuthenticatedPage } from '@/hooks/auth'
 
@@ -61,10 +59,7 @@ export async function getStaticProps({ params, preview = false }) {
         days: await Promise.all(
           days.map(async ({ content, ...day }) => ({
             content: {
-              mdx: await renderToString(he.decode(content), {
-                components: mdxComponents,
-                provider: { component: AuthProvider }
-              }),
+              mdx: await serialize(he.decode(content)),
               markdown: content
             },
             ...day
@@ -72,10 +67,7 @@ export async function getStaticProps({ params, preview = false }) {
         ),
         ...(notes && {
           notes: {
-            mdx: await renderToString(he.decode(notes), {
-              components: mdxComponents,
-              provider: { component: AuthProvider }
-            }),
+            mdx: await serialize(he.decode(notes)),
             markdown: notes
           }
         }),

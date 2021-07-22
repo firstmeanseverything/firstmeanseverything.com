@@ -1,20 +1,16 @@
 import * as React from 'react'
-import hydrate from 'next-mdx-remote/hydrate'
+import { MDXRemote } from 'next-mdx-remote'
 import cx from 'classnames'
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 
-import { AuthProvider } from '@/context/auth'
 import mdxComponents from './mdx'
 import WorkoutBlock from './workout-block'
 
 function DaySection({ activeRecovery = false, content, title }, index) {
-  const mdxContent = content
-    ? hydrate(content.mdx, {
-        components: mdxComponents,
-        provider: { component: AuthProvider }
-      })
-    : null
+  const mdxContent = content ? (
+    <MDXRemote {...content.mdx} components={mdxComponents} />
+  ) : null
 
   return (
     <Disclosure key={index} as="div">
