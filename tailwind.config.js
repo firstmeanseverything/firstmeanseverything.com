@@ -14,6 +14,9 @@ module.exports = {
           css: {
             li: {
               'white-space': 'normal'
+            },
+            p: {
+              'white-space': 'normal'
             }
           }
         }
