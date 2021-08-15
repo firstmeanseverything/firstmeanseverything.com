@@ -51,7 +51,7 @@ function ProgramPage({ program }) {
             </button>
           </div>
         </div>
-        <div className="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+        <div className="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
           <div className="space-y-6 lg:col-start-1 lg:col-span-2">
             <section aria-labelledby="program-days">
               <div className="bg-white shadow sm:rounded-lg">
