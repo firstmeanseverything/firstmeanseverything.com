@@ -12,7 +12,7 @@ import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
-import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
+import { ProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
@@ -29,20 +29,11 @@ function Index({ preview, product }) {
 
   useAuthenticatedPage()
 
-  const showSubscriptionCta =
-    !(isAuthenticating || userHasSubscription) &&
-    ['rx', 'scaled'].includes(activeCategory)
+  const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
   const { data, error } = useSWR(
     user
-      ? activeCategory === 'samples'
-        ? [
-            SampleProgramsListQuery,
-            activeCategory,
-            pagination.limit,
-            pagination.offset
-          ]
-        : userHasSubscription
+      ? userHasSubscription
         ? [
             ProgramsListQuery,
             activeCategory,
@@ -57,11 +48,9 @@ function Index({ preview, product }) {
         {
           limit: Number(limit),
           offset: Number(offset),
-          ...(userHasSubscription && {
-            category: activeCategory.toUpperCase(),
-            from: format(user.accessDate, 'yyyy-MM-dd'),
-            to: format(addDays(new Date(), 1), 'yyyy-MM-dd')
-          })
+          category: activeCategory.toUpperCase(),
+          from: format(user.accessDate, 'yyyy-MM-dd'),
+          to: format(addDays(new Date(), 1), 'yyyy-MM-dd')
         },
         preview
       ),
@@ -101,11 +90,6 @@ function Index({ preview, product }) {
             ) : (
               <React.Fragment>&mdash;</React.Fragment>
             )
-        },
-        {
-          id: 'category',
-          accessor: 'node.category',
-          Cell: ({ value }) => <Badge label={value} theme="green" />
         },
         {
           id: 'author',
@@ -150,18 +134,8 @@ function Index({ preview, product }) {
     return setActiveCategory(router.query.category ?? 'rx')
   }, [router.query.category])
 
-  React.useEffect(() => {
-    return setHiddenColumns(activeCategory === 'samples' ? [] : ['category'])
-  }, [activeCategory])
-
   const viewProgram = ({ node: program }) =>
-    program.free
-      ? router.push(
-          `/program/${program.category.toLowerCase()}/sample/${program.id}`
-        )
-      : router.push(
-          `/program/${program.category.toLowerCase()}/${program.date}`
-        )
+    router.push(`/program/${program.category.toLowerCase()}/${program.date}`)
 
   return (
     <React.Fragment>
@@ -204,7 +178,6 @@ function Index({ preview, product }) {
                   >
                     <option value="rx">RX</option>
                     <option value="scaled">Scaled</option>
-                    <option value="samples">Free Samples</option>
                   </select>
                 </div>
                 <div className="hidden sm:block">
@@ -242,23 +215,6 @@ function Index({ preview, product }) {
                           )}
                         >
                           Scaled
-                        </a>
-                      </Link>
-                      <Link
-                        href={{
-                          pathname: router.pathname,
-                          query: { ...router.query, category: 'samples' }
-                        }}
-                      >
-                        <a
-                          className={cx(
-                            'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
-                            activeCategory === 'samples'
-                              ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
-                          )}
-                        >
-                          Free Samples
                         </a>
                       </Link>
                     </nav>
