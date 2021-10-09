@@ -38,7 +38,7 @@ function usePaginatedTable({
   )
 
   const previousPage = () => {
-    const offset = table.state.pageIndex - 1 * table.state.pageSize
+    const offset = (table.state.pageIndex - 1) * table.state.pageSize
 
     router.replace({
       pathname: router.pathname,
@@ -50,7 +50,7 @@ function usePaginatedTable({
   }
 
   const nextPage = () => {
-    const offset = table.state.pageIndex + 1 * table.state.pageSize
+    const offset = (table.state.pageIndex + 1) * table.state.pageSize
 
     router.replace({
       pathname: router.pathname,
