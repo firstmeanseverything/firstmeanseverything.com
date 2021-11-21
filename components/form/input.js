@@ -11,7 +11,10 @@ function FormInput({
   type = 'text',
   ...props
 }) {
-  const { errors, register } = useFormContext()
+  const {
+    formState: { errors },
+    register
+  } = useFormContext()
 
   const hasError = errors[field]
 
