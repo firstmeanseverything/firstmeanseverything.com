@@ -32,11 +32,10 @@ function FormInput({
                 'cursor-not-allowed opacity-50': disabled
               }
             )}
-            name={field}
             id={field}
             type={type}
             disabled={disabled}
-            ref={register}
+            {...register(field)}
             {...props}
           />
         </div>
