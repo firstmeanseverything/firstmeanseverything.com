@@ -11,7 +11,10 @@ function FormInput({
   type = 'text',
   ...props
 }) {
-  const { errors, register } = useFormContext()
+  const {
+    formState: { errors },
+    register
+  } = useFormContext()
 
   const hasError = errors[field]
 
@@ -32,11 +35,10 @@ function FormInput({
                 'cursor-not-allowed opacity-50': disabled
               }
             )}
-            name={field}
             id={field}
             type={type}
             disabled={disabled}
-            ref={register}
+            {...register(field)}
             {...props}
           />
         </div>
