@@ -1,4 +1,19 @@
 import * as React from 'react'
+import {
+  confirmPasswordReset,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  getAuth,
+  linkWithPopup,
+  onIdTokenChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  unlink,
+  updateProfile,
+  verifyPasswordResetCode
+} from 'firebase/auth'
 import cookie from 'js-cookie'
 import sub from 'date-fns/sub'
 
@@ -9,13 +24,11 @@ import firebase from '@/lib/firebase'
 const AuthDispatchContext = React.createContext()
 const AuthStateContext = React.createContext()
 
+const auth = getAuth(firebase)
+
 function AuthProvider({ children }) {
   const [user, setUser] = React.useState(null)
   const [isAuthenticating, setIsAuthenticating] = React.useState(true)
-
-  const confirmPasswordReset = (code, password) => {
-    return firebase.auth().confirmPasswordReset(code, password)
-  }
 
   const handleUser = async (rawUser) => {
     if (rawUser) {
@@ -41,62 +54,37 @@ function AuthProvider({ children }) {
     }
   }
 
-  const linkAuthProvider = (provider) => {
-    return firebase
-      .auth()
-      .currentUser.linkWithPopup(provider)
-      .then((response) => handleUser(response.user))
-  }
+  const linkAuthProvider = (provider) =>
+    linkWithPopup(auth.currentUser, provider).then((response) =>
+      handleUser(response.user)
+    )
 
   const unlinkAuthProvider = (provider) => {
-    return firebase
-      .auth()
-      .currentUser.unlink(provider)
-      .then((response) => handleUser(response.user))
-  }
-
-  const sendPasswordReset = (email) => {
-    return firebase.auth().sendPasswordResetEmail(email)
+    unlink(auth.currentUser, provider).then((response) =>
+      handleUser(response.user)
+    )
   }
 
   const signInWithEmail = (email, password) => {
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => handleUser(response.user))
+    signInWithEmailAndPassword(auth, email, password).then((response) =>
+      handleUser(response.user)
+    )
   }
 
-  const signInWithProvider = (provider) => {
-    return firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((response) => handleUser(response.user))
-  }
+  const signInWithProvider = (provider) =>
+    signInWithPopup(auth, provider).then((response) =>
+      handleUser(response.user)
+    )
 
-  const signOut = () => {
-    return firebase
-      .auth()
-      .signOut()
-      .then(() => handleUser(false))
-  }
+  const signUp = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password).then((response) =>
+      handleUser(response.user)
+    )
 
-  const signUp = (email, password) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => handleUser(response.user))
-  }
-
-  const updateUser = (data) => {
-    return firebase
-      .auth()
-      .currentUser.updateProfile(data)
-      .then(() => setUser({ ...user, ...data }))
-  }
-
-  const verifyPasswordResetCode = (code) => {
-    return firebase.auth().verifyPasswordResetCode(code)
-  }
+  const updateUser = (data) =>
+    updateProfile(auth.currentUser, data).then(() =>
+      setUser({ ...user, ...data })
+    )
 
   const availableAuthProviders = React.useMemo(
     () => [
@@ -106,7 +94,7 @@ function AuthProvider({ children }) {
           (provider) => provider.providerId === 'facebook.com'
         ),
         icon: FacebookSVG,
-        instance: new firebase.auth.FacebookAuthProvider(),
+        instance: new FacebookAuthProvider(),
         name: 'Facebook'
       }
     ],
@@ -119,7 +107,7 @@ function AuthProvider({ children }) {
   )
 
   React.useEffect(() => {
-    const listener = firebase.auth().onIdTokenChanged(handleUser)
+    const listener = onIdTokenChanged(auth, handleUser)
 
     return () => listener()
   }, [])
@@ -127,16 +115,17 @@ function AuthProvider({ children }) {
   return (
     <AuthDispatchContext.Provider
       value={{
-        confirmPasswordReset,
+        confirmPasswordReset: (code, password) =>
+          confirmPasswordReset(auth, code, password),
         linkAuthProvider,
-        sendPasswordReset,
+        sendPasswordReset: (email) => sendPasswordResetEmail(auth, email),
         signInWithEmail,
         signInWithProvider,
-        signOut,
+        signOut: () => signOut(auth).then(() => handleUser(false)),
         signUp,
         unlinkAuthProvider,
         updateUser,
-        verifyPasswordResetCode
+        verifyPasswordResetCode: (code) => verifyPasswordResetCode(auth, code)
       }}
     >
       <AuthStateContext.Provider
@@ -171,8 +160,8 @@ async function parseUser(user) {
 }
 
 async function getStripeRole() {
-  await firebase.auth().currentUser.getIdToken(true)
-  const decodedToken = await firebase.auth().currentUser.getIdTokenResult()
+  await auth.currentUser.getIdToken(true)
+  const decodedToken = await auth.currentUser.getIdTokenResult()
 
   return decodedToken.claims.stripeRole || 'free'
 }
