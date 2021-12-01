@@ -145,8 +145,8 @@ function AuthProvider({ children }) {
 async function parseUser(user) {
   const { subscriptions } = await getAllUserSubscriptions(user.uid)
 
-  const activeSubscription = subscriptions.find(
-    (sub) => !sub.status.includes(['active', 'trialing'])
+  const activeSubscription = subscriptions.find((sub) =>
+    sub.status.includes(['active', 'trialing'])
   )
 
   return {
