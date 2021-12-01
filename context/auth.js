@@ -145,8 +145,8 @@ function AuthProvider({ children }) {
 async function parseUser(user) {
   const { subscriptions } = await getAllUserSubscriptions(user.uid)
 
-  const activeSubscription = subscriptions.find((sub) =>
-    sub.status.includes(['active', 'trialing'])
+  const activeSubscription = subscriptions?.find((sub) =>
+    ['active', 'trialing'].includes(sub.status)
   )
 
   return {
@@ -157,7 +157,7 @@ async function parseUser(user) {
     photoUrl: user.photoURL,
     providerData: user.providerData,
     stripeRole: await getStripeRole(),
-    hasHadTrial: Boolean(subscriptions.length),
+    hasHadTrial: Boolean(subscriptions?.length),
     accessDate: activeSubscription
       ? sub(activeSubscription.created.toDate(), { days: 7 })
       : null
