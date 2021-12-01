@@ -17,7 +17,7 @@ import {
 import cookie from 'js-cookie'
 import sub from 'date-fns/sub'
 
-import { createUser, getLatestActiveSubscription } from '@/lib/db'
+import { createUser, getAllUserSubscriptions } from '@/lib/db'
 import { FacebookSVG } from '@/components/icons'
 import firebase from '@/lib/firebase'
 
@@ -143,7 +143,11 @@ function AuthProvider({ children }) {
 }
 
 async function parseUser(user) {
-  const { subscription } = await getLatestActiveSubscription(user.uid)
+  const { subscriptions } = await getAllUserSubscriptions(user.uid)
+
+  const activeSubscription = subscriptions.find(
+    (sub) => !sub.status.includes(['active', 'trialing'])
+  )
 
   return {
     uid: user.uid,
@@ -153,8 +157,8 @@ async function parseUser(user) {
     photoUrl: user.photoURL,
     providerData: user.providerData,
     stripeRole: await getStripeRole(),
-    accessDate: subscription
-      ? sub(subscription.created.toDate(), { days: 7 })
+    accessDate: activeSubscription
+      ? sub(activeSubscription.created.toDate(), { days: 7 })
       : null
   }
 }
