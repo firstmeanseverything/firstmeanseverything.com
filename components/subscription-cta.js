@@ -86,7 +86,7 @@ function SubscriptionCTA({ description, name, prices }) {
           <Button
             onClick={() => {
               setCheckoutLoading(true)
-              createCheckoutSession(user.uid, activePrice.id)
+              createCheckoutSession(user, activePrice.id)
             }}
             size="xlarge"
             theme="yellow"

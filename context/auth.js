@@ -157,6 +157,7 @@ async function parseUser(user) {
     photoUrl: user.photoURL,
     providerData: user.providerData,
     stripeRole: await getStripeRole(),
+    hasHadTrial: Boolean(subscriptions.length),
     accessDate: activeSubscription
       ? sub(activeSubscription.created.toDate(), { days: 7 })
       : null
