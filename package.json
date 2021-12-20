@@ -33,7 +33,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "0.3.4",
+    "@tailwindcss/forms": "0.4.0",
     "@tailwindcss/typography": "0.4.1",
     "autoprefixer": "10.4.0",
     "postcss": "8.3.11",
