@@ -16,21 +16,21 @@ function SubscriptionCTA({ description, name, prices }) {
 
   return (
     <div className="overflow-hidden sm:rounded-b-lg lg:flex">
-      <div className="px-6 py-8 lg:flex-shrink-1 lg:p-12">
+      <div className="px-6 py-8 lg:shrink-1 lg:p-12">
         <h3 className="text-2xl leading-8 font-extrabold text-gray-900 sm:text-3xl sm:leading-9">
           {name}
         </h3>
         <p className="mt-6 text-base leading-6 text-gray-500">{description}</p>
         <div className="mt-8">
           <div className="flex items-center">
-            <h4 className="flex-shrink-0 pr-4 bg-white text-sm leading-5 tracking-wider font-semibold uppercase text-indigo-600">
+            <h4 className="shrink-0 pr-4 bg-white text-sm leading-5 tracking-wider font-semibold uppercase text-indigo-600">
               What's included
             </h4>
             <div className="flex-1 border-t-2 border-gray-200"></div>
           </div>
           <ul className="mt-8 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5">
             <li className="flex items-start lg:col-span-1">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
@@ -38,7 +38,7 @@ function SubscriptionCTA({ description, name, prices }) {
               </p>
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
@@ -46,7 +46,7 @@ function SubscriptionCTA({ description, name, prices }) {
               </p>
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
@@ -55,7 +55,7 @@ function SubscriptionCTA({ description, name, prices }) {
               </p>
             </li>
             <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
@@ -65,7 +65,7 @@ function SubscriptionCTA({ description, name, prices }) {
           </ul>
         </div>
       </div>
-      <div className="py-8 px-6 text-center bg-gray-800 lg:flex-shrink-0 lg:flex lg:flex-col lg:justify-center lg:p-12">
+      <div className="py-8 px-6 text-center bg-gray-800 lg:shrink-0 lg:flex lg:flex-col lg:justify-center lg:p-12">
         <p className="text-lg leading-6 font-medium text-gray-300">
           Subscribe today for just
         </p>

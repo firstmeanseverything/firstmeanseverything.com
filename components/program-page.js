@@ -16,7 +16,7 @@ function ProgramPage({ program }) {
       <main className="py-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <span className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-saffron">
                 <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
               </span>

@@ -38,7 +38,7 @@ function Navigation() {
         <div className="border-b border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-0">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Link href="/">
                   <a>
                     <FMEMarkSVG className="h-6 w-auto text-saffron" />
@@ -59,7 +59,8 @@ function Navigation() {
                                 'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                                 {
                                   'text-white bg-gray-900': isActive,
-                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
+                                  'text-gray-300 hover:text-white hover:bg-gray-700':
+                                    !isActive
                                 }
                               )}
                             >
@@ -90,10 +91,10 @@ function Navigation() {
                           </Menu.Button>
                           <Transition
                             show={open}
-                            enter="transition ease-out duration-100 transform"
+                            enter="transition ease-out duration-100"
                             enterFrom="opacity-0 scale-95"
                             enterTo="opacity-100 scale-100"
-                            leave="transition ease-in duration-75 transform"
+                            leave="transition ease-in duration-75"
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                           >
@@ -190,7 +191,8 @@ function Navigation() {
                       'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                       {
                         'text-white bg-gray-900': isActive,
-                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
+                        'text-gray-300 hover:text-white hover:bg-gray-700':
+                          !isActive
                       }
                     )}
                   >
@@ -208,7 +210,7 @@ function Navigation() {
             })}
           >
             <div className="flex items-center px-5">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
                   <UserIcon className="h-full w-full text-gray-300" />
                 </span>
@@ -240,7 +242,8 @@ function Navigation() {
                         'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                         {
                           'text-white bg-gray-900': isActive,
-                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive
+                          'text-gray-400 hover:text-white hover:bg-gray-700':
+                            !isActive
                         }
                       )}
                       role="menuitem"

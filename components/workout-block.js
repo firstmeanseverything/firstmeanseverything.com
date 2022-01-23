@@ -21,7 +21,7 @@ function WorkoutBlock({ children, title, type }) {
     <li className="col-span-1 flex shadow-sm rounded-md">
       <div
         className={cx(
-          'flex-shrink-0 flex items-center justify-center w-8 text-white text-sm font-medium rounded-l-md',
+          'shrink-0 flex items-center justify-center w-8 text-white text-sm font-medium rounded-l-md',
           styleClass(type)
         )}
       ></div>

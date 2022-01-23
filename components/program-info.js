@@ -38,7 +38,7 @@ function ProgramInfo({ program }) {
               className: 'sm:col-span-2',
               label: 'Programmer',
               value: (
-                <div className="flex-shrink-0 block">
+                <div className="shrink-0 block">
                   <div className="flex items-center">
                     <div className="relative h-9 w-9">
                       <Image

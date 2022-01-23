@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./components/**/*.js', './pages/**/*.js'],
+  content: ['./components/**/*.js', './pages/**/*.js'],
   theme: {
     extend: {
       colors: {
@@ -21,11 +21,6 @@ module.exports = {
           }
         }
       }
-    }
-  },
-  variants: {
-    extend: {
-      padding: ['first', 'responsive']
     }
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
