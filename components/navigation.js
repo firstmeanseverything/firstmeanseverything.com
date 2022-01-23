@@ -59,7 +59,8 @@ function Navigation() {
                                 'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                                 {
                                   'text-white bg-gray-900': isActive,
-                                  'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
+                                  'text-gray-300 hover:text-white hover:bg-gray-700':
+                                    !isActive
                                 }
                               )}
                             >
@@ -190,7 +191,8 @@ function Navigation() {
                       'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                       {
                         'text-white bg-gray-900': isActive,
-                        'text-gray-300 hover:text-white hover:bg-gray-700': !isActive
+                        'text-gray-300 hover:text-white hover:bg-gray-700':
+                          !isActive
                       }
                     )}
                   >
@@ -240,7 +242,8 @@ function Navigation() {
                         'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
                         {
                           'text-white bg-gray-900': isActive,
-                          'text-gray-400 hover:text-white hover:bg-gray-700': !isActive
+                          'text-gray-400 hover:text-white hover:bg-gray-700':
+                            !isActive
                         }
                       )}
                       role="menuitem"
