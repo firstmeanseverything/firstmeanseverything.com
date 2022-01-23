@@ -121,7 +121,7 @@ function Account() {
                     manage your payment methods through the secure portal.
                   </p>
                 </div>
-                <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
+                <div className="mt-5 sm:mt-0 sm:ml-6 sm:shrink-0 sm:flex sm:items-center">
                   <Button
                     onClick={() => {
                       setBillingLoading(true)

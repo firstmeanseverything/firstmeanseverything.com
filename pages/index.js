@@ -97,7 +97,7 @@ function Index({ preview, product }) {
           className: 'hidden md:table-cell',
           Cell: ({ value }) => (
             <div className="flex items-center">
-              <div className="flex-shrink-0 relative h-10 w-10">
+              <div className="shrink-0 relative h-10 w-10">
                 <Image
                   className="rounded-full"
                   src={value.picture}
@@ -143,7 +143,7 @@ function Index({ preview, product }) {
       <main className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
           <div className="flex items-center space-x-5">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <span className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-saffron">
                 <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
               </span>

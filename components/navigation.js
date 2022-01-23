@@ -38,7 +38,7 @@ function Navigation() {
         <div className="border-b border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-0">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Link href="/">
                   <a>
                     <FMEMarkSVG className="h-6 w-auto text-saffron" />
@@ -208,7 +208,7 @@ function Navigation() {
             })}
           >
             <div className="flex items-center px-5">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
                   <UserIcon className="h-full w-full text-gray-300" />
                 </span>

@@ -60,7 +60,7 @@ function Alert({ message, title, type = 'error' }) {
   return (
     <div className={cx('rounded-md p-4', themeClass(type))}>
       <div className="flex">
-        <div className="flex-shrink-0">{svgComponent(type)}</div>
+        <div className="shrink-0">{svgComponent(type)}</div>
         <div className="ml-3">
           <h3
             className={cx(

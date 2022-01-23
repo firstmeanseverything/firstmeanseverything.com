@@ -39,7 +39,7 @@ function SocialAuthProviders() {
 
   return (
     <div className="mt-5 space-y-6">
-      <div className="space-y-3 sm:flex-shrink-0 sm:flex sm:items-center sm:space-x-3 sm:space-y-0">
+      <div className="space-y-3 sm:shrink-0 sm:flex sm:items-center sm:space-x-3 sm:space-y-0">
         {availableAuthProviders.map((provider, index) => {
           const IconSVG = provider.icon
 
