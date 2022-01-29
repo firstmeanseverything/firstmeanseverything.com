@@ -5,7 +5,6 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import cx from 'classnames'
 import format from 'date-fns/format'
-import addDays from 'date-fns/addDays'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 
 import { APMarkSVG } from '@/components/svgs'
@@ -49,8 +48,7 @@ function Index({ preview, product }) {
           limit: Number(limit),
           offset: Number(offset),
           category: activeCategory.toUpperCase(),
-          from: format(user.accessDate, 'yyyy-MM-dd'),
-          to: format(addDays(new Date(), 1), 'yyyy-MM-dd')
+          from: format(user.accessDate, 'yyyy-MM-dd')
         },
         preview
       ),

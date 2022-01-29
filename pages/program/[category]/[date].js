@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { serialize } from 'next-mdx-remote/serialize'
 import he from 'he'
 import addDays from 'date-fns/addDays'
-import subDays from 'date-fns/subDays'
 
 import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import ProgramPage from '@/components/program-page'
@@ -20,7 +19,7 @@ function SubscribedProgramPage({ program }) {
 
   useAuthenticatedPage()
   useProtectedPage()
-  useAccessiblePage({ programDate: subDays(new Date(program.date), 1) })
+  useAccessiblePage({ programDate: new Date(program.date) })
 
   return <ProgramPage program={program} />
 }
