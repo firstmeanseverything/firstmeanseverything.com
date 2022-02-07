@@ -95,7 +95,7 @@ function Index({ preview, product }) {
           className: 'hidden md:table-cell',
           Cell: ({ value }) => (
             <div className="flex items-center">
-              <div className="shrink-0 relative h-10 w-10">
+              <div className="relative h-10 w-10 shrink-0">
                 <Image
                   className="rounded-full"
                   src={value.picture}
@@ -139,10 +139,10 @@ function Index({ preview, product }) {
     <React.Fragment>
       <SEO title="Athlete Program" />
       <main className="py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
           <div className="flex items-center space-x-5">
             <div className="shrink-0">
-              <span className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-saffron">
+              <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-saffron">
                 <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
               </span>
             </div>
@@ -152,9 +152,9 @@ function Index({ preview, product }) {
               </h1>
             </div>
           </div>
-          <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"></div>
+          <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3"></div>
         </div>
-        <div className="mt-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div className="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
           <section>
             <div className="bg-white shadow sm:rounded-lg">
               <div className="border-b border-gray-200 px-4 sm:px-0">
@@ -165,7 +165,7 @@ function Index({ preview, product }) {
                   <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-shark focus:border-shark sm:text-sm rounded-md"
+                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-shark focus:outline-none focus:ring-shark sm:text-sm"
                     value={activeCategory}
                     onChange={(e) =>
                       router.push({
@@ -189,10 +189,10 @@ function Index({ preview, product }) {
                       >
                         <a
                           className={cx(
-                            'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
                             activeCategory === 'rx'
                               ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
                           )}
                         >
                           RX
@@ -206,10 +206,10 @@ function Index({ preview, product }) {
                       >
                         <a
                           className={cx(
-                            'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
                             activeCategory === 'scaled'
                               ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
                           )}
                         >
                           Scaled
@@ -219,7 +219,7 @@ function Index({ preview, product }) {
                   </div>
                 </div>
               </div>
-              <div className="align-middle inline-block min-w-full border-b border-gray-200">
+              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                 {showSubscriptionCta ? (
                   <SubscriptionCTA {...product} />
                 ) : (

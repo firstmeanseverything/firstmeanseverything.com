@@ -21,7 +21,7 @@ function Auth() {
 
   return (
     <div className="mt-8">
-      <SpinnerSVG className="animate-spin h-6 w-6" />
+      <SpinnerSVG className="h-6 w-6 animate-spin" />
     </div>
   )
 }

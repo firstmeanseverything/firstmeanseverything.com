@@ -38,7 +38,7 @@ function ProgramInfo({ program }) {
               className: 'sm:col-span-2',
               label: 'Programmer',
               value: (
-                <div className="shrink-0 block">
+                <div className="block shrink-0">
                   <div className="flex items-center">
                     <div className="relative h-9 w-9">
                       <Image
@@ -83,13 +83,13 @@ function ProgramInfo({ program }) {
   return (
     <section
       aria-labelledby="information-title"
-      className="lg:col-start-3 lg:col-span-1 order-first lg:order-last"
+      className="order-first lg:order-last lg:col-span-1 lg:col-start-3"
     >
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg lg:sticky lg:top-10">
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg lg:sticky lg:top-10">
         <div className="px-4 py-5 sm:px-6">
           <h2
             id="information-title"
-            className="text-lg leading-6 font-medium text-gray-900"
+            className="text-lg font-medium leading-6 text-gray-900"
           >
             Program Details
           </h2>

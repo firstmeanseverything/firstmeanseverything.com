@@ -18,15 +18,15 @@ function WorkoutBlock({ children, title, type }) {
   }
 
   return (
-    <li className="col-span-1 flex shadow-sm rounded-md">
+    <li className="col-span-1 flex rounded-md shadow-sm">
       <div
         className={cx(
-          'shrink-0 flex items-center justify-center w-8 text-white text-sm font-medium rounded-l-md',
+          'flex w-8 shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
           styleClass(type)
         )}
       ></div>
-      <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
-        <div className="flex-1 px-4 py-6 text-sm truncate">
+      <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
+        <div className="flex-1 truncate px-4 py-6 text-sm">
           <h3 className="text-lg font-medium">{title}</h3>
           <div className="prose prose-sm sm:prose">{children}</div>
         </div>

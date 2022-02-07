@@ -16,14 +16,14 @@ function SubscriptionCTA({ description, name, prices }) {
 
   return (
     <div className="overflow-hidden sm:rounded-b-lg lg:flex">
-      <div className="px-6 py-8 lg:shrink-1 lg:p-12">
-        <h3 className="text-2xl leading-8 font-extrabold text-gray-900 sm:text-3xl sm:leading-9">
+      <div className="lg:shrink-1 px-6 py-8 lg:p-12">
+        <h3 className="text-2xl font-extrabold leading-8 text-gray-900 sm:text-3xl sm:leading-9">
           {name}
         </h3>
         <p className="mt-6 text-base leading-6 text-gray-500">{description}</p>
         <div className="mt-8">
           <div className="flex items-center">
-            <h4 className="shrink-0 pr-4 bg-white text-sm leading-5 tracking-wider font-semibold uppercase text-indigo-600">
+            <h4 className="shrink-0 bg-white pr-4 text-sm font-semibold uppercase leading-5 tracking-wider text-indigo-600">
               What's included
             </h4>
             <div className="flex-1 border-t-2 border-gray-200"></div>
@@ -65,11 +65,11 @@ function SubscriptionCTA({ description, name, prices }) {
           </ul>
         </div>
       </div>
-      <div className="py-8 px-6 text-center bg-gray-800 lg:shrink-0 lg:flex lg:flex-col lg:justify-center lg:p-12">
-        <p className="text-lg leading-6 font-medium text-gray-300">
+      <div className="bg-gray-800 py-8 px-6 text-center lg:flex lg:shrink-0 lg:flex-col lg:justify-center lg:p-12">
+        <p className="text-lg font-medium leading-6 text-gray-300">
           Subscribe today for just
         </p>
-        <div className="mt-4 flex items-center justify-center text-5xl leading-none font-extrabold text-white">
+        <div className="mt-4 flex items-center justify-center text-5xl font-extrabold leading-none text-white">
           <span>
             {new Intl.NumberFormat('en-GB', {
               style: 'currency',
@@ -78,7 +78,7 @@ function SubscriptionCTA({ description, name, prices }) {
               minimumFractionDigits: 0
             }).format(activePrice.unit_amount / 100)}
           </span>
-          <span className="ml-3 text-xl leading-7 font-medium text-gray-300">
+          <span className="ml-3 text-xl font-medium leading-7 text-gray-300">
             / {activePrice.interval}
           </span>
         </div>

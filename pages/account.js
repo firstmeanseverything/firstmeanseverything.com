@@ -49,7 +49,7 @@ function Account() {
         <div className="space-y-6">
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="bg-white shadow rounded overflow-hidden sm:rounded-lg">
+              <div className="overflow-hidden rounded bg-white shadow sm:rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                   <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="md:col-span-1">
@@ -60,7 +60,7 @@ function Account() {
                         Your public profile.
                       </p>
                     </div>
-                    <div className="mt-5 space-y-6 md:mt-0 md:col-span-2">
+                    <div className="mt-5 space-y-6 md:col-span-2 md:mt-0">
                       <div className="grid grid-cols-3 gap-6">
                         <div className="col-span-3 sm:col-span-2">
                           <FormInput
@@ -80,7 +80,7 @@ function Account() {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                   <div className="sm:inline-flex sm:justify-end">
                     <Button
                       type="submit"
@@ -94,9 +94,9 @@ function Account() {
               </div>
             </form>
           </FormProvider>
-          <div className="bg-white shadow rounded sm:rounded-lg">
+          <div className="rounded bg-white shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:p-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
                 Linked accounts
               </h3>
               <div className="mt-2 max-w-xl text-sm text-gray-500">
@@ -108,9 +108,9 @@ function Account() {
               <SocialAuthProviders />
             </div>
           </div>
-          <div className="bg-white shadow rounded sm:rounded-lg">
+          <div className="rounded bg-white shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:p-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
                 Manage billing
               </h3>
               <div className="mt-2 sm:flex sm:items-start sm:justify-between">
@@ -121,7 +121,7 @@ function Account() {
                     manage your payment methods through the secure portal.
                   </p>
                 </div>
-                <div className="mt-5 sm:mt-0 sm:ml-6 sm:shrink-0 sm:flex sm:items-center">
+                <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex sm:shrink-0 sm:items-center">
                   <Button
                     onClick={() => {
                       setBillingLoading(true)

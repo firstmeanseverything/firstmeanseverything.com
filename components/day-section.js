@@ -17,10 +17,10 @@ function DaySection({ activeRecovery = false, content, title }, index) {
       {({ open }) => (
         <React.Fragment>
           <dt className="px-4 py-4 text-lg leading-7 sm:py-5 sm:px-6">
-            <Disclosure.Button className="text-left w-full flex justify-between items-center text-gray-400 focus:outline-none focus:text-gray-900">
+            <Disclosure.Button className="flex w-full items-center justify-between text-left text-gray-400 focus:text-gray-900 focus:outline-none">
               <span className="font-medium text-gray-900">{title}</span>
 
-              <span className="ml-6 h-7 flex items-center">
+              <span className="ml-6 flex h-7 items-center">
                 <ChevronDownIcon
                   className={cx(
                     'h-6 w-6 transition-transform duration-100',

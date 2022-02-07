@@ -32,11 +32,13 @@ function Button({
       case 'indigo':
       default:
         return cx('text-white bg-indigo-600', {
-          'hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700': !disabled
+          'hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700':
+            !disabled
         })
       case 'yellow':
         return cx('text-gray-700 bg-yellow-300', {
-          'hover:bg-yellow-200 focus:border-yellow-400 focus:shadow-outline-yellow active:bg-yellow-400': !disabled
+          'hover:bg-yellow-200 focus:border-yellow-400 focus:shadow-outline-yellow active:bg-yellow-400':
+            !disabled
         })
     }
   }
@@ -63,7 +65,7 @@ function Button({
       <button
         type={type}
         className={cx(
-          'w-full flex items-center justify-center border border-transparent font-medium focus:outline-none transition ease-in-out duration-150',
+          'flex w-full items-center justify-center border border-transparent font-medium transition duration-150 ease-in-out focus:outline-none',
           sizeClass(size),
           themeClass(theme, disabled),
           {
@@ -74,7 +76,7 @@ function Button({
         {...props}
       >
         {isLoading ? (
-          <SpinnerSVG className={cx('animate-spin mr-3', svgSizeClass(size))} />
+          <SpinnerSVG className={cx('mr-3 animate-spin', svgSizeClass(size))} />
         ) : null}
         {isLoading ? 'Loading' : children}
       </button>

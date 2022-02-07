@@ -13,13 +13,13 @@ function SignIn() {
     <React.Fragment>
       <SEO title="Sign In" />
       <div>
-        <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
+        <h2 className="mt-6 text-3xl font-extrabold leading-9 text-gray-900">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-sm leading-5 text-gray-600 max-w">
+        <p className="max-w mt-2 text-sm leading-5 text-gray-600">
           Don't have an account?{' '}
           <Link href="/signup">
-            <a className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <a className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none">
               Sign up for free
             </a>
           </Link>
