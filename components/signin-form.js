@@ -25,13 +25,8 @@ function SignInForm() {
       })
     )
   })
-  const {
-    formError,
-    formLoading,
-    formState,
-    setFormError,
-    setFormLoading
-  } = useFormReducer()
+  const { formError, formLoading, formState, setFormError, setFormLoading } =
+    useFormReducer()
 
   const providerSignIn = async (provider) => {
     setFormLoading({ message: 'Signing you in' })

@@ -29,13 +29,8 @@ function SignUpForm() {
       })
     )
   })
-  const {
-    formError,
-    formLoading,
-    formState,
-    setFormLoading,
-    setFormError
-  } = useFormReducer()
+  const { formError, formLoading, formState, setFormLoading, setFormError } =
+    useFormReducer()
 
   const onSubmit = async ({ email, password }) => {
     setFormLoading({ message: 'Creating your account' })
