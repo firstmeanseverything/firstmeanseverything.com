@@ -34,9 +34,9 @@ function Navigation() {
 
   return (
     <nav className="bg-shark">
-      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="border-b border-gray-700">
-          <div className="flex items-center justify-between h-16 px-4 sm:px-0">
+          <div className="flex h-16 items-center justify-between px-4 sm:px-0">
             <div className="flex items-center">
               <div className="shrink-0">
                 <Link href="/">
@@ -56,10 +56,10 @@ function Navigation() {
                           <Link key={index} href={link.href}>
                             <a
                               className={cx(
-                                'px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                                'rounded-md px-3 py-2 text-sm font-medium focus:bg-gray-700 focus:text-white focus:outline-none',
                                 {
-                                  'text-white bg-gray-900': isActive,
-                                  'text-gray-300 hover:text-white hover:bg-gray-700':
+                                  'bg-gray-900 text-white': isActive,
+                                  'text-gray-300 hover:bg-gray-700 hover:text-white':
                                     !isActive
                                 }
                               )}
@@ -76,16 +76,16 @@ function Navigation() {
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
-                <div className="ml-3 relative">
+                <div className="relative ml-3">
                   {user && (
                     <Menu>
                       {({ open }) => (
                         <React.Fragment>
                           <Menu.Button
                             id="test"
-                            className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+                            className="focus:shadow-solid flex max-w-xs items-center rounded-full text-sm text-white focus:outline-none"
                           >
-                            <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
+                            <span className="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
                               <UserIcon className="h-full w-full text-gray-300" />
                             </span>
                           </Menu.Button>
@@ -100,15 +100,15 @@ function Navigation() {
                           >
                             <Menu.Items
                               static
-                              className="origin-top-right absolute z-10 right-0 mt-2 w-56 bg-white
-                            border border-gray-200 divide-y divide-gray-100
-                            rounded-md shadow-lg outline-none"
+                              className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y
+                            divide-gray-100 rounded-md border border-gray-200
+                            bg-white shadow-lg outline-none"
                             >
                               <div className="px-4 py-3">
                                 <p className="text-sm leading-5">
                                   Signed in as
                                 </p>
-                                <p className="text-sm leading-5 font-medium text-gray-900 truncate">
+                                <p className="truncate text-sm font-medium leading-5 text-gray-900">
                                   {user.email}
                                 </p>
                               </div>
@@ -161,7 +161,7 @@ function Navigation() {
             <div className="-mr-2 flex md:hidden">
               <button
                 onClick={toggleNavOpen}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:bg-gray-700 focus:text-white focus:outline-none"
               >
                 {navOpen ? (
                   <XIcon className="h-6 w-6" />
@@ -188,10 +188,10 @@ function Navigation() {
                 <Link key={index} href={link.href}>
                   <a
                     className={cx(
-                      'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                      'block rounded-md px-3 py-2 text-base font-medium focus:bg-gray-700 focus:text-white focus:outline-none',
                       {
-                        'text-white bg-gray-900': isActive,
-                        'text-gray-300 hover:text-white hover:bg-gray-700':
+                        'bg-gray-900 text-white': isActive,
+                        'text-gray-300 hover:bg-gray-700 hover:text-white':
                           !isActive
                       }
                     )}
@@ -205,13 +205,13 @@ function Navigation() {
         ) : null}
         {user && (
           <div
-            className={cx('pt-4 pb-3 border-gray-700', {
+            className={cx('border-gray-700 pt-4 pb-3', {
               'border-t': primaryLinks.length
             })}
           >
             <div className="flex items-center px-5">
               <div className="shrink-0">
-                <span className="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
+                <span className="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
                   <UserIcon className="h-full w-full text-gray-300" />
                 </span>
               </div>
@@ -227,7 +227,7 @@ function Navigation() {
               </div>
             </div>
             <div
-              className="mt-3 px-2 space-y-1"
+              className="mt-3 space-y-1 px-2"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="user-menu"
@@ -239,10 +239,10 @@ function Navigation() {
                   <Link key={index} href={link.href}>
                     <a
                       className={cx(
-                        'block px-3 py-2 rounded-md text-base font-medium focus:outline-none focus:text-white focus:bg-gray-700',
+                        'block rounded-md px-3 py-2 text-base font-medium focus:bg-gray-700 focus:text-white focus:outline-none',
                         {
-                          'text-white bg-gray-900': isActive,
-                          'text-gray-400 hover:text-white hover:bg-gray-700':
+                          'bg-gray-900 text-white': isActive,
+                          'text-gray-400 hover:bg-gray-700 hover:text-white':
                             !isActive
                         }
                       )}
@@ -257,7 +257,7 @@ function Navigation() {
               <a
                 href="#"
                 onClick={signOut}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white focus:bg-gray-700 focus:text-white focus:outline-none"
                 role="menuitem"
               >
                 Sign out

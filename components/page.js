@@ -4,10 +4,10 @@ function Page({ children, controls, meta, title }) {
   return (
     <React.Fragment>
       <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
           <div className="lg:flex lg:items-center lg:justify-between">
-            <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:leading-9">
                 {title}
               </h1>
               {meta && (
@@ -23,7 +23,7 @@ function Page({ children, controls, meta, title }) {
         </div>
       </header>
       <main>
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
           {children}
         </div>
       </main>

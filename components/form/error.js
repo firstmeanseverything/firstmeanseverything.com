@@ -1,5 +1,5 @@
 function FormError({ children }) {
-  return <p className="mt-2 text-red-600 text-sm">{children}</p>
+  return <p className="mt-2 text-sm text-red-600">{children}</p>
 }
 
 export default FormError

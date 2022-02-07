@@ -10,19 +10,19 @@ function SkeletonRow({ cells = 3, isEvenRow, ...props }) {
     <tr className="animate-pulse" {...props}>
       {Array.from(Array(cells), (_, index) => {
         return (
-          <td key={index} className="px-6 py-4 whitespace-no-wrap">
+          <td key={index} className="whitespace-no-wrap px-6 py-4">
             <div className="flex">
-              <div className="flex flex-col flex-1 min-w-0 space-y-1.5">
+              <div className="flex min-w-0 flex-1 flex-col space-y-1.5">
                 <div
                   className={cx('rounded bg-gray-100', {
-                    'w-1/3 h-4': isEvenRow,
-                    'w-3/5 h-3': !isEvenRow
+                    'h-4 w-1/3': isEvenRow,
+                    'h-3 w-3/5': !isEvenRow
                   })}
                 />
                 <div
                   className={cx({
-                    'w-1/2 h-3': isEvenRow,
-                    'w-2/5 h-4': !isEvenRow
+                    'h-3 w-1/2': isEvenRow,
+                    'h-4 w-2/5': !isEvenRow
                   })}
                 >
                   <div className="h-full rounded bg-gray-200" />
@@ -60,7 +60,7 @@ function Table({
       >
         <tbody
           {...getTableBodyProps()}
-          className="bg-white divide-y divide-gray-200"
+          className="divide-y divide-gray-200 bg-white"
         >
           {loading ? (
             <React.Fragment>
@@ -114,12 +114,12 @@ function Table({
       </table>
       {!loading ? (
         <nav
-          className="border-t border-gray-200 pb-4 px-4 flex items-center justify-between"
+          className="flex items-center justify-between border-t border-gray-200 px-4 pb-4"
           aria-label="Pagination"
         >
-          <div className="-mt-px w-0 flex-1 flex">
+          <div className="-mt-px flex w-0 flex-1">
             <button
-              className="pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
+              className="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 hover:text-gray-700"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
@@ -130,9 +130,9 @@ function Table({
               Previous
             </button>
           </div>
-          <div className="-mt-px w-0 flex-1 flex justify-end">
+          <div className="-mt-px flex w-0 flex-1 justify-end">
             <button
-              className="pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
+              className="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 hover:text-gray-700"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >

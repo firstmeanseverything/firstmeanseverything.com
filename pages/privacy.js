@@ -8,7 +8,7 @@ function Privacy() {
     <React.Fragment>
       <SEO title="Privacy Policy" />
       <div className="px-4 py-8">
-        <div className="mx-auto prose">
+        <div className="prose mx-auto">
           <h1>Privacy Policy</h1>
           <p>
             Your privacy is important to us. It is First Means Everything

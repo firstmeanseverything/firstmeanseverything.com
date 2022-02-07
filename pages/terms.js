@@ -8,7 +8,7 @@ function Terms() {
     <React.Fragment>
       <SEO title="Terms of Service" />
       <div className="px-4 py-8">
-        <div className="mx-auto prose">
+        <div className="prose mx-auto">
           <h1>Terms of Service</h1>
           <p>
             These Terms of Service govern your use of the website located at{' '}

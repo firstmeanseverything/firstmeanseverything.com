@@ -12,10 +12,10 @@ function ForgotPassword() {
     <React.Fragment>
       <SEO title="Forgot Password" />
       <div>
-        <h2 className="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
+        <h2 className="mt-6 text-3xl font-extrabold leading-9 text-gray-900">
           Reset your password
         </h2>
-        <p className="mt-2 text-sm leading-5 text-gray-600 max-w">
+        <p className="max-w mt-2 text-sm leading-5 text-gray-600">
           Forgot your password? Enter your email address and we'll send you a
           link to reset your password
         </p>

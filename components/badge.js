@@ -25,7 +25,7 @@ function Badge({ label, size = 'regular', theme = 'blue' }) {
   return (
     <span
       className={cx(
-        'inline-flex items-center font-medium rounded-full',
+        'inline-flex items-center rounded-full font-medium',
         sizeClass(size),
         themeClass(theme)
       )}

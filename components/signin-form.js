@@ -70,7 +70,7 @@ function SignInForm() {
                 <div key={index}>
                   <button
                     className={cx(
-                      'w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50',
+                      'inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50',
                       {
                         'cursor-not-allowed opacity-50': formLoading
                       }
@@ -97,7 +97,7 @@ function SignInForm() {
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">
+            <span className="bg-white px-2 text-gray-500">
               Or continue with
             </span>
           </div>
@@ -127,7 +127,7 @@ function SignInForm() {
             <div className="mt-6 flex items-center justify-end">
               <div className="text-sm leading-5">
                 <Link href="/forgot">
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                  <a className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none">
                     Forgot your password?
                   </a>
                 </Link>

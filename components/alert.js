@@ -64,7 +64,7 @@ function Alert({ message, title, type = 'error' }) {
         <div className="ml-3">
           <h3
             className={cx(
-              'text-sm leading-5 font-medium',
+              'text-sm font-medium leading-5',
               titleThemeClass(type)
             )}
           >
