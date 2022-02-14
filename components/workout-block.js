@@ -28,7 +28,9 @@ function WorkoutBlock({ children, title, type }) {
       <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
         <div className="flex-1 truncate px-4 py-6 text-sm">
           <h3 className="text-lg font-medium">{title}</h3>
-          <div className="prose prose-sm sm:prose">{children}</div>
+          <div className="prose prose-sm prose-h4:whitespace-normal prose-p:whitespace-normal prose-li:whitespace-normal sm:prose">
+            {children}
+          </div>
         </div>
       </div>
     </li>
