@@ -59,17 +59,15 @@ function AuthProvider({ children }) {
       handleUser(response.user)
     )
 
-  const unlinkAuthProvider = (provider) => {
+  const unlinkAuthProvider = (provider) =>
     unlink(auth.currentUser, provider).then((response) =>
       handleUser(response.user)
     )
-  }
 
-  const signInWithEmail = (email, password) => {
+  const signInWithEmail = (email, password) =>
     signInWithEmailAndPassword(auth, email, password).then((response) =>
       handleUser(response.user)
     )
-  }
 
   const signInWithProvider = (provider) =>
     signInWithPopup(auth, provider).then((response) =>
