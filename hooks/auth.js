@@ -3,16 +3,17 @@ import { useRouter } from 'next/router'
 
 import { useAuthState } from '@/context/auth'
 
-function useAccessiblePage({ programDate } = {}) {
+function useAccessiblePage({ program } = {}) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   React.useEffect(() => {
-    const isInaccessibleProgam = user?.accessDate > programDate
+    const isInaccessibleProgam =
+      user?.accessDate > program.date && !program.test
 
     if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
       router.push('/')
-  }, [isAuthenticating, programDate, router.isPreview, user])
+  }, [isAuthenticating, program, router.isPreview, user])
 }
 
 function useAuthenticatedPage() {

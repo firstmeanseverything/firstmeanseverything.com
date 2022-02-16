@@ -40,6 +40,7 @@ const ProgramPageFragment = gql`
     free
     id
     notes
+    test
     title
   }
 `

@@ -19,7 +19,7 @@ function SubscribedProgramPage({ program }) {
 
   useAuthenticatedPage()
   useProtectedPage()
-  useAccessiblePage({ programDate: new Date(program.date) })
+  useAccessiblePage({ program })
 
   return <ProgramPage program={program} />
 }
