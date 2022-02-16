@@ -48,7 +48,7 @@ function Index({ preview, product }) {
           limit: Number(limit),
           offset: Number(offset),
           category: activeCategory.toUpperCase(),
-          from: format(user.accessDate, 'yyyy-MM-dd')
+          from: user.accessDate
         },
         preview
       ),

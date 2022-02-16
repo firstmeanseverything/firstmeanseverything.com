@@ -15,6 +15,7 @@ import {
   verifyPasswordResetCode
 } from 'firebase/auth'
 import cookie from 'js-cookie'
+import format from 'date-fns/format'
 import sub from 'date-fns/sub'
 
 import { createUser, getAllUserSubscriptions } from '@/lib/db'
@@ -157,7 +158,10 @@ async function parseUser(user) {
     stripeRole: await getStripeRole(),
     hasHadTrial: Boolean(subscriptions?.length),
     accessDate: activeSubscription
-      ? sub(activeSubscription.created.toDate(), { days: 7 })
+      ? format(
+          sub(activeSubscription.created.toDate(), { days: 7 }),
+          'yyyy-MM-dd'
+        )
       : null
   }
 }
