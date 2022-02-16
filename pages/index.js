@@ -4,7 +4,6 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
 import cx from 'classnames'
-import format from 'date-fns/format'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 
 import { APMarkSVG } from '@/components/svgs'
