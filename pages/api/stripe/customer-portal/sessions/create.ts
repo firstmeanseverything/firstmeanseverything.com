@@ -7,7 +7,11 @@ import { validateToken } from '@/lib/db-admin'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Stripe } from 'stripe'
 
-async function handler(req: NextApiRequest, res: NextApiResponse, user: any) {
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Stripe.BillingPortal.Session | { message: any }>,
+  user: any
+) {
   try {
     const { stripeId: customer }: FirebaseFirestore.DocumentData = (
       await getFirestore(admin).collection('users').doc(user.uid).get()
