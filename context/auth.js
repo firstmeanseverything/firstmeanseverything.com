@@ -38,7 +38,7 @@ function AuthProvider({ children }) {
       createUser(user.uid, user)
       setUser({ providerData, token, ...user })
 
-      cookie.set('first-means-everything', true, {
+      cookie.set('first-means-everything', token, {
         expires: 1
       })
 
