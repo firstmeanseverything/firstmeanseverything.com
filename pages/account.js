@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import cookie from 'js-cookie'
 
 import Alert from '@/components/alert'
 import Button from '@/components/button'
 import { FormInput } from '@/components/form'
-import { goToBillingPortal } from '@/lib/db'
 import Page from '@/components/page'
 import SEO from '@/components/seo'
 import SocialAuthProviders from '@/components/social-auth-providers'
@@ -39,6 +39,34 @@ function Account() {
       setFormSuccess()
     } catch (error) {
       setFormError({ message: error.message })
+    }
+  }
+
+  const createCustomerPortalSession = async () => {
+    try {
+      setBillingLoading(true)
+
+      const customerPortalSession = await fetch(
+        '/api/stripe/customer-portal/sessions/create',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: cookie.get('first-means-everything'),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            return_url: window.location.href
+          })
+        }
+      ).then((response) => {
+        if (!response.ok) throw new Error('dd')
+
+        return response.json()
+      })
+
+      window.location.assign(customerPortalSession.url)
+    } catch (error) {
+      setBillingLoading(false)
     }
   }
 
@@ -123,10 +151,7 @@ function Account() {
                 </div>
                 <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex sm:shrink-0 sm:items-center">
                   <Button
-                    onClick={() => {
-                      setBillingLoading(true)
-                      goToBillingPortal()
-                    }}
+                    onClick={createCustomerPortalSession}
                     isDisabled={isAuthenticating}
                     isLoading={billingLoading}
                   >
