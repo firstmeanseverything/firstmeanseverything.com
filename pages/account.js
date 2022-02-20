@@ -59,7 +59,10 @@ function Account() {
           })
         }
       ).then((response) => {
-        if (!response.ok) throw new Error('dd')
+        if (!response.ok)
+          throw new Error(
+            'There was an issue creating the customer portal session'
+          )
 
         return response.json()
       })
