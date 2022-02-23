@@ -1,8 +1,8 @@
 import * as React from 'react'
+import cookie from 'js-cookie'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
 import Button from '@/components/button'
-import { createCheckoutSession } from '@/lib/db'
 import { useAuthState } from '@/context/auth'
 
 function SubscriptionCTA({ description, name, prices }) {
@@ -13,6 +13,39 @@ function SubscriptionCTA({ description, name, prices }) {
   const activePrice = prices.find(
     (price) => price.interval === activeBillingInterval
   )
+
+  const createCheckoutSession = async () => {
+    try {
+      setCheckoutLoading(true)
+
+      const checkoutSession = await fetch(
+        '/api/stripe/checkout/sessions/create',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: cookie.get('first-means-everything'),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            allow_promotion_codes: true,
+            cancel_url: window.location.href,
+            price: activePrice.id,
+            success_url: window.location.href,
+            trial_from_plan: !user.hasHadTrial
+          })
+        }
+      ).then((response) => {
+        if (!response.ok)
+          throw new Error('There was an issue creating the Checkout Session')
+
+        return response.json()
+      })
+
+      window.location.assign(checkoutSession.url)
+    } catch (error) {
+      setCheckoutLoading(false)
+    }
+  }
 
   return (
     <div className="overflow-hidden sm:rounded-b-lg lg:flex">
@@ -84,10 +117,7 @@ function SubscriptionCTA({ description, name, prices }) {
         </div>
         <div className="mt-6">
           <Button
-            onClick={() => {
-              setCheckoutLoading(true)
-              createCheckoutSession(user, activePrice.id)
-            }}
+            onClick={createCheckoutSession}
             size="xlarge"
             theme="yellow"
             isDisabled={isAuthenticating}
