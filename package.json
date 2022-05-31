@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "1.5.0",
+    "@headlessui/react": "1.6.4",
     "@heroicons/react": "1.0.6",
     "@hookform/resolvers": "2.8.10",
     "@stripe/react-stripe-js": "1.7.2",
