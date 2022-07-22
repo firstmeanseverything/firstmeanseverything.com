@@ -10,9 +10,9 @@ import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
 import { getProduct } from '@/lib/db-admin'
+import PricingTable from '@/components/pricing-table'
 import { ProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
-import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
 import { useAuthenticatedPage } from '@/hooks/auth'
@@ -155,81 +155,81 @@ function Index({ preview, product }) {
         </div>
         <div className="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
           <section>
-            <div className="bg-white shadow sm:rounded-lg">
-              <div className="border-b border-gray-200 px-4 sm:px-0">
-                <div className="py-4 sm:hidden">
-                  <label htmlFor="tabs" className="sr-only">
-                    Select a tab
-                  </label>
-                  <select
-                    id="tabs"
-                    name="tabs"
-                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-shark focus:outline-none focus:ring-shark sm:text-sm"
-                    value={activeCategory}
-                    onChange={(e) =>
-                      router.push({
-                        pathname: router.pathname,
-                        query: { ...router.query, category: e.target.value }
-                      })
-                    }
-                  >
-                    <option value="rx">RX</option>
-                    <option value="scaled">Scaled</option>
-                  </select>
-                </div>
-                <div className="hidden sm:block">
-                  <div className="sm:px-4">
-                    <nav className="mt-2 -mb-px flex space-x-8">
-                      <Link
-                        href={{
+            {showSubscriptionCta ? (
+              <PricingTable />
+            ) : (
+              <div className="bg-white shadow sm:rounded-lg">
+                <div className="border-b border-gray-200 px-4 sm:px-0">
+                  <div className="py-4 sm:hidden">
+                    <label htmlFor="tabs" className="sr-only">
+                      Select a tab
+                    </label>
+                    <select
+                      id="tabs"
+                      name="tabs"
+                      className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-shark focus:outline-none focus:ring-shark sm:text-sm"
+                      value={activeCategory}
+                      onChange={(e) =>
+                        router.push({
                           pathname: router.pathname,
-                          query: { ...router.query, category: 'rx' }
-                        }}
-                      >
-                        <a
-                          className={cx(
-                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                            activeCategory === 'rx'
-                              ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                          )}
+                          query: { ...router.query, category: e.target.value }
+                        })
+                      }
+                    >
+                      <option value="rx">RX</option>
+                      <option value="scaled">Scaled</option>
+                    </select>
+                  </div>
+                  <div className="hidden sm:block">
+                    <div className="sm:px-4">
+                      <nav className="mt-2 -mb-px flex space-x-8">
+                        <Link
+                          href={{
+                            pathname: router.pathname,
+                            query: { ...router.query, category: 'rx' }
+                          }}
                         >
-                          RX
-                        </a>
-                      </Link>
-                      <Link
-                        href={{
-                          pathname: router.pathname,
-                          query: { ...router.query, category: 'scaled' }
-                        }}
-                      >
-                        <a
-                          className={cx(
-                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                            activeCategory === 'scaled'
-                              ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                          )}
+                          <a
+                            className={cx(
+                              'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
+                              activeCategory === 'rx'
+                                ? 'border-saffron text-shark'
+                                : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
+                            )}
+                          >
+                            RX
+                          </a>
+                        </Link>
+                        <Link
+                          href={{
+                            pathname: router.pathname,
+                            query: { ...router.query, category: 'scaled' }
+                          }}
                         >
-                          Scaled
-                        </a>
-                      </Link>
-                    </nav>
+                          <a
+                            className={cx(
+                              'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
+                              activeCategory === 'scaled'
+                                ? 'border-saffron text-shark'
+                                : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
+                            )}
+                          >
+                            Scaled
+                          </a>
+                        </Link>
+                      </nav>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                {showSubscriptionCta ? (
-                  <SubscriptionCTA {...product} />
-                ) : (
+                <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                   <Table
                     loading={!data}
                     rowOnClick={viewProgram}
                     {...programTable}
                   />
-                )}
+                </div>
               </div>
-            </div>
+            )}
           </section>
         </div>
       </main>
