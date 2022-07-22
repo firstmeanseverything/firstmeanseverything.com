@@ -15,7 +15,6 @@ import { ProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
-import { useAuthenticatedPage } from '@/hooks/auth'
 import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
@@ -24,8 +23,6 @@ function Index({ preview, product }) {
   const pagination = usePaginationQueryParams()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = React.useState('rx')
-
-  useAuthenticatedPage()
 
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
