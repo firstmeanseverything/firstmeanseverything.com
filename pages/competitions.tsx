@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
+import Link from 'next/link'
 import Image from 'next/future/image'
 
 import { getCompetitionsList } from '@/lib/graphcms'
@@ -33,14 +34,13 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
                   alt={`View details for ${competition.title}`}
                   className="pointer-events-none object-cover group-hover:opacity-75"
                 />
-                <button
-                  type="button"
-                  className="absolute inset-0 focus:outline-none"
-                >
-                  <span className="sr-only">
-                    View details for {competition.title}
-                  </span>
-                </button>
+                <Link href={`/competitions/${competition.slug}`}>
+                  <a className="absolute inset-0 focus:outline-none">
+                    <span className="sr-only">
+                      View details for {competition.title}
+                    </span>
+                  </a>
+                </Link>
               </div>
               <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
                 {competition.title}
