@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
+import Image from 'next/future/image'
 
 import { getCompetitionsList } from '@/lib/graphcms'
 
@@ -25,9 +26,11 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
           {competitions.map((competition) => (
             <li key={competition.id} className="relative">
               <div className="aspect-w-10 aspect-h-7 group block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                <img
+                <Image
+                  height={competition.header.height}
+                  width={competition.header.width}
                   src={competition.header.url}
-                  alt=""
+                  alt={`View details for ${competition.title}`}
                   className="pointer-events-none object-cover group-hover:opacity-75"
                 />
                 <button

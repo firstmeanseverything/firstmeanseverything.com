@@ -10,8 +10,10 @@ const CompetitionListFragment = gql`
         description
         endDate
         header {
+          height
           id
           url
+          width
         }
         id
         slug
