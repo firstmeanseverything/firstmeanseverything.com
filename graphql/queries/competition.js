@@ -18,6 +18,12 @@ const CompetitionPageQuery = gql`
       title
       type
       url
+      venue {
+        id
+        address
+        latitude
+        longitude
+      }
     }
   }
 `

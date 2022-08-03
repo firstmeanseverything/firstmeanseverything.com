@@ -5,8 +5,9 @@ import Image from 'next/future/image'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 
-import { competitionMdxComponents } from '@/components/mdx'
+import Badge from '@/components/badge'
 import CompetitionInfo from '@/components/competition-info'
+import { competitionMdxComponents } from '@/components/mdx'
 import { getCompetitionPage, getCompetitionsPaths } from '@/lib/graphcms'
 
 interface CompetitionPage {
@@ -27,9 +28,12 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {competition.title}
-              </h1>
+              <div className="flex items-center space-x-2">
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {competition.title}
+                </h1>
+                <Badge label={competition.type} theme="green" />
+              </div>
               <time
                 className="text-sm font-medium text-gray-500"
                 dateTime={competition.dateRange}

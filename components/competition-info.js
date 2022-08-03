@@ -1,10 +1,9 @@
 import * as React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import cx from 'classnames'
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 
-import Badge from '@/components/badge'
+import VenueMap from '@/components/venue-map'
 
 function CompetitionInfo({ competition }) {
   const information = React.useMemo(
@@ -19,12 +18,19 @@ function CompetitionInfo({ competition }) {
           ]
         : []),
       {
-        className: 'sm:col-span-1',
-        label: 'Type',
-        value: <Badge label={competition.type} theme="green" />
+        className: 'sm:col-span-3',
+        label: 'Location',
+        value: (
+          <div className="space-y-8">
+            <p>{competition.venue.address}</p>
+            <div className="-mx-4 flex justify-center sm:-mx-6">
+              <VenueMap venue={competition.venue} />
+            </div>
+          </div>
+        )
       },
       {
-        className: 'sm:col-span-2',
+        className: 'sm:col-span-3',
         value: (
           <span className="block rounded-md shadow-sm">
             <Link href={competition.url}>
