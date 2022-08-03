@@ -40,6 +40,7 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
                 <Image
                   height={competition.header.height}
                   width={competition.header.width}
+                  priority={true}
                   src={competition.header.url}
                   alt={`View details for ${competition.title}`}
                   className="pointer-events-none object-cover group-hover:opacity-75"
