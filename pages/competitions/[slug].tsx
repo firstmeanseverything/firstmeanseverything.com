@@ -30,6 +30,12 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
               <h1 className="text-2xl font-bold text-gray-900">
                 {competition.title}
               </h1>
+              <time
+                className="text-sm font-medium text-gray-500"
+                dateTime={competition.dateRange}
+              >
+                {competition.dateRange}
+              </time>
             </div>
           </div>
         </div>
