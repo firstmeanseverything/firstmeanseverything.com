@@ -59,7 +59,7 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const { competitions } = await getCompetitionsList(
-    { type: 'finals' },
+    { type: 'FINALS' },
     preview
   )
 
