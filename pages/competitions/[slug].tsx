@@ -5,6 +5,7 @@ import Image from 'next/future/image'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 
+import { competitionMdxComponents } from '@/components/mdx'
 import CompetitionInfo from '@/components/competition-info'
 import { getCompetitionPage, getCompetitionsPaths } from '@/lib/graphcms'
 
@@ -14,7 +15,10 @@ interface CompetitionPage {
 
 const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
   const mdxContent = competition.description ? (
-    <MDXRemote {...competition.description.mdx} />
+    <MDXRemote
+      {...competition.description.mdx}
+      components={competitionMdxComponents}
+    />
   ) : null
 
   return (

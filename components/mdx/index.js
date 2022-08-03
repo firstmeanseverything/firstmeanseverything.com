@@ -1,8 +1,13 @@
+import Alert from '@/components/alert'
 import PercentageRepWork from '@/components/mdx/percentage-rep-work'
 import PercentageWeightWork from '@/components/mdx/percentage-weight-work'
 import WorkoutBlock from '@/components/workout-block'
 
-const mdxComponents = {
+const competitionMdxComponents = {
+  Alert: Alert
+}
+
+const programMdxComponents = {
   Conditioning: ({ children, ...props }) => (
     <WorkoutBlock {...props} title="Conditioning" type="conditioning">
       {children}
@@ -27,4 +32,4 @@ const mdxComponents = {
   )
 }
 
-export default mdxComponents
+export { competitionMdxComponents, programMdxComponents }
