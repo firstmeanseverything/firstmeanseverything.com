@@ -3,15 +3,18 @@ import cx from 'classnames'
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
+  InformationCircleIcon,
   XCircleIcon
 } from '@heroicons/react/solid'
 
-function Alert({ message, title, type = 'error' }) {
+function Alert({ className, message, title, type = 'error' }) {
   const themeClass = (type) => {
     switch (type) {
       case 'error':
       default:
         return 'bg-red-50 text-red-700'
+      case 'info':
+        return 'bg-blue-50 text-blue-700'
       case 'success':
         return 'bg-green-50 text-green-700'
       case 'warn':
@@ -24,6 +27,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return 'text-red-800'
+      case 'info':
+        return 'text-blue-800'
       case 'success':
         return 'text-green-800'
       case 'warn':
@@ -36,6 +41,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return 'text-red-400'
+      case 'info':
+        return 'text-blue-400'
       case 'success':
         return 'text-green-400'
       case 'warn':
@@ -50,6 +57,8 @@ function Alert({ message, title, type = 'error' }) {
       case 'error':
       default:
         return <XCircleIcon className={baseClass} />
+      case 'info':
+        return <InformationCircleIcon className={baseClass} />
       case 'success':
         return <CheckCircleIcon className={baseClass} />
       case 'warn':
@@ -58,7 +67,7 @@ function Alert({ message, title, type = 'error' }) {
   }
 
   return (
-    <div className={cx('rounded-md p-4', themeClass(type))}>
+    <div className={cx('rounded-md p-4', className, themeClass(type))}>
       <div className="flex">
         <div className="shrink-0">{svgComponent(type)}</div>
         <div className="ml-3">

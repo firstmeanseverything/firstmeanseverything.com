@@ -4,12 +4,12 @@ import cx from 'classnames'
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 
-import mdxComponents from './mdx'
-import WorkoutBlock from './workout-block'
+import { programMdxComponents } from '@/components/mdx'
+import WorkoutBlock from '@/components/workout-block'
 
 function DaySection({ activeRecovery = false, content, title }, index) {
   const mdxContent = content ? (
-    <MDXRemote {...content.mdx} components={mdxComponents} />
+    <MDXRemote {...content.mdx} components={programMdxComponents} />
   ) : null
 
   return (

@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import cx from 'classnames'
 
 import Badge from '@/components/badge'
-import mdxComponents from './mdx'
+import { programMdxComponents } from '@/components/mdx'
 
 function ProgramInfo({ program }) {
   const information = React.useMemo(
@@ -68,7 +68,7 @@ function ProgramInfo({ program }) {
                   {program.notes ? (
                     <MDXRemote
                       {...program.notes.mdx}
-                      components={mdxComponents}
+                      components={programMdxComponents}
                     />
                   ) : null}
                 </div>
