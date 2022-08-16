@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 
+import Footer from '@/components/footer'
 import Navigation from '@/components/navigation'
 
 function Layout({ children }) {
   const router = useRouter()
 
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       {router.isPreview ? (
         <div className="relative bg-indigo-600">
           <div className="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
@@ -30,7 +31,8 @@ function Layout({ children }) {
         </div>
       ) : null}
       <Navigation />
-      {children}
+      <main className="flex-grow">{children}</main>
+      <Footer />
     </div>
   )
 }
