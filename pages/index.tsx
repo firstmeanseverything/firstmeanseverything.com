@@ -35,12 +35,13 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
                   alt={`View details for ${competition.title}`}
                   className="pointer-events-none object-cover group-hover:opacity-75"
                 />
-                <Link href={`/competitions/${competition.slug}`}>
-                  <a className="absolute inset-0 focus:outline-none">
-                    <span className="sr-only">
-                      View details for {competition.title}
-                    </span>
-                  </a>
+                <Link
+                  href={`/competitions/${competition.slug}`}
+                  className="absolute inset-0 focus:outline-none"
+                >
+                  <span className="sr-only">
+                    View details for {competition.title}
+                  </span>
                 </Link>
               </div>
               <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">

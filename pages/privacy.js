@@ -15,10 +15,8 @@ function Privacy() {
             Ltd&#39;s policy to respect your privacy and comply with any
             applicable law and regulation regarding any personal information we
             may collect about you, including across our{' '}
-            <Link href="https://firstmeanseverything.com">
-              <a>website</a>
-            </Link>
-            , and other sites we own and operate.
+            <Link href="https://firstmeanseverything.com">website</Link>, and
+            other sites we own and operate.
           </p>
           <p>
             Personal information is any information about you which can be used
@@ -529,7 +527,7 @@ function Privacy() {
           <p>
             For any questions or concerns regarding your privacy, you may{' '}
             <Link href="mailto:team@firstmeanseverything.com?subject=Privacy Policy">
-              <a>contact us</a>
+              contact us
             </Link>
             .
           </p>

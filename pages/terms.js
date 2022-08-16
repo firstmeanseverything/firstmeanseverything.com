@@ -13,14 +13,14 @@ function Terms() {
           <p>
             These Terms of Service govern your use of the website located at{' '}
             <Link href="https://firstmeanseverything.com">
-              <a>firstmeanseverything.com</a>
+              firstmeanseverything.com
             </Link>{' '}
             and any related services provided by First Means Everything Ltd.
           </p>
           <p>
             By accessing{' '}
             <Link href="https://firstmeanseverything.com">
-              <a>firstmeanseverything.com</a>
+              firstmeanseverything.com
             </Link>
             , you agree to abide by these Terms of Service and to comply with
             all applicable laws and regulations. If you do not agree with these

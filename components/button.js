@@ -40,6 +40,11 @@ function Button({
           'hover:bg-yellow-200 focus:border-yellow-400 focus:shadow-outline-yellow active:bg-yellow-400':
             !disabled
         })
+      case 'gray':
+        return cx('text-gray-800 bg-gray-100', {
+          'hover:bg-gray-50 focus:border-gray-200 focus:shadow-outline-gray active:bg-gray-200':
+            !disabled
+        })
     }
   }
 

@@ -18,10 +18,11 @@ function SignIn() {
         </h2>
         <p className="max-w mt-2 text-sm leading-5 text-gray-600">
           Don't have an account?{' '}
-          <Link href="/signup">
-            <a className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none">
-              Sign up for free
-            </a>
+          <Link
+            href="/signup"
+            className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none"
+          >
+            Sign up for free
           </Link>
         </p>
       </div>

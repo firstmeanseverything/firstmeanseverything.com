@@ -121,10 +121,11 @@ function SignInForm() {
             </div>
             <div className="mt-6 flex items-center justify-end">
               <div className="text-sm leading-5">
-                <Link href="/forgot">
-                  <a className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none">
-                    Forgot your password?
-                  </a>
+                <Link
+                  href="/forgot"
+                  className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none"
+                >
+                  Forgot your password?
                 </Link>
               </div>
             </div>

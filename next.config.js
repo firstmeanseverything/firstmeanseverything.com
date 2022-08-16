@@ -11,7 +11,8 @@ module.exports = {
   experimental: {
     images: {
       allowFutureImage: true
-    }
+    },
+    newNextLinkBehavior: true
   },
   images: {
     domains: [

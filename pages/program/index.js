@@ -185,34 +185,28 @@ function Index({ preview, product }) {
                           pathname: router.pathname,
                           query: { ...router.query, category: 'rx' }
                         }}
+                        className={cx(
+                          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
+                          activeCategory === 'rx'
+                            ? 'border-saffron text-shark'
+                            : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
+                        )}
                       >
-                        <a
-                          className={cx(
-                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                            activeCategory === 'rx'
-                              ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                          )}
-                        >
-                          RX
-                        </a>
+                        RX
                       </Link>
                       <Link
                         href={{
                           pathname: router.pathname,
                           query: { ...router.query, category: 'scaled' }
                         }}
+                        className={cx(
+                          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
+                          activeCategory === 'scaled'
+                            ? 'border-saffron text-shark'
+                            : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
+                        )}
                       >
-                        <a
-                          className={cx(
-                            'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                            activeCategory === 'scaled'
-                              ? 'border-saffron text-shark'
-                              : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                          )}
-                        >
-                          Scaled
-                        </a>
+                        Scaled
                       </Link>
                     </nav>
                   </div>
