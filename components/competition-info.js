@@ -33,11 +33,12 @@ function CompetitionInfo({ competition }) {
         className: 'sm:col-span-3',
         value: (
           <span className="block rounded-md shadow-sm">
-            <Link href={competition.url}>
-              <a className="focus:shadow-outline-indigo flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out hover:bg-indigo-500 focus:border-indigo-700 focus:outline-none active:bg-indigo-700">
-                <ExternalLinkIcon className="h5 mr-3 w-5" />
-                Registration Open Now
-              </a>
+            <Link
+              href={competition.url}
+              className="focus:shadow-outline-indigo flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out hover:bg-indigo-500 focus:border-indigo-700 focus:outline-none active:bg-indigo-700"
+            >
+              <ExternalLinkIcon className="h5 mr-3 w-5" />
+              Registration Open Now
             </Link>
           </span>
         )
