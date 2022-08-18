@@ -9,6 +9,7 @@ import Badge from '@/components/badge'
 import CompetitionInfo from '@/components/competition-info'
 import { competitionMdxComponents } from '@/components/mdx'
 import { getCompetitionPage, getCompetitionsPaths } from '@/lib/graphcms'
+import SEO from '@/components/seo'
 
 interface CompetitionPage {
   competition: any
@@ -24,6 +25,7 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
 
   return (
     <React.Fragment>
+      <SEO title={competition.title} image={competition.header} />
       <main className="py-10">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
