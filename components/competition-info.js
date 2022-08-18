@@ -8,6 +8,15 @@ import VenueMap from '@/components/venue-map'
 function CompetitionInfo({ competition }) {
   const information = React.useMemo(
     () => [
+      ...(competition.description
+        ? [
+            {
+              className: 'sm:col-span-2',
+              label: 'Description',
+              value: competition.description
+            }
+          ]
+        : []),
       ...(competition.dateRange
         ? [
             {
@@ -60,9 +69,6 @@ function CompetitionInfo({ competition }) {
           >
             Competition Details
           </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Key information.
-          </p>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-2">
