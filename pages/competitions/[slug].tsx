@@ -25,7 +25,11 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
 
   return (
     <React.Fragment>
-      <SEO title={competition.title} image={competition.header} />
+      <SEO
+        title={competition.title}
+        image={competition.header}
+        description={competition.description}
+      />
       <main className="py-10">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
