@@ -20,7 +20,7 @@ interface SEOComponent {
   title: string
 }
 
-function SEO({ image, title, ...props }: SEOComponent) {
+function SEO({ image, ...props }: SEOComponent) {
   const router = useRouter()
 
   const SEO = {
@@ -28,7 +28,7 @@ function SEO({ image, title, ...props }: SEOComponent) {
       ...(image && {
         images: [
           {
-            alt: title,
+            alt: props.title,
             ...image
           }
         ]
