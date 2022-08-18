@@ -3,7 +3,24 @@ import { NextSeo } from 'next-seo'
 
 import { defaultUrl } from 'next-seo.config'
 
-function SEO({ image, ...props }) {
+interface SEOComponent {
+  /**
+   * Page description to override site default.
+   */
+  description?: string
+  /**
+   * Image to be used for page previews.
+   */
+  image?: {
+    url: string
+  }
+  /**
+   * Page title to override site default.
+   */
+  title: string
+}
+
+function SEO({ image, ...props }: SEOComponent) {
   const router = useRouter()
 
   const SEO = {
@@ -16,8 +33,7 @@ function SEO({ image, ...props }) {
           }
         ]
       }),
-      url: defaultUrl + router.asPath,
-      ...props
+      url: defaultUrl + router.asPath
     },
     ...props
   }

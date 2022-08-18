@@ -7,6 +7,7 @@ const CompetitionListFragment = gql`
     }
     edges {
       node {
+        content
         description
         endDate
         header {

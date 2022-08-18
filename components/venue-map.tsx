@@ -14,12 +14,12 @@ function VenueMap({ venue }) {
 
   return isLoaded ? (
     <GoogleMap
-      zoom={16}
+      zoom={15}
       center={{
         lat: venue.latitude,
         lng: venue.longitude
       }}
-      mapContainerClassName="h-96 w-full"
+      mapContainerClassName="h-64 w-full"
       options={{
         disableDefaultUI: true,
         clickableIcons: false,
