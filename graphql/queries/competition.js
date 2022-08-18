@@ -5,6 +5,7 @@ const CompetitionPageQuery = gql`
   query CompetitionPageQuery($slug: String!, $stage: Stage!) {
     competition(stage: $stage, where: { slug: $slug }) {
       id
+      content
       description
       endDate
       header {

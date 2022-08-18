@@ -16,9 +16,9 @@ interface CompetitionPage {
 }
 
 const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
-  const mdxContent = competition.description ? (
+  const mdxContent = competition.content ? (
     <MDXRemote
-      {...competition.description.mdx}
+      {...competition.content.mdx}
       components={competitionMdxComponents}
     />
   ) : null
@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({
     process.env.NODE_ENV === 'development' ? true : preview
   )
 
-  const { description, ...rest } = competition
+  const { content, ...rest } = competition
 
   return {
     props: {
@@ -103,9 +103,9 @@ export const getStaticProps: GetStaticProps = async ({
           dateStyle: 'long',
           timeStyle: 'short'
         }).formatRange(new Date(rest.startDate), new Date(rest.endDate)),
-        description: {
-          mdx: await serialize(he.decode(description)),
-          markdown: description
+        content: {
+          mdx: await serialize(he.decode(content)),
+          markdown: content
         },
         ...rest
       }
