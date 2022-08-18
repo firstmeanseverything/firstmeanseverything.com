@@ -23,8 +23,7 @@ function SEO({ image, ...props }: SEOComponent) {
           }
         ]
       }),
-      url: defaultUrl + router.asPath,
-      ...props
+      url: defaultUrl + router.asPath
     },
     ...props
   }
