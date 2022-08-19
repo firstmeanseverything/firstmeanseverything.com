@@ -13,7 +13,7 @@ function SubscribedProgramPage({ program }) {
 
   if (router.isFallback) return <div>Loading...</div>
 
-  useProtectedPage({ program })
+  useProtectedPage({ path: '/program', program })
 
   return <ProgramPage program={program} />
 }

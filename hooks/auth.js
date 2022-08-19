@@ -12,7 +12,11 @@ function useAuthenticatedPage() {
   }, [isAuthenticating, user])
 }
 
-function useProtectedPage({ permittedRoles = ['basic'], program } = {}) {
+function useProtectedPage({
+  path = '/',
+  permittedRoles = ['basic'],
+  program
+} = {}) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
@@ -22,10 +26,10 @@ function useProtectedPage({ permittedRoles = ['basic'], program } = {}) {
     if (!(isAuthenticating || user)) return router.replace('/signin')
 
     if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
-      return router.replace('/')
+      return router.replace(path)
 
     if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
-      router.replace('/')
+      router.replace(path)
   }, [isAuthenticating, program, router.isPreview, user])
 }
 
