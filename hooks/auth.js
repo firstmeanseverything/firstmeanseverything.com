@@ -3,36 +3,30 @@ import { useRouter } from 'next/router'
 
 import { useAuthState } from '@/context/auth'
 
-function useAccessiblePage({ program } = {}) {
-  const { isAuthenticating, user } = useAuthState()
-  const router = useRouter()
-
-  React.useEffect(() => {
-    const isInaccessibleProgam =
-      user?.accessDate > program.date && !program.test
-
-    if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
-      router.replace('/')
-  }, [isAuthenticating, program, router.isPreview, user])
-}
-
 function useAuthenticatedPage() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!(isAuthenticating || user)) router.replace('/signin')
+    if (!(isAuthenticating || user)) return router.replace('/signin')
   }, [isAuthenticating, user])
 }
 
-function useProtectedPage({ permittedRoles = ['basic'] } = {}) {
+function useProtectedPage({ permittedRoles = ['basic'], program } = {}) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
+  const isInaccessibleProgam = user?.accessDate > program.date && !program.test
+
   React.useEffect(() => {
+    if (!(isAuthenticating || user)) return router.replace('/signin')
+
     if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
+      return router.replace('/')
+
+    if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
       router.replace('/')
-  }, [isAuthenticating, user])
+  }, [isAuthenticating, program, router.isPreview, user])
 }
 
 function useUnauthenticatedPage() {
@@ -40,13 +34,8 @@ function useUnauthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!isAuthenticating && user) router.replace('/')
+    if (!isAuthenticating && user) return router.replace('/')
   }, [isAuthenticating, user])
 }
 
-export {
-  useAccessiblePage,
-  useAuthenticatedPage,
-  useProtectedPage,
-  useUnauthenticatedPage
-}
+export { useAuthenticatedPage, useProtectedPage, useUnauthenticatedPage }

@@ -6,20 +6,14 @@ import addDays from 'date-fns/addDays'
 
 import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import ProgramPage from '@/components/program-page'
-import {
-  useAccessiblePage,
-  useAuthenticatedPage,
-  useProtectedPage
-} from '@/hooks/auth'
+import { useProtectedPage } from '@/hooks/auth'
 
 function SubscribedProgramPage({ program }) {
   const router = useRouter()
 
   if (router.isFallback) return <div>Loading...</div>
 
-  useAuthenticatedPage()
-  useProtectedPage()
-  useAccessiblePage({ program })
+  useProtectedPage({ program })
 
   return <ProgramPage program={program} />
 }
