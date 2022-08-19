@@ -12,7 +12,7 @@ function useAccessiblePage({ program } = {}) {
       user?.accessDate > program.date && !program.test
 
     if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
-      router.push('/')
+      router.replace('/')
   }, [isAuthenticating, program, router.isPreview, user])
 }
 
@@ -21,7 +21,7 @@ function useAuthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!(isAuthenticating || user)) router.push('/signin')
+    if (!(isAuthenticating || user)) router.replace('/signin')
   }, [isAuthenticating, user])
 }
 
@@ -31,7 +31,7 @@ function useProtectedPage({ permittedRoles = ['basic'] } = {}) {
 
   React.useEffect(() => {
     if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
-      router.push('/')
+      router.replace('/')
   }, [isAuthenticating, user])
 }
 
@@ -40,7 +40,7 @@ function useUnauthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!isAuthenticating && user) router.push('/')
+    if (!isAuthenticating && user) router.replace('/')
   }, [isAuthenticating, user])
 }
 
