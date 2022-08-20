@@ -8,7 +8,11 @@ function useAuthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!(isAuthenticating || user)) return router.replace('/signin')
+    if (!(isAuthenticating || user))
+      return router.replace({
+        pathname: '/signin',
+        ...(router.asPath !== '/' && { query: { return_url: router.asPath } })
+      })
   }, [isAuthenticating, user])
 }
 
@@ -23,7 +27,11 @@ function useProtectedPage({
   const isInaccessibleProgam = user?.accessDate > program.date && !program.test
 
   React.useEffect(() => {
-    if (!(isAuthenticating || user)) return router.replace('/signin')
+    if (!(isAuthenticating || user))
+      return router.replace({
+        pathname: '/signin',
+        ...(router.asPath !== '/' && { query: { return_url: router.asPath } })
+      })
 
     if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
       return router.replace(path)
@@ -38,7 +46,8 @@ function useUnauthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!isAuthenticating && user) return router.replace('/')
+    if (!isAuthenticating && user)
+      return router.replace(router.query.return_url ?? '/')
   }, [isAuthenticating, user])
 }
 
