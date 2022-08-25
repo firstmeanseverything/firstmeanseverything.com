@@ -4,6 +4,7 @@ import cookie from 'js-cookie'
 
 import Alert from '@/components/alert'
 import Button from '@/components/button'
+import fetcher from '@/lib/fetcher'
 import { FormInput } from '@/components/form'
 import Page from '@/components/page'
 import SEO from '@/components/seo'
@@ -46,29 +47,21 @@ function Account() {
     try {
       setBillingLoading(true)
 
-      const customerPortalSession = await fetch(
-        '/api/stripe/customer-portal/sessions/create',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: cookie.get('first-means-everything'),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            return_url: window.location.href
-          })
-        }
-      ).then((response) => {
-        if (!response.ok)
-          throw new Error(
-            'There was an issue creating the customer portal session'
-          )
-
-        return response.json()
+      const customerPortalSession = await fetcher({
+        body: {
+          return_url: window.location.href
+        },
+        headers: {
+          Authorization: cookie.get('first-means-everything')
+        },
+        method: 'POST',
+        url: '/api/stripe/customer-portal/sessions/create'
       })
 
       window.location.assign(customerPortalSession.url)
     } catch (error) {
+      console.error(error.info)
+    } finally {
       setBillingLoading(false)
     }
   }

@@ -3,6 +3,7 @@ import cookie from 'js-cookie'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
 import Button from '@/components/button'
+import fetcher from '@/lib/fetcher'
 import { useAuthState } from '@/context/auth'
 
 function SubscriptionCTA({ price }) {
@@ -13,31 +14,23 @@ function SubscriptionCTA({ price }) {
     try {
       setCheckoutLoading(true)
 
-      const checkoutSession = await fetch(
-        '/api/stripe/checkout/sessions/create',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: cookie.get('first-means-everything'),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            allow_promotion_codes: true,
-            cancel_url: window.location.href,
-            price: price.id,
-            success_url: window.location.href,
-            trial_from_plan: !user.hasHadTrial
-          })
-        }
-      ).then((response) => {
-        if (!response.ok)
-          throw new Error('There was an issue creating the Checkout Session')
-
-        return response.json()
+      const checkoutSession = await fetcher({
+        body: {
+          allow_promotion_codes: true,
+          cancel_url: window.location.href,
+          price: price.id,
+          success_url: window.location.href,
+          trial_from_plan: !user.hasHadTrial
+        },
+        headers: { Authorization: cookie.get('first-means-everything') },
+        method: 'POST',
+        url: '/api/stripe/checkout/sessions/create'
       })
 
       window.location.assign(checkoutSession.url)
     } catch (error) {
+      console.error(error.info)
+    } finally {
       setCheckoutLoading(false)
     }
   }
