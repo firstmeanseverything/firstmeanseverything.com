@@ -5,14 +5,9 @@ import { CheckCircleIcon } from '@heroicons/react/solid'
 import Button from '@/components/button'
 import { useAuthState } from '@/context/auth'
 
-function SubscriptionCTA({ description, name, prices }) {
+function SubscriptionCTA({ price }) {
   const { isAuthenticating, user } = useAuthState()
-  const [activeBillingInterval, setBillingInterval] = React.useState('month')
   const [checkoutLoading, setCheckoutLoading] = React.useState(false)
-
-  const activePrice = prices.find(
-    (price) => price.interval === activeBillingInterval
-  )
 
   const createCheckoutSession = async () => {
     try {
@@ -29,7 +24,7 @@ function SubscriptionCTA({ description, name, prices }) {
           body: JSON.stringify({
             allow_promotion_codes: true,
             cancel_url: window.location.href,
-            price: activePrice.id,
+            price: price.id,
             success_url: window.location.href,
             trial_from_plan: !user.hasHadTrial
           })
@@ -51,9 +46,11 @@ function SubscriptionCTA({ description, name, prices }) {
     <div className="overflow-hidden sm:rounded-b-lg lg:flex">
       <div className="lg:shrink-1 px-6 py-8 lg:p-12">
         <h3 className="text-2xl font-extrabold leading-8 text-gray-900 sm:text-3xl sm:leading-9">
-          {name}
+          {price.product.name}
         </h3>
-        <p className="mt-6 text-base leading-6 text-gray-500">{description}</p>
+        <p className="mt-6 text-base leading-6 text-gray-500">
+          {price.product.description}
+        </p>
         <div className="mt-8">
           <div className="flex items-center">
             <h4 className="shrink-0 bg-white pr-4 text-sm font-semibold uppercase leading-5 tracking-wider text-indigo-600">
@@ -106,13 +103,13 @@ function SubscriptionCTA({ description, name, prices }) {
           <span>
             {new Intl.NumberFormat('en-GB', {
               style: 'currency',
-              currency: activePrice.currency,
+              currency: price.currency,
               maximumFractionDigits: 0,
               minimumFractionDigits: 0
-            }).format(activePrice.unit_amount / 100)}
+            }).format(price.unit_amount / 100)}
           </span>
           <span className="ml-3 text-xl font-medium leading-7 text-gray-300">
-            / {activePrice.interval}
+            / {price.recurring.interval}
           </span>
         </div>
         <div className="mt-6">
@@ -123,7 +120,7 @@ function SubscriptionCTA({ description, name, prices }) {
             isDisabled={isAuthenticating}
             isLoading={checkoutLoading}
           >
-            Unlock
+            Subscribe
           </Button>
         </div>
       </div>

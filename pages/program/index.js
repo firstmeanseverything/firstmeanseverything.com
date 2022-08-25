@@ -5,11 +5,11 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import cx from 'classnames'
 import { ChevronRightIcon } from '@heroicons/react/solid'
+import Stripe from 'stripe'
 
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
-import { getProduct } from '@/lib/db-admin'
 import { ProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
@@ -19,7 +19,7 @@ import { useAuthenticatedPage } from '@/hooks/auth'
 import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
-function Index({ preview, product }) {
+function Index({ preview, price }) {
   const { isAuthenticating, user, userHasSubscription } = useAuthState()
   const pagination = usePaginationQueryParams()
   const router = useRouter()
@@ -214,7 +214,7 @@ function Index({ preview, product }) {
               </div>
               <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                 {showSubscriptionCta ? (
-                  <SubscriptionCTA {...product} />
+                  <SubscriptionCTA price={price} />
                 ) : (
                   <Table
                     loading={!data}
@@ -232,12 +232,18 @@ function Index({ preview, product }) {
 }
 
 export async function getStaticProps({ preview = false }) {
-  const { product } = await getProduct(process.env.STRIPE_PRODUCT_ID)
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2020-08-27'
+  })
+
+  const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID, {
+    expand: ['product']
+  })
 
   return {
     props: {
       preview: process.env.NODE_ENV === 'development' ? true : preview,
-      product
+      price
     }
   }
 }
