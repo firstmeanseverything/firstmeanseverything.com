@@ -120,7 +120,7 @@ function SubscriptionCTA({ price }) {
             isDisabled={isAuthenticating}
             isLoading={checkoutLoading}
           >
-            Unlock
+            Subscribe
           </Button>
         </div>
       </div>
