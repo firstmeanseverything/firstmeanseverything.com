@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
 import Button from '@/components/button'
@@ -7,10 +8,19 @@ import { useAuthState } from '@/context/auth'
 
 function SubscriptionCTA({ price }) {
   const { isAuthenticating, user } = useAuthState()
+  const router = useRouter()
   const [checkoutLoading, setCheckoutLoading] = React.useState(false)
 
   const handleClick = async () => {
     try {
+      if (!user)
+        return router.push({
+          pathname: '/signin',
+          query: {
+            return_url: '/subscribe'
+          }
+        })
+
       setCheckoutLoading(true)
 
       const checkoutSession = await createCheckoutSession({

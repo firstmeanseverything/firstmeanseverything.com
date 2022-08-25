@@ -233,9 +233,12 @@ export async function getStaticProps({ preview = false }) {
     apiVersion: '2020-08-27'
   })
 
-  const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID, {
-    expand: ['product']
-  })
+  const price = await stripe.prices.retrieve(
+    process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
+    {
+      expand: ['product']
+    }
+  )
 
   return {
     props: {
