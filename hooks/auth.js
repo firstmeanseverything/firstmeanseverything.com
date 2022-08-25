@@ -3,36 +3,42 @@ import { useRouter } from 'next/router'
 
 import { useAuthState } from '@/context/auth'
 
-function useAccessiblePage({ program } = {}) {
-  const { isAuthenticating, user } = useAuthState()
-  const router = useRouter()
-
-  React.useEffect(() => {
-    const isInaccessibleProgam =
-      user?.accessDate > program.date && !program.test
-
-    if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
-      router.push('/')
-  }, [isAuthenticating, program, router.isPreview, user])
-}
-
 function useAuthenticatedPage() {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!(isAuthenticating || user)) router.push('/signin')
+    if (!(isAuthenticating || user))
+      return router.replace({
+        pathname: '/signin',
+        ...(router.asPath !== '/' && { query: { return_url: router.asPath } })
+      })
   }, [isAuthenticating, user])
 }
 
-function useProtectedPage({ permittedRoles = ['basic'] } = {}) {
+function useProtectedPage({
+  path = '/',
+  permittedRoles = ['basic'],
+  program
+} = {}) {
   const { isAuthenticating, user } = useAuthState()
   const router = useRouter()
 
+  const isInaccessibleProgam = user?.accessDate > program.date && !program.test
+
   React.useEffect(() => {
+    if (!(isAuthenticating || user))
+      return router.replace({
+        pathname: '/signin',
+        ...(router.asPath !== '/' && { query: { return_url: router.asPath } })
+      })
+
     if (!(isAuthenticating || permittedRoles.includes(user?.stripeRole)))
-      router.push('/')
-  }, [isAuthenticating, user])
+      return router.replace(path)
+
+    if (!(isAuthenticating || router.isPreview) && isInaccessibleProgam)
+      router.replace(path)
+  }, [isAuthenticating, program, router.isPreview, user])
 }
 
 function useUnauthenticatedPage() {
@@ -40,13 +46,9 @@ function useUnauthenticatedPage() {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!isAuthenticating && user) router.push('/')
+    if (!isAuthenticating && user)
+      return router.replace(router.query.return_url ?? '/')
   }, [isAuthenticating, user])
 }
 
-export {
-  useAccessiblePage,
-  useAuthenticatedPage,
-  useProtectedPage,
-  useUnauthenticatedPage
-}
+export { useAuthenticatedPage, useProtectedPage, useUnauthenticatedPage }

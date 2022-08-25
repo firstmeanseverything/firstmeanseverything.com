@@ -15,7 +15,6 @@ import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
-import { useAuthenticatedPage } from '@/hooks/auth'
 import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
 
@@ -24,8 +23,6 @@ function Index({ preview, price }) {
   const pagination = usePaginationQueryParams()
   const router = useRouter()
   const [activeCategory, setActiveCategory] = React.useState('rx')
-
-  useAuthenticatedPage()
 
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
@@ -236,9 +233,12 @@ export async function getStaticProps({ preview = false }) {
     apiVersion: '2020-08-27'
   })
 
-  const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID, {
-    expand: ['product']
-  })
+  const price = await stripe.prices.retrieve(
+    process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
+    {
+      expand: ['product']
+    }
+  )
 
   return {
     props: {

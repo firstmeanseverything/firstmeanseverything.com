@@ -1,11 +1,10 @@
 import { getFirestore } from 'firebase-admin/firestore'
+import { Stripe } from 'stripe'
 
 import admin from '@/lib/firebase-admin'
-import { stripe } from '@/lib/stripe'
 import { validateToken } from '@/lib/db-admin'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Stripe } from 'stripe'
 
 async function handler(
   req: NextApiRequest,
@@ -13,6 +12,10 @@ async function handler(
   user: any
 ) {
   try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2020-08-27'
+    })
+
     const { stripeId: customer }: FirebaseFirestore.DocumentData = (
       await getFirestore(admin).collection('users').doc(user.uid).get()
     ).data()

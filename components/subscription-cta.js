@@ -1,43 +1,38 @@
 import * as React from 'react'
-import cookie from 'js-cookie'
+import { useRouter } from 'next/router'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
 import Button from '@/components/button'
+import { createCheckoutSession } from '@/lib/stripe'
 import { useAuthState } from '@/context/auth'
 
 function SubscriptionCTA({ price }) {
   const { isAuthenticating, user } = useAuthState()
+  const router = useRouter()
   const [checkoutLoading, setCheckoutLoading] = React.useState(false)
 
-  const createCheckoutSession = async () => {
+  const handleClick = async () => {
     try {
+      if (!user)
+        return router.push({
+          pathname: '/signin',
+          query: {
+            return_url: '/subscribe'
+          }
+        })
+
       setCheckoutLoading(true)
 
-      const checkoutSession = await fetch(
-        '/api/stripe/checkout/sessions/create',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: cookie.get('first-means-everything'),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            allow_promotion_codes: true,
-            cancel_url: window.location.href,
-            price: price.id,
-            success_url: window.location.href,
-            trial_from_plan: !user.hasHadTrial
-          })
-        }
-      ).then((response) => {
-        if (!response.ok)
-          throw new Error('There was an issue creating the Checkout Session')
-
-        return response.json()
+      const checkoutSession = await createCheckoutSession({
+        allow_promotion_codes: true,
+        price: price.id,
+        trial_from_plan: !user.hasHadTrial
       })
 
       window.location.assign(checkoutSession.url)
     } catch (error) {
+      console.error(error.info)
+    } finally {
       setCheckoutLoading(false)
     }
   }
@@ -114,7 +109,7 @@ function SubscriptionCTA({ price }) {
         </div>
         <div className="mt-6">
           <Button
-            onClick={createCheckoutSession}
+            onClick={handleClick}
             size="xlarge"
             theme="yellow"
             isDisabled={isAuthenticating}

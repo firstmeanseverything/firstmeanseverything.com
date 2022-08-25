@@ -1,7 +1,6 @@
-import { stripe } from '@/lib/stripe'
+import { Stripe } from 'stripe'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Stripe } from 'stripe'
 
 export const config = {
   api: {
@@ -18,6 +17,10 @@ const verifyStripeSignature =
     ) => void
   ) =>
   async (req: NextApiRequest, res: NextApiResponse<{ message: any }>) => {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2020-08-27'
+    })
+
     const chunks = []
 
     for await (const chunk of req) {
