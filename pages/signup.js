@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { getLayout as getAuthLayout } from '@/components/layout/auth'
 import SEO from '@/components/seo'
@@ -7,6 +8,8 @@ import SignUpForm from '@/components/signup-form'
 import { useUnauthenticatedPage } from '@/hooks/auth'
 
 function SignUp() {
+  const router = useRouter()
+
   useUnauthenticatedPage()
 
   return (
@@ -19,7 +22,14 @@ function SignUp() {
         <p className="max-w mt-2 text-sm leading-5 text-gray-600">
           Already have an account?{' '}
           <Link
-            href="/signin"
+            href={{
+              pathname: '/signin',
+              query: {
+                ...(router.query.return_url && {
+                  return_url: router.query.return_url
+                })
+              }
+            }}
             className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none"
           >
             Sign in
