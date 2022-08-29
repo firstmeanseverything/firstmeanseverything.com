@@ -111,7 +111,19 @@ export default function Navigation() {
                     </Menu>
                   </div>
                 ) : (
-                  <Button theme="gray" onClick={() => router.push('/signin')}>
+                  <Button
+                    theme="gray"
+                    onClick={() =>
+                      router.push({
+                        pathname: '/signin',
+                        query: {
+                          ...(router.asPath !== '/' && {
+                            return_url: router.asPath
+                          })
+                        }
+                      })
+                    }
+                  >
                     Sign in
                   </Button>
                 )}
@@ -187,7 +199,14 @@ export default function Navigation() {
                 ) : (
                   <Disclosure.Button
                     as={Link}
-                    href="/signin"
+                    href={{
+                      pathname: '/signin',
+                      query: {
+                        ...(router.asPath !== '/' && {
+                          return_url: router.asPath
+                        })
+                      }
+                    }}
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-black hover:bg-opacity-10 hover:text-white"
                   >
                     Sign in
