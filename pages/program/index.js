@@ -133,7 +133,10 @@ function Index({ preview, price }) {
 
   return (
     <React.Fragment>
-      <SEO title="Athlete Program" />
+      <SEO
+        title="Athlete Program"
+        image={{ url: process.env.NEXT_PUBLIC_OG_IMAGE_PROGRAM }}
+      />
       <main className="py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
           <div className="flex items-center space-x-5">
