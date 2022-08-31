@@ -8,6 +8,16 @@ const seo = {
   description,
   openGraph: {
     description,
+    images: [
+      {
+        alt: 'First Means Everything',
+        height: 630,
+        width: 1200,
+        url:
+          process.env.NEXT_PUBLIC_OG_IMAGE_DEFAULT &&
+          'https://media.graphassets.com/aOq2N2nkR3WLVXpczCEA'
+      }
+    ],
     title: 'First Means Everything',
     type: 'website',
     url
