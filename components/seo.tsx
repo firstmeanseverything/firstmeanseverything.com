@@ -25,7 +25,7 @@ function SEO({ image, ...props }: SEOComponent) {
 
   const SEO = {
     openGraph: {
-      ...(image && {
+      ...(image?.url && {
         images: [
           {
             alt: props.title,
