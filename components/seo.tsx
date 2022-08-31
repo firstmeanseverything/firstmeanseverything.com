@@ -29,6 +29,8 @@ function SEO({ image, ...props }: SEOComponent) {
         images: [
           {
             alt: props.title,
+            height: 630,
+            width: 1200,
             ...image
           }
         ]
