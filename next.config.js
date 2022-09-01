@@ -1,13 +1,4 @@
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/program/:category/sample/:id',
-        permanent: true,
-        destination: '/'
-      }
-    ]
-  },
   experimental: {
     images: {
       allowFutureImage: true

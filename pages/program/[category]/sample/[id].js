@@ -5,14 +5,11 @@ import he from 'he'
 
 import { getProgramsPaths, getSampleProgramPage } from '@/lib/graphcms'
 import ProgramPage from '@/components/program-page'
-import { useAuthenticatedPage } from '@/hooks/auth'
 
 function SamplePage({ program }) {
   const router = useRouter()
 
   if (router.isFallback) return <div>Loading...</div>
-
-  useAuthenticatedPage()
 
   return <ProgramPage program={program} />
 }
