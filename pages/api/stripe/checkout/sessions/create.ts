@@ -48,6 +48,8 @@ async function handler(
 
     res.status(201).json(checkoutSession)
   } catch (error) {
+    console.error(error)
+
     res.status(400).json({ message: error.message })
   }
 }
