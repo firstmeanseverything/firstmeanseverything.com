@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore'
-import { Stripe } from 'stripe'
+import Stripe from 'stripe'
 
 import admin from '@/lib/firebase-admin'
 import { validateToken } from '@/lib/db-admin'
