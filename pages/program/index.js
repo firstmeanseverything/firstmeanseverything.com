@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
-import cx from 'classnames'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import Stripe from 'stripe'
 
@@ -22,28 +20,21 @@ function Index({ preview, price }) {
   const { isAuthenticating, user, userHasSubscription } = useAuthState()
   const pagination = usePaginationQueryParams()
   const router = useRouter()
-  const [activeCategory, setActiveCategory] = React.useState('rx')
 
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
   const { data, error } = useSWR(
     user
       ? userHasSubscription
-        ? [
-            ProgramsListQuery,
-            activeCategory,
-            pagination.limit,
-            pagination.offset
-          ]
+        ? [ProgramsListQuery, pagination.limit, pagination.offset]
         : null
       : null,
-    (query, activeCategory, limit, offset) =>
+    (query, limit, offset) =>
       getProgramsList(
         query,
         {
           limit: Number(limit),
           offset: Number(offset),
-          category: activeCategory.toUpperCase(),
           from: user.accessDate
         },
         preview
@@ -124,10 +115,6 @@ function Index({ preview, price }) {
     }
   })
 
-  React.useEffect(() => {
-    return setActiveCategory(router.query.category ?? 'rx')
-  }, [router.query.category])
-
   const viewProgram = ({ node: program }) =>
     router.push(`/program/${program.date}`)
 
@@ -155,63 +142,7 @@ function Index({ preview, price }) {
         </div>
         <div className="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
           <section>
-            <div className="bg-white shadow sm:rounded-lg">
-              <div className="border-b border-gray-200 px-4 sm:px-0">
-                <div className="py-4 sm:hidden">
-                  <label htmlFor="tabs" className="sr-only">
-                    Select a tab
-                  </label>
-                  <select
-                    id="tabs"
-                    name="tabs"
-                    className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-shark focus:outline-none focus:ring-shark sm:text-sm"
-                    value={activeCategory}
-                    onChange={(e) =>
-                      router.push({
-                        pathname: router.pathname,
-                        query: { ...router.query, category: e.target.value }
-                      })
-                    }
-                  >
-                    <option value="rx">RX</option>
-                    <option value="scaled">Scaled</option>
-                  </select>
-                </div>
-                <div className="hidden sm:block">
-                  <div className="sm:px-4">
-                    <nav className="mt-2 -mb-px flex space-x-8">
-                      <Link
-                        href={{
-                          pathname: router.pathname,
-                          query: { ...router.query, category: 'rx' }
-                        }}
-                        className={cx(
-                          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                          activeCategory === 'rx'
-                            ? 'border-saffron text-shark'
-                            : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                        )}
-                      >
-                        RX
-                      </Link>
-                      <Link
-                        href={{
-                          pathname: router.pathname,
-                          query: { ...router.query, category: 'scaled' }
-                        }}
-                        className={cx(
-                          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-                          activeCategory === 'scaled'
-                            ? 'border-saffron text-shark'
-                            : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700'
-                        )}
-                      >
-                        Scaled
-                      </Link>
-                    </nav>
-                  </div>
-                </div>
-              </div>
+            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
               <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                 {showSubscriptionCta ? (
                   <SubscriptionCTA price={price} />
