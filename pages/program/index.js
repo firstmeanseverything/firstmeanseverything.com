@@ -129,7 +129,7 @@ function Index({ preview, price }) {
   }, [router.query.category])
 
   const viewProgram = ({ node: program }) =>
-    router.push(`/program/${program.category.toLowerCase()}/${program.date}`)
+    router.push(`/program/${program.date}`)
 
   return (
     <React.Fragment>
