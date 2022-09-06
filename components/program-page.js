@@ -48,22 +48,9 @@ function ProgramPage({ programs }) {
           <div className="space-y-6 lg:col-span-2 lg:col-start-1">
             <section aria-labelledby="program-days">
               <div className="bg-white shadow sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
-                  <h2
-                    id="applicant-days"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Program Days
-                  </h2>
-                  <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                    A breakdown of your weekly work.
-                  </p>
-                </div>
-                <div className="border-t border-gray-200">
-                  <dl className="sm:divide-y sm:divide-gray-200">
-                    {selectedProgram.days.map(DaySection)}
-                  </dl>
-                </div>
+                <dl className="sm:divide-y sm:divide-gray-200">
+                  {selectedProgram.days.map(DaySection)}
+                </dl>
               </div>
             </section>
           </div>
