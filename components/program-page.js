@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import cx from 'classnames'
 import { RadioGroup } from '@headlessui/react'
 
@@ -8,12 +9,25 @@ import ProgramInfo from '@/components/program-info'
 import SEO from '@/components/seo'
 
 function ProgramPage({ programs }) {
-  const [selectedProgram, setSelectedProgram] = React.useState(programs[0])
+  const router = useRouter()
+  const [activeCategory, setActiveCategory] = React.useState('rx')
+
+  React.useEffect(() => {
+    setActiveCategory(router.query.category ?? 'rx')
+  }, [router.query.category])
+
+  const activeProgram = React.useMemo(
+    () =>
+      programs.find(
+        (program) => program.category === activeCategory.toUpperCase()
+      ),
+    [activeCategory, programs]
+  )
 
   return (
     <React.Fragment>
       <SEO
-        title={`${selectedProgram.date} - Athlete Program`}
+        title={`${activeProgram.date} - Athlete Program`}
         image={{ url: process.env.NEXT_PUBLIC_OG_IMAGE_PROGRAM }}
       />
       <main className="py-10">
@@ -26,18 +40,15 @@ function ProgramPage({ programs }) {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                {selectedProgram.title}
+                {activeProgram.title}
               </h1>
-              {selectedProgram.date ? (
+              {activeProgram.date ? (
                 <p className="text-sm font-medium text-gray-500">
                   Week beginning{' '}
-                  <time
-                    className="text-gray-900"
-                    dateTime={selectedProgram.date}
-                  >
+                  <time className="text-gray-900" dateTime={activeProgram.date}>
                     {new Intl.DateTimeFormat('en-GB', {
                       dateStyle: 'full'
-                    }).format(new Date(selectedProgram.date))}
+                    }).format(new Date(activeProgram.date))}
                   </time>
                 </p>
               ) : null}
@@ -49,7 +60,7 @@ function ProgramPage({ programs }) {
             <section aria-labelledby="program-days">
               <div className="bg-white shadow sm:rounded-lg">
                 <dl className="sm:divide-y sm:divide-gray-200">
-                  {selectedProgram.days.map(DaySection)}
+                  {activeProgram.days.map(DaySection)}
                 </dl>
               </div>
             </section>
@@ -59,8 +70,16 @@ function ProgramPage({ programs }) {
               <section aria-labelledby="program-category">
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                   <RadioGroup
-                    value={selectedProgram}
-                    onChange={setSelectedProgram}
+                    value={activeCategory}
+                    onChange={(category) =>
+                      router.replace({
+                        pathname: router.pathname,
+                        query: {
+                          ...router.query,
+                          category: category.toLowerCase()
+                        }
+                      })
+                    }
                   >
                     <RadioGroup.Label className="sr-only">
                       Program category
@@ -69,7 +88,7 @@ function ProgramPage({ programs }) {
                       {programs.map((program, index) => (
                         <RadioGroup.Option
                           key={program.id}
-                          value={program}
+                          value={program.category.toLowerCase()}
                           className={({ checked }) =>
                             cx(
                               index === 0
@@ -122,7 +141,7 @@ function ProgramPage({ programs }) {
                   </RadioGroup>
                 </div>
               </section>
-              <ProgramInfo program={selectedProgram} />
+              <ProgramInfo program={activeProgram} />
             </div>
           </div>
         </div>
