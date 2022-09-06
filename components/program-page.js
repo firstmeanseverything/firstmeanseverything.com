@@ -1,4 +1,6 @@
 import * as React from 'react'
+import cx from 'classnames'
+import { RadioGroup } from '@headlessui/react'
 
 import { APMarkSVG } from '@/svgs'
 import DaySection from '@/components/day-section'
@@ -65,7 +67,77 @@ function ProgramPage({ programs }) {
               </div>
             </section>
           </div>
-          <ProgramInfo program={selectedProgram} />
+          <div className="order-first lg:order-last lg:col-span-1 lg:col-start-3">
+            <div className="space-y-6 lg:sticky lg:top-10">
+              <section aria-labelledby="program-category">
+                <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                  <RadioGroup
+                    value={selectedProgram}
+                    onChange={setSelectedProgram}
+                  >
+                    <RadioGroup.Label className="sr-only">
+                      Program category
+                    </RadioGroup.Label>
+                    <div className="-space-y-px rounded-md">
+                      {programs.map((program, index) => (
+                        <RadioGroup.Option
+                          key={program.id}
+                          value={program}
+                          className={({ checked }) =>
+                            cx(
+                              index === 0
+                                ? 'sm:rounded-tl-lg sm:rounded-tr-lg'
+                                : '',
+                              index === programs.length - 1
+                                ? 'sm:rounded-bl-lg sm:rounded-br-lg'
+                                : '',
+                              checked
+                                ? 'z-10 border-indigo-200 bg-indigo-50'
+                                : 'border-gray-200',
+                              'relative flex cursor-pointer border p-4 focus:outline-none'
+                            )
+                          }
+                        >
+                          {({ active, checked }) => (
+                            <>
+                              <span
+                                className={cx(
+                                  checked
+                                    ? 'border-transparent bg-indigo-600'
+                                    : 'border-gray-',
+                                  active
+                                    ? 'ring-2 ring-indigo-500 ring-offset-2'
+                                    : '',
+                                  'mt-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full border'
+                                )}
+                                aria-hidden="true"
+                              >
+                                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                              </span>
+                              <span className="ml-3 flex flex-col">
+                                <RadioGroup.Label
+                                  as="span"
+                                  className={cx(
+                                    checked
+                                      ? 'text-indigo-900'
+                                      : 'text-gray-900',
+                                    'block text-sm font-medium'
+                                  )}
+                                >
+                                  {program.category}
+                                </RadioGroup.Label>
+                              </span>
+                            </>
+                          )}
+                        </RadioGroup.Option>
+                      ))}
+                    </div>
+                  </RadioGroup>
+                </div>
+              </section>
+              <ProgramInfo program={selectedProgram} />
+            </div>
+          </div>
         </div>
       </main>
     </React.Fragment>
