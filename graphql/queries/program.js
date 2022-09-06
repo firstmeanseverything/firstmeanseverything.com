@@ -25,6 +25,7 @@ const ProgramPreviewPageQuery = gql`
 
 const ProgramsListQuery = gql`
   query ProgramsListQuery(
+    $category: ProgramCategory!
     $from: Date!
     $limit: Int!
     $offset: Int!
@@ -35,7 +36,12 @@ const ProgramsListQuery = gql`
       orderBy: date_DESC
       skip: $offset
       stage: $stage
-      where: { OR: [{ date_gte: $from }, { test: true }] }
+      where: {
+        OR: [
+          { category: $category, date_gte: $from }
+          { category: $category, test: true }
+        ]
+      }
     ) {
       ...ProgramListFragment
     }
