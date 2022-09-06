@@ -5,11 +5,13 @@ import DaySection from '@/components/day-section'
 import ProgramInfo from '@/components/program-info'
 import SEO from '@/components/seo'
 
-function ProgramPage({ program }) {
+function ProgramPage({ programs }) {
+  const [selectedProgram, setSelectedProgram] = React.useState(programs[0])
+
   return (
     <React.Fragment>
       <SEO
-        title={`${program.title} (${program.category}) - Athlete Program`}
+        title={`${selectedProgram.title} (${selectedProgram.category}) - Athlete Program`}
         image={{ url: process.env.NEXT_PUBLIC_OG_IMAGE_PROGRAM }}
       />
       <main className="py-10">
@@ -22,15 +24,18 @@ function ProgramPage({ program }) {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                {program.title}
+                {selectedProgram.title}
               </h1>
-              {program.date ? (
+              {selectedProgram.date ? (
                 <p className="text-sm font-medium text-gray-500">
                   Week beginning{' '}
-                  <time className="text-gray-900" dateTime={program.date}>
+                  <time
+                    className="text-gray-900"
+                    dateTime={selectedProgram.date}
+                  >
                     {new Intl.DateTimeFormat('en-GB', {
                       dateStyle: 'full'
-                    }).format(new Date(program.date))}
+                    }).format(new Date(selectedProgram.date))}
                   </time>
                 </p>
               ) : null}
@@ -54,13 +59,13 @@ function ProgramPage({ program }) {
                 </div>
                 <div className="border-t border-gray-200">
                   <dl className="sm:divide-y sm:divide-gray-200">
-                    {program.days.map(DaySection)}
+                    {selectedProgram.days.map(DaySection)}
                   </dl>
                 </div>
               </div>
             </section>
           </div>
-          <ProgramInfo program={program} />
+          <ProgramInfo program={selectedProgram} />
         </div>
       </main>
     </React.Fragment>
