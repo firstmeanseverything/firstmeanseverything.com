@@ -2,15 +2,8 @@ import { gql } from '@/lib/graphcms'
 import { ProgramListFragment, ProgramPageFragment } from '@/fragments/program'
 
 const ProgramPageQuery = gql`
-  query ProgramPageQuery(
-    $date: Date!
-    $category: ProgramCategory!
-    $stage: Stage!
-  ) {
-    programs: programWeeks(
-      stage: $stage
-      where: { date: $date, category: $category }
-    ) {
+  query ProgramPageQuery($date: Date!, $stage: Stage!) {
+    programs: programWeeks(stage: $stage, where: { date: $date }) {
       date
       ...ProgramPageFragment
     }
@@ -61,8 +54,8 @@ const ProgramsPathsQuery = gql`
   query ProgramsPathsQuery($free: Boolean!) {
     programs: programWeeks(where: { free: $free }) {
       id
+      bias
       date
-      category
     }
   }
 `
@@ -85,14 +78,11 @@ const SampleProgramsListQuery = gql`
 
 const SampleProgramPageQuery = gql`
   query SampleProgramPageQuery(
-    $category: ProgramCategory!
-    $id: ID!
+    $bias: ProgramBias!
+    $free: Boolean!
     $stage: Stage!
   ) {
-    programs: programWeeks(
-      stage: $stage
-      where: { category: $category, id: $id }
-    ) {
+    programs: programWeeks(stage: $stage, where: { bias: $bias, free: $free }) {
       ...ProgramPageFragment
     }
   }
