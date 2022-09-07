@@ -8,7 +8,7 @@ import Stripe from 'stripe'
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
-import { ProgramsListQuery } from '@/queries/program'
+import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
@@ -24,10 +24,10 @@ function Index({ preview, price }) {
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
   const { data, error } = useSWR(
-    user
+    !isAuthenticating
       ? userHasSubscription
         ? [ProgramsListQuery, pagination.limit, pagination.offset]
-        : null
+        : [SampleProgramsListQuery, pagination.limit, pagination.offset]
       : null,
     (query, limit, offset) =>
       getProgramsList(
@@ -35,7 +35,7 @@ function Index({ preview, price }) {
         {
           limit: Number(limit),
           offset: Number(offset),
-          from: user.accessDate
+          ...(userHasSubscription && { from: user.accessDate })
         },
         preview
       ),
@@ -116,7 +116,9 @@ function Index({ preview, price }) {
   })
 
   const viewProgram = ({ node: program }) =>
-    router.push(`/program/${program.date}`)
+    program.free
+      ? router.push(`/program/sample/${program.bias.toLowerCase()}`)
+      : router.push(`/program/${program.date}`)
 
   return (
     <React.Fragment>
