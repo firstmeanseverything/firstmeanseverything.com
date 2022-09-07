@@ -4,11 +4,12 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import Stripe from 'stripe'
+import cx from 'classnames'
 
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
 import { getProgramsList } from '@/lib/graphcms'
-import { ProgramsListQuery } from '@/queries/program'
+import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
@@ -24,10 +25,10 @@ function Index({ preview, price }) {
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
   const { data, error } = useSWR(
-    user
+    !isAuthenticating
       ? userHasSubscription
         ? [ProgramsListQuery, pagination.limit, pagination.offset]
-        : null
+        : [SampleProgramsListQuery, pagination.limit, pagination.offset]
       : null,
     (query, limit, offset) =>
       getProgramsList(
@@ -35,7 +36,7 @@ function Index({ preview, price }) {
         {
           limit: Number(limit),
           offset: Number(offset),
-          from: user.accessDate
+          ...(userHasSubscription && { from: user.accessDate })
         },
         preview
       ),
@@ -116,7 +117,9 @@ function Index({ preview, price }) {
   })
 
   const viewProgram = ({ node: program }) =>
-    router.push(`/program/${program.date}`)
+    program.free
+      ? router.push(`/program/sample/${program.bias.toLowerCase()}`)
+      : router.push(`/program/${program.date}`)
 
   return (
     <React.Fragment>
@@ -140,22 +143,30 @@ function Index({ preview, price }) {
           </div>
           <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3"></div>
         </div>
-        <div className="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
-          <section>
-            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                {showSubscriptionCta ? (
-                  <SubscriptionCTA price={price} />
-                ) : (
+        <div className="mx-auto mt-8 grid max-w-7xl grid-cols-1 gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
+          {showSubscriptionCta && (
+            <div className="lg:col-span-1 lg:col-start-3">
+              <SubscriptionCTA price={price} />
+            </div>
+          )}
+          <div
+            className={cx(
+              'space-y-6 lg:col-start-1',
+              showSubscriptionCta ? 'lg:col-span-2' : 'lg:col-span-3'
+            )}
+          >
+            <section>
+              <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                   <Table
                     loading={!data}
                     rowOnClick={viewProgram}
                     {...programTable}
                   />
-                )}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </main>
     </React.Fragment>

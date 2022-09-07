@@ -38,7 +38,7 @@ function SubscriptionCTA({ price }) {
   }
 
   return (
-    <div className="overflow-hidden sm:rounded-b-lg lg:flex">
+    <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="lg:shrink-1 px-6 py-8 lg:p-12">
         <h3 className="text-2xl font-extrabold leading-8 text-gray-900 sm:text-3xl sm:leading-9">
           {price.product.name}
@@ -53,8 +53,8 @@ function SubscriptionCTA({ price }) {
             </h4>
             <div className="flex-1 border-t-2 border-gray-200"></div>
           </div>
-          <ul className="mt-8 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5">
-            <li className="flex items-start lg:col-span-1">
+          <ul className="mt-8 space-y-5">
+            <li className="flex items-start">
               <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
@@ -62,7 +62,7 @@ function SubscriptionCTA({ price }) {
                 Weekly program published every Monday
               </p>
             </li>
-            <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
+            <li className="flex items-start">
               <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
@@ -70,21 +70,13 @@ function SubscriptionCTA({ price }) {
                 RX and scaled tracks available
               </p>
             </li>
-            <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
+            <li className="flex items-start">
               <div className="shrink-0">
                 <CheckCircleIcon className="h-5 w-5 text-green-400" />
               </div>
               <p className="ml-3 text-sm leading-5 text-gray-700">
                 8 week cycles switching focus between conditioning,
                 weightlifting and gymnastics
-              </p>
-            </li>
-            <li className="mt-5 flex items-start lg:col-span-1 lg:mt-0">
-              <div className="shrink-0">
-                <CheckCircleIcon className="h-5 w-5 text-green-400" />
-              </div>
-              <p className="ml-3 text-sm leading-5 text-gray-700">
-                Access to private Facebook community
               </p>
             </li>
           </ul>
