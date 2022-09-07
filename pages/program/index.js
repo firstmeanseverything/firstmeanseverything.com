@@ -142,22 +142,25 @@ function Index({ preview, price }) {
           </div>
           <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3"></div>
         </div>
-        <div className="mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
-          <section>
-            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                {showSubscriptionCta ? (
-                  <SubscriptionCTA price={price} />
-                ) : (
+        <div className="mx-auto mt-8 grid max-w-7xl grid-cols-1 gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
+          {showSubscriptionCta && (
+            <div className="lg:col-span-1 lg:col-start-3">
+              <SubscriptionCTA price={price} />
+            </div>
+          )}
+          <div className="space-y-6 lg:col-span-2 lg:col-start-1">
+            <section>
+              <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                   <Table
                     loading={!data}
                     rowOnClick={viewProgram}
                     {...programTable}
                   />
-                )}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </main>
     </React.Fragment>
