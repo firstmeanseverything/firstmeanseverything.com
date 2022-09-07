@@ -20,11 +20,6 @@ function ProgramInfo({ program }) {
         : []),
       {
         className: 'sm:col-span-1',
-        label: 'Category',
-        value: <Badge label={program.category} theme="green" />
-      },
-      {
-        className: 'sm:col-span-1',
         label: 'Bias',
         value: program.bias ? (
           <Badge label={program.bias} theme="green" />
@@ -81,11 +76,8 @@ function ProgramInfo({ program }) {
   )
 
   return (
-    <section
-      aria-labelledby="information-title"
-      className="order-first lg:order-last lg:col-span-1 lg:col-start-3"
-    >
-      <div className="overflow-hidden bg-white shadow sm:rounded-lg lg:sticky lg:top-10">
+    <section aria-labelledby="information-title">
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
           <h2
             id="information-title"
@@ -93,9 +85,6 @@ function ProgramInfo({ program }) {
           >
             Program Details
           </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Key information.
-          </p>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-2">
