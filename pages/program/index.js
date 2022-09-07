@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import { ChevronRightIcon } from '@heroicons/react/solid'
 import Stripe from 'stripe'
+import cx from 'classnames'
 
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
@@ -148,7 +149,12 @@ function Index({ preview, price }) {
               <SubscriptionCTA price={price} />
             </div>
           )}
-          <div className="space-y-6 lg:col-span-2 lg:col-start-1">
+          <div
+            className={cx(
+              'space-y-6 lg:col-start-1',
+              showSubscriptionCta ? 'lg:col-span-2' : 'lg:col-span-3'
+            )}
+          >
             <section>
               <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 <div className="inline-block min-w-full border-b border-gray-200 align-middle">
