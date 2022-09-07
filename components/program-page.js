@@ -58,7 +58,7 @@ function ProgramPage({ programs }) {
         <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
           <div className="space-y-6 lg:col-span-2 lg:col-start-1">
             <section aria-labelledby="program-days">
-              <div className="bg-white shadow sm:rounded-lg">
+              <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 <dl className="sm:divide-y sm:divide-gray-200">
                   {activeProgram.days.map(DaySection)}
                 </dl>
