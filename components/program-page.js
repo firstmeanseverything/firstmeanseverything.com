@@ -27,7 +27,11 @@ function ProgramPage({ programs }) {
   return (
     <React.Fragment>
       <SEO
-        title={`${activeProgram.date} - Athlete Program`}
+        title={
+          activeProgram.free
+            ? `${activeProgram.title} - Athlete Program`
+            : `${activeProgram.date} - Athlete Program`
+        }
         image={{ url: process.env.NEXT_PUBLIC_OG_IMAGE_PROGRAM }}
       />
       <main className="py-10">
