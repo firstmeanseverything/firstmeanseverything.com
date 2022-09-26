@@ -14,7 +14,7 @@
     "@react-google-maps/api": "2.12.2",
     "@stripe/react-stripe-js": "1.10.0",
     "@stripe/stripe-js": "1.35.0",
-    "classnames": "2.3.1",
+    "classnames": "2.3.2",
     "date-fns": "2.29.2",
     "firebase": "9.9.3",
     "firebase-admin": "10.2.0",
