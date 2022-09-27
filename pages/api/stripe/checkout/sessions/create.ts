@@ -28,8 +28,10 @@ async function handler(
     }
 
     const {
+      adjustable_quantity = { enabled: false },
       allow_promotion_codes = true,
       cancel_url,
+      mode = 'subscription',
       price,
       success_url,
       trial_from_plan = false
@@ -41,12 +43,15 @@ async function handler(
       ...(user && { customer: await findUserCustomerId(user) }),
       line_items: [
         {
+          adjustable_quantity,
           price,
           quantity: 1
         }
       ],
-      mode: 'subscription',
-      subscription_data: { trial_from_plan },
+      mode,
+      ...(mode === 'subscription' && {
+        subscription_data: { trial_from_plan }
+      }),
       success_url
     }
 
