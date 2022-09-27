@@ -33,10 +33,14 @@ const addSpectatorSheetRow = async ({
       private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
     })
 
-    const sheet = await doc.addSheet({
-      headerValues: ['id', 'name', 'email', 'quantity'],
-      title: lineItem.description
-    })
+    await doc.loadInfo()
+
+    const sheet =
+      doc.sheetsByTitle[lineItem.description] ??
+      (await doc.addSheet({
+        headerValues: ['id', 'name', 'email', 'quantity'],
+        title: lineItem.description
+      }))
 
     const row: SpectatorSheetRowProps = {
       id: checkoutSession.id,
