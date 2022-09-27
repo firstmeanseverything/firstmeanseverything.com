@@ -20,6 +20,7 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
     <MDXRemote
       {...competition.content.mdx}
       components={competitionMdxComponents}
+      scope={{ competition }}
     />
   ) : null
 

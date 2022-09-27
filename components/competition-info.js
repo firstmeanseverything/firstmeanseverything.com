@@ -6,6 +6,8 @@ import { ExternalLinkIcon } from '@heroicons/react/outline'
 import VenueMap from '@/components/venue-map'
 
 function CompetitionInfo({ competition }) {
+  const pastCompetition = new Date(competition.startDate) < new Date()
+
   const information = React.useMemo(
     () => [
       ...(competition.description
@@ -47,13 +49,13 @@ function CompetitionInfo({ competition }) {
               className="focus:shadow-outline-indigo flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out hover:bg-indigo-500 focus:border-indigo-700 focus:outline-none active:bg-indigo-700"
             >
               <ExternalLinkIcon className="h5 mr-3 w-5" />
-              Registration Open Now
+              {pastCompetition ? 'View leaderboards' : 'Registration open now'}
             </Link>
           </span>
         )
       }
     ],
-    []
+    [pastCompetition]
   )
 
   return (

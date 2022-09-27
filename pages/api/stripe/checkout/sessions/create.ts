@@ -16,13 +16,22 @@ async function handler(
       apiVersion: '2020-08-27'
     })
 
-    const { stripeId: customer }: FirebaseFirestore.DocumentData = (
-      await getFirestore(admin).collection('users').doc(user.uid).get()
-    ).data()
+    const findUserCustomerId = async (user) => {
+      const userDoc: FirebaseFirestore.DocumentData = (
+        await getFirestore(admin).collection('users').doc(user?.uid).get()
+      ).data()
+
+      if (!userDoc?.stripeId)
+        throw new Error(`No Stripe ID found for this user`)
+
+      return userDoc?.stripeId
+    }
 
     const {
+      adjustable_quantity = { enabled: false },
       allow_promotion_codes = true,
       cancel_url,
+      mode = 'subscription',
       price,
       success_url,
       trial_from_plan = false
@@ -31,15 +40,18 @@ async function handler(
     const params: Stripe.Checkout.SessionCreateParams = {
       allow_promotion_codes,
       cancel_url,
-      customer,
+      ...(user && { customer: await findUserCustomerId(user) }),
       line_items: [
         {
+          adjustable_quantity,
           price,
           quantity: 1
         }
       ],
-      mode: 'subscription',
-      subscription_data: { trial_from_plan },
+      mode,
+      ...(mode === 'subscription' && {
+        subscription_data: { trial_from_plan }
+      }),
       success_url
     }
 
