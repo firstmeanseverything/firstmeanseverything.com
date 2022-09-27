@@ -1,6 +1,8 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 import { Stripe } from 'stripe'
 
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { addSpectatorSheetRow } from '@/lib/google-spreadsheet'
 
 export const config = {
   api: {
@@ -42,19 +44,37 @@ const verifyStripeSignature =
     }
   }
 
+const handleCheckoutSession = async (
+  checkoutSession: Stripe.Checkout.Session
+) => {
+  switch (checkoutSession.metadata.webhook_action) {
+    case 'spectator':
+      await addSpectatorSheetRow({
+        sheetId: process.env.GOOGLE_SHEET_SPECTATOR_ID,
+        checkoutSession
+      })
+      break
+    default:
+      console.log('no action')
+      break
+  }
+}
+
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{ message: string }>,
   event: Stripe.Event
 ) {
-  const permittedEvents: [string] = ['customer.created']
+  const permittedEvents: string[] = ['checkout.session.completed']
 
   if (req.method === 'POST') {
     if (permittedEvents.includes(event.type)) {
       try {
         switch (event.type) {
-          case 'customer.created':
-            console.log(event.data.object as Stripe.Customer)
+          case 'checkout.session.completed':
+            await handleCheckoutSession(
+              event.data.object as Stripe.Checkout.Session
+            )
             break
           default:
             throw new Error(`Unhhandled event: ${event.type}`)
