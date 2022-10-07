@@ -19,7 +19,6 @@ const competitionMdxComponents = {
         const checkoutSession = await createCheckoutSession({
           adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 },
           allow_promotion_codes: false,
-          customer_creation: 'if_required',
           metadata: {
             webhook_action: 'spectator'
           },

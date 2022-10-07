@@ -30,17 +30,18 @@ async function handler(
     const {
       adjustable_quantity = { enabled: false },
       allow_promotion_codes = true,
-      cancel_url,
+      customer_creation = 'if_required',
       mode = 'subscription',
       price,
-      success_url,
-      trial_from_plan = false
+      trial_from_plan = false,
+      ...rest
     } = req.body
 
     const params: Stripe.Checkout.SessionCreateParams = {
       allow_promotion_codes,
-      cancel_url,
-      ...(user && { customer: await findUserCustomerId(user) }),
+      ...(user
+        ? { customer: await findUserCustomerId(user) }
+        : { customer_creation }),
       line_items: [
         {
           adjustable_quantity,
@@ -52,7 +53,7 @@ async function handler(
       ...(mode === 'subscription' && {
         subscription_data: { trial_from_plan }
       }),
-      success_url
+      ...rest
     }
 
     const checkoutSession: Stripe.Checkout.Session =
