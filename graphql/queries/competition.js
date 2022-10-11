@@ -8,6 +8,11 @@ const CompetitionPageQuery = gql`
       content
       description
       endDate
+      files {
+        id
+        fileName
+        url
+      }
       header {
         id
         height
