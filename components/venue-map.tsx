@@ -19,7 +19,7 @@ function VenueMap({ venue }) {
         lat: venue.latitude,
         lng: venue.longitude
       }}
-      mapContainerClassName="h-64 w-full"
+      mapContainerClassName="h-48 w-full"
       options={{
         disableDefaultUI: true,
         clickableIcons: false,
