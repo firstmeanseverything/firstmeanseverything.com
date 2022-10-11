@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import cx from 'classnames'
-import { ExternalLinkIcon } from '@heroicons/react/outline'
+import { ExternalLinkIcon, PaperClipIcon } from '@heroicons/react/outline'
 
 import VenueMap from '@/components/venue-map'
 
@@ -25,6 +25,45 @@ function CompetitionInfo({ competition }) {
               className: 'sm:col-span-2',
               label: 'Dates',
               value: competition.dateRange
+            }
+          ]
+        : []),
+      ...(competition.files.length
+        ? [
+            {
+              className: 'sm:col-span-3',
+              label: 'Files',
+              value: (
+                <ul
+                  role="list"
+                  className="divide-y divide-gray-200 rounded-md border border-gray-200"
+                >
+                  {competition.files.map((file) => (
+                    <li
+                      key={file.id}
+                      className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                    >
+                      <div className="flex w-0 flex-1 items-center">
+                        <PaperClipIcon
+                          className="h-5 w-5 flex-shrink-0 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span className="ml-2 w-0 flex-1 truncate">
+                          {file.fileName}
+                        </span>
+                      </div>
+                      <div className="ml-4 flex-shrink-0">
+                        <a
+                          href={file.url}
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                        >
+                          Download
+                        </a>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )
             }
           ]
         : []),
