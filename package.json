@@ -10,7 +10,7 @@
   "dependencies": {
     "@headlessui/react": "1.7.3",
     "@heroicons/react": "1.0.6",
-    "@hookform/resolvers": "2.9.9",
+    "@hookform/resolvers": "2.9.10",
     "@react-google-maps/api": "2.13.1",
     "@stripe/react-stripe-js": "1.10.0",
     "@stripe/stripe-js": "1.35.0",
