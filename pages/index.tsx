@@ -64,10 +64,7 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const { competitions } = await getCompetitionsList(
-    { type: 'FINALS' },
-    preview
-  )
+  const { competitions } = await getCompetitionsList(preview)
 
   return {
     props: {
