@@ -35,10 +35,9 @@ const CompetitionPageQuery = gql`
 `
 
 const CompetitionsListQuery = gql`
-  query CompetitionsListQuery($type: CompetitionType!) {
+  query CompetitionsListQuery() {
     competitions: competitionsConnection(
       orderBy: startDate_DESC
-      where: { type: $type }
     ) {
       ...CompetitionListFragment
     }

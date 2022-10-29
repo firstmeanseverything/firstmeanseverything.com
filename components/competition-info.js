@@ -67,18 +67,22 @@ function CompetitionInfo({ competition }) {
             }
           ]
         : []),
-      {
-        className: 'sm:col-span-3',
-        label: 'Location',
-        value: (
-          <div className="space-y-8">
-            <p>{competition.venue.address}</p>
-            <div className="-mx-4 flex justify-center sm:-mx-6">
-              <VenueMap venue={competition.venue} />
-            </div>
-          </div>
-        )
-      },
+      ...(competition.venue
+        ? [
+            {
+              className: 'sm:col-span-3',
+              label: 'Location',
+              value: (
+                <div className="space-y-8">
+                  <p>{competition.venue.address}</p>
+                  <div className="-mx-4 flex justify-center sm:-mx-6">
+                    <VenueMap venue={competition.venue} />
+                  </div>
+                </div>
+              )
+            }
+          ]
+        : []),
       {
         className: 'sm:col-span-3',
         value: (
