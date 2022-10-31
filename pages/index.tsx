@@ -3,6 +3,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/future/image'
 
+import Badge from '@/components/badge'
 import { getCompetitionsList } from '@/lib/graphcms'
 import SEO from '@/components/seo'
 
@@ -48,9 +49,12 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
                     </span>
                   </Link>
                 </div>
-                <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
-                  {competition.title}
-                </p>
+                <div className="mt-2 flex items-center justify-between space-x-2">
+                  <p className="pointer-events-none block truncate text-sm font-medium text-gray-900">
+                    {competition.title}
+                  </p>
+                  <Badge label={competition.type} size="small" theme="green" />
+                </div>
                 <p className="pointer-events-none block text-sm font-medium text-gray-500">
                   {competition.dateRange}
                 </p>
@@ -70,8 +74,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
     props: {
       competitions: competitions.edges.map(({ node: competition }) => ({
         dateRange: new Intl.DateTimeFormat('en-GB', {
-          dateStyle: 'long',
-          timeStyle: 'short'
+          dateStyle: 'long'
         }).formatRange(
           new Date(competition.startDate),
           new Date(competition.endDate)
