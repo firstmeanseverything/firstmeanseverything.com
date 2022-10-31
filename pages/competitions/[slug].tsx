@@ -106,7 +106,7 @@ export const getStaticProps: GetStaticProps = async ({
       competition: {
         dateRange: new Intl.DateTimeFormat('en-GB', {
           dateStyle: 'long',
-          timeStyle: 'short'
+          ...(rest.type !== 'QUALIFIERS' && { timeStyle: 'short' })
         }).formatRange(new Date(rest.startDate), new Date(rest.endDate)),
         content: {
           mdx: await serialize(he.decode(content)),
