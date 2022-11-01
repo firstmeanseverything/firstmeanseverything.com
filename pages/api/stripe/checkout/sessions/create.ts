@@ -30,7 +30,6 @@ async function handler(
     const {
       adjustable_quantity = { enabled: false },
       allow_promotion_codes = true,
-      customer_creation = 'if_required',
       mode = 'subscription',
       price,
       trial_from_plan = false,
@@ -39,9 +38,7 @@ async function handler(
 
     const params: Stripe.Checkout.SessionCreateParams = {
       allow_promotion_codes,
-      ...(user
-        ? { customer: await findUserCustomerId(user) }
-        : { customer_creation }),
+      ...(user && { customer: await findUserCustomerId(user) }),
       line_items: [
         {
           adjustable_quantity,
