@@ -1,4 +1,5 @@
 import * as React from 'react'
+import subDays from 'date-fns/subDays'
 
 import Alert from '@/components/alert'
 import Button from '@/components/button'
@@ -34,7 +35,8 @@ const competitionMdxComponents = {
       }
     }
 
-    const pastCompetition = new Date(competition.endDate) < new Date()
+    const pastCompetition =
+      subDays(new Date(competition.startDate), 1) < new Date()
 
     return (
       <Button

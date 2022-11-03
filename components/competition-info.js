@@ -2,11 +2,13 @@ import * as React from 'react'
 import Link from 'next/link'
 import cx from 'classnames'
 import { ExternalLinkIcon, PaperClipIcon } from '@heroicons/react/outline'
+import subWeeks from 'date-fns/subWeeks'
 
 import VenueMap from '@/components/venue-map'
 
 function CompetitionInfo({ competition }) {
-  const pastCompetition = new Date(competition.startDate) < new Date()
+  const pastCompetition =
+    subWeeks(new Date(competition.startDate), 2) < new Date()
 
   const information = React.useMemo(
     () => [
