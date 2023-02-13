@@ -1100,10 +1100,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/google-spreadsheet@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.3.0.tgz#9a1653de44b57f81ff54a87e4f6b41b608d8d8de"
-  integrity sha512-5VXD/RvRkeH1dgYvMh1vJfjTUpJwMnfOAAkMcK7IwZmv/jY3qnXrW7Iye74mZ3nXIP8OjGzh4qLc1+TaKdvLfA==
+"@types/google-spreadsheet@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.3.1.tgz#582d02155967d01a47b49887fa2f484fb14f10b5"
+  integrity sha512-nvwAEr+uKK/IQ0hfH3agtRX2RnKI5+D/pUnDpJ/+D8nSbrvvV+fgyA8lGjoAHIHcls19NTzkQBm1T7vbF5iy8A==
 
 "@types/google.maps@3.50.5":
   version "3.50.5"
