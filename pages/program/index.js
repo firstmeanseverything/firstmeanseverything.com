@@ -127,48 +127,46 @@ function Index({ preview, price }) {
         title="Athlete Program"
         image={{ url: process.env.NEXT_PUBLIC_OG_IMAGE_PROGRAM }}
       />
-      <main className="py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
-          <div className="flex items-center space-x-5">
-            <div className="shrink-0">
-              <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-saffron">
-                <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
-              </span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Athlete Program
-              </h1>
-            </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
+        <div className="flex items-center space-x-5">
+          <div className="shrink-0">
+            <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-saffron">
+              <APMarkSVG className="-mt-2 h-10 w-10 text-shark" />
+            </span>
           </div>
-          <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3"></div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Athlete Program
+            </h1>
+          </div>
         </div>
-        <div className="mx-auto mt-8 grid max-w-7xl grid-cols-1 gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
-          {showSubscriptionCta && (
-            <div className="lg:col-span-1 lg:col-start-3">
-              <SubscriptionCTA price={price} />
-            </div>
+        <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3"></div>
+      </div>
+      <div className="mx-auto mt-8 grid max-w-7xl grid-cols-1 gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-3 lg:px-8">
+        {showSubscriptionCta && (
+          <div className="lg:col-span-1 lg:col-start-3">
+            <SubscriptionCTA price={price} />
+          </div>
+        )}
+        <div
+          className={cx(
+            'space-y-6 lg:col-start-1',
+            showSubscriptionCta ? 'lg:col-span-2' : 'lg:col-span-3'
           )}
-          <div
-            className={cx(
-              'space-y-6 lg:col-start-1',
-              showSubscriptionCta ? 'lg:col-span-2' : 'lg:col-span-3'
-            )}
-          >
-            <section>
-              <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                <div className="inline-block min-w-full border-b border-gray-200 align-middle">
-                  <Table
-                    loading={!data}
-                    rowOnClick={viewProgram}
-                    {...programTable}
-                  />
-                </div>
+        >
+          <section>
+            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+              <div className="inline-block min-w-full border-b border-gray-200 align-middle">
+                <Table
+                  loading={!data}
+                  rowOnClick={viewProgram}
+                  {...programTable}
+                />
               </div>
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
-      </main>
+      </div>
     </React.Fragment>
   )
 }
