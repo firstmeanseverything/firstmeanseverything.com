@@ -31,7 +31,7 @@ function Layout({ children }) {
         </div>
       ) : null}
       <Navigation />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow py-12">{children}</main>
       <Footer />
     </div>
   )
