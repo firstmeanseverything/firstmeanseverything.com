@@ -3,7 +3,7 @@ import type { Competition as BaseCompetition } from '@/graphql/sdk'
 
 import * as React from 'react'
 import Link from 'next/link'
-import Image from 'next/future/image'
+import Image from 'next/image'
 
 import Badge from '@/components/badge'
 import SEO from '@/components/seo'
