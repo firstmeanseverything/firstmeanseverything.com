@@ -47,16 +47,18 @@ function Account() {
     try {
       setBillingLoading(true)
 
-      const customerPortalSession = await fetcher({
-        body: {
-          return_url: window.location.href
-        },
-        headers: {
-          Authorization: cookie.get('first-means-everything')
-        },
-        method: 'POST',
-        url: '/api/stripe/customer-portal/sessions/create'
-      })
+      const customerPortalSession = await fetcher(
+        '/api/stripe/customer-portal/sessions/create',
+        {
+          body: {
+            return_url: window.location.href
+          },
+          headers: {
+            Authorization: cookie.get('first-means-everything')
+          },
+          method: 'POST'
+        }
+      )
 
       window.location.assign(customerPortalSession.url)
     } catch (error) {
