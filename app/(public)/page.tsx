@@ -1,25 +1,36 @@
-import type { GetStaticProps, NextPage } from 'next'
-import type { Competition as BaseCompetition } from '@/graphql/sdk'
+import type { Metadata } from 'next'
 
 import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 import Badge from '@/components/badge'
-import SEO from '@/components/seo'
-import { graphCmsSdk } from '@/graphql/client'
-import { Stage } from '@/graphql/sdk'
+import { getCompetitionsList } from '@/lib/graphcms'
 
-type Competition = BaseCompetition & { dateRange: string }
-
-interface CompetitionPage {
-  competitions: Competition[]
+export const metadata: Metadata = {
+  title: 'Competitions'
 }
 
-const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
+async function getData(): Promise<any> {
+  const { data } = await getCompetitionsList(100)
+
+  return {
+    competitions: data.competitions.edges.map(
+      ({ node: { endDate, startDate, ...competition } }) => ({
+        dateRange: new Intl.DateTimeFormat('en-GB', {
+          dateStyle: 'long'
+        }).formatRange(new Date(startDate), new Date(endDate)),
+        ...competition
+      })
+    )
+  }
+}
+
+export default async function Competitions(): Promise<JSX.Element> {
+  const { competitions } = await getData()
+
   return (
     <React.Fragment>
-      <SEO title="Competitions" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
         <div className="flex items-center space-x-5">
           <div>
@@ -69,25 +80,3 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
     </React.Fragment>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const { competitions } = await graphCmsSdk.CompetitionsListQuery({
-    stage: preview ? Stage.Draft : Stage.Published
-  })
-
-  return {
-    props: {
-      competitions: competitions.edges.map(({ node: competition }) => ({
-        dateRange: new Intl.DateTimeFormat('en-GB', {
-          dateStyle: 'long'
-        }).formatRange(
-          new Date(competition.startDate),
-          new Date(competition.endDate)
-        ),
-        ...competition
-      }))
-    }
-  }
-}
-
-export default Competitions
