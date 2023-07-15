@@ -1,0 +1,43 @@
+query CompetitionPageQuery($slug: String!, $stage: Stage!) {
+  competition(stage: $stage, where: { slug: $slug }) {
+    id
+    content
+    description
+    endDate
+    files {
+      id
+      fileName
+      url
+    }
+    header {
+      id
+      height
+      url
+      width
+    }
+    slug
+    startDate
+    title
+    type
+    url
+    venue {
+      id
+      address
+      latitude
+      longitude
+    }
+  }
+}
+
+query CompetitionsListQuery($stage: Stage!) {
+  competitions: competitionsConnection(orderBy: startDate_DESC, stage: $stage) {
+    ...CompetitionListFragment
+  }
+}
+
+query CompetitionsPathsQuery {
+  competitions {
+    id
+    slug
+  }
+}
