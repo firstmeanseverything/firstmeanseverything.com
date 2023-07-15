@@ -1,12 +1,21 @@
-import { getProgramPreviewPage } from '@/lib/graphcms'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-async function handler(req, res) {
+import { graphCmsSdk } from '@/graphql/client'
+import { Stage } from '@/graphql/sdk'
+
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   if (!req.query.id)
     return res
       .status(401)
       .json({ status: 401, message: 'No ID query parameter found' })
 
-  const { program } = await getProgramPreviewPage(req.query.id)
+  const { program } = await graphCmsSdk.ProgramPreviewPageQuery({
+    id: req.query.id as string,
+    stage: Stage.Draft
+  })
 
   if (!program)
     return res.status(404).json({ status: 404, message: 'Not found' })

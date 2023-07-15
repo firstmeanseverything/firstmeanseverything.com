@@ -1,14 +1,19 @@
 import type { GetStaticProps, NextPage } from 'next'
+import type { Competition as BaseCompetition } from '@/graphql/sdk'
+
 import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/future/image'
 
 import Badge from '@/components/badge'
-import { getCompetitionsList } from '@/lib/graphcms'
 import SEO from '@/components/seo'
+import { graphCmsSdk } from '@/graphql/client'
+import { Stage } from '@/graphql/sdk'
+
+type Competition = BaseCompetition & { dateRange: string }
 
 interface CompetitionPage {
-  competitions: any
+  competitions: Competition[]
 }
 
 const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
@@ -66,7 +71,9 @@ const Competitions: NextPage<CompetitionPage> = ({ competitions }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const { competitions } = await getCompetitionsList(preview)
+  const { competitions } = await graphCmsSdk.CompetitionsListQuery({
+    stage: preview ? Stage.Draft : Stage.Published
+  })
 
   return {
     props: {

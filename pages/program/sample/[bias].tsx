@@ -1,45 +1,52 @@
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+
 import * as React from 'react'
 import { useRouter } from 'next/router'
 import { serialize } from 'next-mdx-remote/serialize'
 import he from 'he'
-import addDays from 'date-fns/addDays'
 
-import { getProgramPage, getProgramsPaths } from '@/lib/graphcms'
 import ProgramPage from '@/components/program-page'
-import { useProtectedPage } from '@/hooks/auth'
+import { graphCmsSdk } from '@/graphql/client'
+import { type ProgramBias, ProgramWeek, Stage } from '@/graphql/sdk'
 
-function SubscribedProgramPage({ programs }) {
+interface SamplePage {
+  programs: ProgramWeek[]
+}
+
+const SamplePage: NextPage<SamplePage> = ({ programs }) => {
   const router = useRouter()
 
   if (router.isFallback) return <div>Loading...</div>
 
-  useProtectedPage({ path: '/program', program: programs[0] })
-
   return <ProgramPage programs={programs} />
 }
 
-export async function getStaticPaths() {
-  const { programs } = await getProgramsPaths({ free: false })
-
-  const paths = programs.map(({ date }) => ({
-    params: {
-      date
-    }
-  }))
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { programs } = await graphCmsSdk.ProgramsPathsQuery({ free: true })
 
   return {
-    paths,
-    fallback: 'blocking'
+    paths: programs.map(({ bias }) => ({
+      params: {
+        bias: bias.toLowerCase()
+      }
+    })),
+    fallback: true
   }
 }
 
-export async function getStaticProps({ params, preview = false }) {
-  const { programs } = await getProgramPage(
-    {
-      date: params.date
-    },
-    process.env.NODE_ENV === 'development' ? true : preview
-  )
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false
+}) => {
+  const stage: Stage = preview ? Stage.Draft : Stage.Published
+
+  const { bias } = params as { bias: string }
+
+  const { programs } = await graphCmsSdk.SampleProgramPageQuery({
+    bias: bias.toUpperCase() as ProgramBias,
+    free: true,
+    stage: process.env.NODE_ENV === 'development' ? Stage.Draft : stage
+  })
 
   if (!programs.length) {
     return {
@@ -50,14 +57,9 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: {
+      preview,
       programs: await Promise.all(
         programs.map(async ({ days, notes, ...program }) => ({
-          dateRange: new Intl.DateTimeFormat('en-GB', {
-            dateStyle: 'long'
-          }).formatRange(
-            new Date(program.date),
-            addDays(new Date(program.date), 6)
-          ),
           days: await Promise.all(
             days.map(async ({ content, ...day }) => ({
               content: {
@@ -81,4 +83,4 @@ export async function getStaticProps({ params, preview = false }) {
   }
 }
 
-export default SubscribedProgramPage
+export default SamplePage
