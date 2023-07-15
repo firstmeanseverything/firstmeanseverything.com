@@ -1,3 +1,5 @@
+import type { GetStaticProps, NextPage } from 'next'
+
 import * as React from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
@@ -8,42 +10,57 @@ import cx from 'classnames'
 
 import { APMarkSVG } from '@/components/svgs'
 import Badge from '@/components/badge'
-import { getProgramsList } from '@/lib/graphcms'
-import { ProgramsListQuery, SampleProgramsListQuery } from '@/queries/program'
 import SEO from '@/components/seo'
 import SubscriptionCTA from '@/components/subscription-cta'
 import Table from '@/ui/table'
 import { useAuthState } from '@/context/auth'
 import { usePaginationQueryParams } from '@/hooks/data'
 import { usePaginatedTable } from '@/hooks/table'
+import { graphCmsSdk } from '@/graphql/client'
+import { ProgramCategory, Stage } from '@/graphql/sdk'
 
-function Index({ preview, price }) {
+interface IndexPage {
+  preview: boolean
+  price: Stripe.Price
+}
+
+const Index: NextPage<IndexPage> = ({ preview, price }) => {
   const { isAuthenticating, user, userHasSubscription } = useAuthState()
   const pagination = usePaginationQueryParams()
   const router = useRouter()
 
   const showSubscriptionCta = !(isAuthenticating || userHasSubscription)
 
-  const { data, error } = useSWR(
+  const { data, error } = useSWR<any>(
     !isAuthenticating
-      ? userHasSubscription
-        ? [ProgramsListQuery, pagination.limit, pagination.offset]
-        : [SampleProgramsListQuery, pagination.limit, pagination.offset]
+      ? [userHasSubscription, pagination.limit, pagination.offset]
       : null,
-    (query, limit, offset) =>
-      getProgramsList(
-        query,
-        {
-          limit: Number(limit),
-          offset: Number(offset),
-          ...(userHasSubscription && { from: user.accessDate })
-        },
-        preview
-      ),
-    { revalidateOnFocus: false }
+    (userHasSubscription, limit, offset) =>
+      graphCmsSdk.ProgramsListQuery({
+        stage: preview ? Stage.Draft : Stage.Published,
+        limit: Number(limit),
+        offset: Number(offset),
+        ...(userHasSubscription
+          ? {
+              where: {
+                OR: [
+                  { category: ProgramCategory.Rx, date_gte: user.accessDate },
+                  { category: ProgramCategory.Rx, test: true }
+                ]
+              }
+            }
+          : { where: { free: true, category: ProgramCategory.Rx } })
+      }),
+    {
+      revalidateOnFocus: false
+    }
   )
+  console.log(data)
 
   const { setHiddenColumns, ...programTable } = usePaginatedTable({
+    initialState: {
+      hiddenColumns: ['bias', 'author']
+    },
     columns: React.useMemo(
       () => [
         {
@@ -171,7 +188,7 @@ function Index({ preview, price }) {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2022-08-01'
   })

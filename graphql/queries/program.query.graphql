@@ -1,0 +1,50 @@
+query ProgramPageQuery($date: Date!, $stage: Stage!) {
+  programs: programWeeks(stage: $stage, where: { date: $date }) {
+    date
+    ...ProgramPageFragment
+  }
+}
+
+query ProgramPreviewPageQuery($id: ID!, $stage: Stage!) {
+  program: programWeek(stage: $stage, where: { id: $id }) {
+    id
+    category
+    date
+    free
+  }
+}
+
+query ProgramsListQuery(
+  $limit: Int!
+  $offset: Int!
+  $stage: Stage!
+  $where: ProgramWeekWhereInput
+) {
+  programs: programWeeksConnection(
+    first: $limit
+    orderBy: date_DESC
+    skip: $offset
+    stage: $stage
+    where: $where
+  ) {
+    ...ProgramListFragment
+  }
+}
+
+query ProgramsPathsQuery($free: Boolean!) {
+  programs: programWeeks(where: { free: $free }) {
+    id
+    bias
+    date
+  }
+}
+
+query SampleProgramPageQuery(
+  $bias: ProgramBias!
+  $free: Boolean!
+  $stage: Stage!
+) {
+  programs: programWeeks(stage: $stage, where: { bias: $bias, free: $free }) {
+    ...ProgramPageFragment
+  }
+}

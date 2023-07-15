@@ -1,18 +1,26 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import type { Competition as BaseCompetition } from '@/graphql/sdk'
+
 import * as React from 'react'
 import he from 'he'
 import Image from 'next/future/image'
 import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 import Badge from '@/components/badge'
 import CompetitionInfo from '@/components/competition-info'
 import { competitionMdxComponents } from '@/components/mdx'
-import { getCompetitionPage, getCompetitionsPaths } from '@/lib/graphcms'
 import SEO from '@/components/seo'
+import { graphCmsSdk } from '@/graphql/client'
+import { Stage } from '@/graphql/sdk'
+
+type Competition = BaseCompetition & {
+  dateRange: string
+  content: { mdx: MDXRemoteSerializeResult }
+}
 
 interface CompetitionPage {
-  competition: any
+  competition: Competition
 }
 
 const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
@@ -74,7 +82,7 @@ const CompetitionPage: NextPage<CompetitionPage> = ({ competition }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { competitions } = await getCompetitionsPaths({ free: false })
+  const { competitions } = await graphCmsSdk.CompetitionsPathsQuery()
 
   const paths = competitions.map(({ slug }) => ({
     params: {
@@ -92,10 +100,12 @@ export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false
 }) => {
-  const { competition } = await getCompetitionPage(
-    { slug: params.slug },
-    process.env.NODE_ENV === 'development' ? true : preview
-  )
+  const stage: Stage = preview ? Stage.Draft : Stage.Published
+
+  const { competition } = await graphCmsSdk.CompetitionPageQuery({
+    slug: params.slug as string,
+    stage: process.env.NODE_ENV === 'development' ? Stage.Draft : stage
+  })
 
   const { content, ...rest } = competition
 
