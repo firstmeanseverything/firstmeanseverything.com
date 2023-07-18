@@ -5,29 +5,18 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import Badge from '@/components/badge'
-import { getCompetitionsList } from '@/lib/graphcms'
+import { graphCmsSdk } from '@/graphql/client'
+import { Stage } from '@/graphql/sdk'
 
 export const metadata: Metadata = {
   title: 'Competitions'
 }
 
-async function getData(): Promise<any> {
-  const { data } = await getCompetitionsList(100)
-
-  return {
-    competitions: data.competitions.edges.map(
-      ({ node: { endDate, startDate, ...competition } }) => ({
-        dateRange: new Intl.DateTimeFormat('en-GB', {
-          dateStyle: 'long'
-        }).formatRange(new Date(startDate), new Date(endDate)),
-        ...competition
-      })
-    )
-  }
-}
-
 export default async function Competitions(): Promise<JSX.Element> {
-  const { competitions } = await getData()
+  const { competitions } = await graphCmsSdk.CompetitionsListQuery({
+    stage:
+      process.env.NODE_ENV === 'development' ? Stage.Draft : Stage.Published
+  })
 
   return (
     <React.Fragment>
@@ -44,37 +33,49 @@ export default async function Competitions(): Promise<JSX.Element> {
           role="list"
           className="grid gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8"
         >
-          {competitions.map((competition) => (
-            <li key={competition.id} className="relative">
-              <div className="aspect-w-10 aspect-h-7 group block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                <Image
-                  height={competition.header.height}
-                  width={competition.header.width}
-                  priority={true}
-                  src={competition.header.url}
-                  alt={`View details for ${competition.title}`}
-                  className="pointer-events-none object-cover group-hover:opacity-75"
-                />
-                <Link
-                  href={`/competitions/${competition.slug}`}
-                  className="absolute inset-0 focus:outline-none"
-                >
-                  <span className="sr-only">
-                    View details for {competition.title}
-                  </span>
-                </Link>
-              </div>
-              <div className="mt-2 flex items-center justify-between space-x-2">
-                <p className="pointer-events-none block truncate text-sm font-medium text-gray-900">
-                  {competition.title}
-                </p>
-                <Badge label={competition.type} size="small" theme="green" />
-              </div>
-              <p className="pointer-events-none block text-sm font-medium text-gray-500">
-                {competition.dateRange}
-              </p>
-            </li>
-          ))}
+          {competitions.edges.map(
+            ({ node: { endDate, startDate, ...competition } }) => {
+              const dateRange: string = new Intl.DateTimeFormat('en-GB', {
+                dateStyle: 'long'
+              }).formatRange(new Date(startDate), new Date(endDate))
+
+              return (
+                <li key={competition.id} className="relative">
+                  <div className="aspect-w-10 aspect-h-7 group block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                    <Image
+                      height={competition.header.height as number}
+                      width={competition.header.width as number}
+                      priority={true}
+                      src={competition.header.url}
+                      alt={`View details for ${competition.title}`}
+                      className="pointer-events-none object-cover group-hover:opacity-75"
+                    />
+                    <Link
+                      href={`/competitions/${competition.slug}`}
+                      className="absolute inset-0 focus:outline-none"
+                    >
+                      <span className="sr-only">
+                        View details for {competition.title}
+                      </span>
+                    </Link>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between space-x-2">
+                    <p className="pointer-events-none block truncate text-sm font-medium text-gray-900">
+                      {competition.title}
+                    </p>
+                    <Badge
+                      label={competition.type}
+                      size="small"
+                      theme="green"
+                    />
+                  </div>
+                  <p className="pointer-events-none block text-sm font-medium text-gray-500">
+                    {dateRange}
+                  </p>
+                </li>
+              )
+            }
+          )}
         </ul>
       </div>
     </React.Fragment>
