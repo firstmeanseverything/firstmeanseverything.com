@@ -3,7 +3,7 @@ import type { Competition as BaseCompetition } from '@/graphql/sdk'
 
 import * as React from 'react'
 import he from 'he'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote'
 
