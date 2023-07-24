@@ -28,7 +28,7 @@
     "next-seo": "4.29.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "7.45.1",
+    "react-hook-form": "7.45.2",
     "react-table": "7.7.0",
     "stripe": "10.17.0",
     "swr": "0.5.7",
