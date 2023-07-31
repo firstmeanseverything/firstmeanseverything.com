@@ -1,4 +1,4 @@
-function FMEStacked(props) {
+export default function FMEStacked(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -35,5 +35,3 @@ function FMEStacked(props) {
     </svg>
   )
 }
-
-export default FMEStacked

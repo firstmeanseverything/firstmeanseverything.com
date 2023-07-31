@@ -1,4 +1,4 @@
-function FMEHorizontal(props) {
+export default function FMEHorizontal(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -40,4 +40,3 @@ function FMEHorizontal(props) {
     </svg>
   )
 }
-export default FMEHorizontal

@@ -1,4 +1,4 @@
-function APHorizontal(props) {
+export default function APHorizontal(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,5 +15,3 @@ function APHorizontal(props) {
     </svg>
   )
 }
-
-export default APHorizontal

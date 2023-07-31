@@ -1,4 +1,4 @@
-function APMark(props) {
+export default function APMark(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,5 +15,3 @@ function APMark(props) {
     </svg>
   )
 }
-
-export default APMark

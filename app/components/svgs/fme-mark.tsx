@@ -1,4 +1,4 @@
-function FMEMark(props) {
+export default function FMEMark(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,5 +20,3 @@ function FMEMark(props) {
     </svg>
   )
 }
-
-export default FMEMark

@@ -1,4 +1,4 @@
-function Facebook(props) {
+export default function Facebook(props: React.SVGAttributes<SVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,5 +14,3 @@ function Facebook(props) {
     </svg>
   )
 }
-
-export default Facebook

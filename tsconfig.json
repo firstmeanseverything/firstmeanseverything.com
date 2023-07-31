@@ -20,10 +20,9 @@
       "@/context/*": ["context/*"],
       "@/graphql/*": ["graphql/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/icons": ["components/icons/index.js"],
       "@/lib/*": ["lib/*"],
       "@/queries/*": ["graphql/queries/*"],
-      "@/svgs": ["components/svgs/index.js"],
+      "@/svgs/*": ["app/components/svgs/*"],
       "@/ui/*": ["components/ui/*"]
     }
   },
