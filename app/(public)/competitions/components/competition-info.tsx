@@ -1,13 +1,21 @@
+import type { Competition, CompetitionPageQueryQuery } from '@/graphql/sdk'
+
 import * as React from 'react'
 import Link from 'next/link'
 import cx from 'classnames'
 import { ExternalLinkIcon, PaperClipIcon } from '@heroicons/react/outline'
 import subWeeks from 'date-fns/subWeeks'
 
-import VenueMap from '@/components/venue-map'
+import VenueMap from './venue-map'
 
-function CompetitionInfo({ competition }) {
-  const pastCompetition =
+interface CompetitionInfoProps {
+  competition: CompetitionPageQueryQuery['competition'] & { dateRange: string }
+}
+
+export default function CompetitionInfo({
+  competition
+}: CompetitionInfoProps): JSX.Element {
+  const pastCompetition: boolean =
     subWeeks(new Date(competition.startDate), 2) < new Date()
 
   const information = React.useMemo(
@@ -131,5 +139,3 @@ function CompetitionInfo({ competition }) {
     </section>
   )
 }
-
-export default CompetitionInfo

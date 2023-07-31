@@ -1,11 +1,20 @@
+'use client'
+
 import * as React from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 
-import { SpinnerSVG } from '@/components/icons'
+import SpinnerSVG from '@/svgs/spinner'
 
-function VenueMap({ venue }) {
+interface VenueMapProps {
+  venue: {
+    latitude: number
+    longitude: number
+  }
+}
+
+export default function VenueMap({ venue }: VenueMapProps): JSX.Element {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string
   })
 
   if (loadError) {
@@ -39,5 +48,3 @@ function VenueMap({ venue }) {
     <SpinnerSVG className="h-6 w-6 animate-spin" />
   )
 }
-
-export default VenueMap
