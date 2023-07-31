@@ -1,17 +1,31 @@
 import cx from 'classnames'
 
-import { SpinnerSVG } from '@/icons'
+import SpinnerSVG from '@/svgs/spinner'
 
-function Button({
+type ButtonSize = 'large' | 'regular' | 'small' | 'xlarge' | 'xsmall'
+type ButtonTheme = 'gray' | 'indigo' | 'yellow'
+type ButtonType = 'button' | 'submit'
+
+interface ButtonProps {
+  children: React.ReactNode
+  isDisabled?: boolean
+  isLoading?: boolean
+  onClick?: () => void
+  size?: ButtonSize
+  theme?: ButtonTheme
+  type?: ButtonType
+}
+
+export default function Button({
   children,
   isDisabled = false,
   isLoading = false,
+  onClick,
   size = 'regular',
   theme = 'indigo',
-  type = 'button',
-  ...props
-}) {
-  const sizeClass = (size) => {
+  type = 'button'
+}: ButtonProps): JSX.Element {
+  const sizeClass = (size?: ButtonSize): string => {
     switch (size) {
       case 'large':
         return 'px-4 py-2 text-base leading-6 rounded-md'
@@ -27,7 +41,7 @@ function Button({
     }
   }
 
-  const themeClass = (theme, disabled) => {
+  const themeClass = (disabled: boolean, theme?: ButtonTheme): string => {
     switch (theme) {
       case 'indigo':
       default:
@@ -48,7 +62,7 @@ function Button({
     }
   }
 
-  const svgSizeClass = (size) => {
+  const svgSizeClass = (size?: ButtonSize): string => {
     switch (size) {
       case 'large':
         return 'h-5 w-5'
@@ -63,7 +77,7 @@ function Button({
     }
   }
 
-  const disabled = isDisabled || isLoading
+  const disabled: boolean = isDisabled || isLoading
 
   return (
     <span className="block rounded-md shadow-sm">
@@ -72,13 +86,13 @@ function Button({
         className={cx(
           'flex w-full items-center justify-center border border-transparent font-medium transition duration-150 ease-in-out focus:outline-none',
           sizeClass(size),
-          themeClass(theme, disabled),
+          themeClass(disabled, theme),
           {
             'cursor-not-allowed opacity-50': disabled
           }
         )}
         disabled={disabled}
-        {...props}
+        onClick={onClick}
       >
         {isLoading ? (
           <SpinnerSVG className={cx('mr-3 animate-spin', svgSizeClass(size))} />
@@ -88,5 +102,3 @@ function Button({
     </span>
   )
 }
-
-export default Button

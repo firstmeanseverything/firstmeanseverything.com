@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/components/*": ["app/components/*"],
       "@/context/*": ["context/*"],
       "@/graphql/*": ["graphql/*"],
       "@/hooks/*": ["hooks/*"],

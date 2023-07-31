@@ -1,7 +1,20 @@
 import cx from 'classnames'
 
-function Badge({ label, size = 'regular', theme = 'blue' }) {
-  const sizeClass = (size) => {
+type BadgeSize = 'large' | 'regular' | 'small'
+type BadgeTheme = 'blue' | 'green' | 'orange'
+
+interface BadgeProps {
+  label: string
+  size?: BadgeSize
+  theme?: BadgeTheme
+}
+
+export default function Badge({
+  label,
+  size = 'regular',
+  theme = 'blue'
+}: BadgeProps): JSX.Element {
+  const sizeClass = (size?: BadgeSize): string => {
     switch (size) {
       case 'large':
         return 'px-3 py-0.5 text-sm leading-5'
@@ -10,7 +23,7 @@ function Badge({ label, size = 'regular', theme = 'blue' }) {
         return 'px-2.5 py-0.5 text-xs leading-4'
     }
   }
-  const themeClass = (theme) => {
+  const themeClass = (theme?: BadgeTheme): string => {
     switch (theme) {
       case 'blue':
       default:
@@ -34,5 +47,3 @@ function Badge({ label, size = 'regular', theme = 'blue' }) {
     </span>
   )
 }
-
-export default Badge

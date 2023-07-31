@@ -7,8 +7,22 @@ import {
   XCircleIcon
 } from '@heroicons/react/solid'
 
-function Alert({ className, message, title, type = 'error' }) {
-  const themeClass = (type) => {
+type AlertType = 'error' | 'info' | 'success' | 'warn'
+
+interface AlertProps {
+  className?: string
+  message: string
+  title: string
+  type?: AlertType
+}
+
+export default function Alert({
+  className,
+  message,
+  title,
+  type = 'error'
+}: AlertProps): JSX.Element {
+  const themeClass = (type?: AlertType): string => {
     switch (type) {
       case 'error':
       default:
@@ -22,7 +36,7 @@ function Alert({ className, message, title, type = 'error' }) {
     }
   }
 
-  const titleThemeClass = (type) => {
+  const titleThemeClass = (type?: AlertType): string => {
     switch (type) {
       case 'error':
       default:
@@ -36,7 +50,7 @@ function Alert({ className, message, title, type = 'error' }) {
     }
   }
 
-  const svgThemeClass = (type) => {
+  const svgThemeClass = (type?: AlertType): string => {
     switch (type) {
       case 'error':
       default:
@@ -50,8 +64,8 @@ function Alert({ className, message, title, type = 'error' }) {
     }
   }
 
-  const svgComponent = (type) => {
-    const baseClass = cx('h-5 w-5', svgThemeClass(type))
+  const svgComponent = (type?: AlertType): JSX.Element => {
+    const baseClass: string = cx('h-5 w-5', svgThemeClass(type))
 
     switch (type) {
       case 'error':
@@ -87,5 +101,3 @@ function Alert({ className, message, title, type = 'error' }) {
     </div>
   )
 }
-
-export default Alert
