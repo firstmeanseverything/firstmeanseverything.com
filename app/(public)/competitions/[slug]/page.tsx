@@ -34,7 +34,7 @@ export default async function CompetitionPage({
   const mdxContent = competition.content ? (
     <MDXRemote
       source={competition.content}
-      components={{ Alert: Alert, SpectatorTickets: SpectatorTickets }}
+      components={{ Alert, SpectatorTickets }}
       options={{ scope: { competition } }}
     />
   ) : null
