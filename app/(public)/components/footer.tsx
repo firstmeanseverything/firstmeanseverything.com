@@ -1,11 +1,18 @@
 import Link from 'next/link'
 
-import { FMEMarkSVG } from '@/svgs'
+import FMEMarkSVG from '@/svgs/fme-mark'
 
 export default function Footer(): JSX.Element {
-  const year = new Date().getFullYear()
+  const year: number = new Date().getFullYear()
 
-  const navigation = {
+  const navigation: Record<
+    string,
+    Array<{
+      name: string
+      href: string
+      icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
+    }>
+  > = {
     legal: [
       { name: 'Privacy', href: '/privacy' },
       { name: 'Terms', href: '/terms' }
@@ -68,14 +75,14 @@ export default function Footer(): JSX.Element {
               Functional fitness events and programming
             </p>
             <div className="flex space-x-6">
-              {navigation.social.map((item) => (
+              {navigation.social.map(({ icon: Icon, ...item }) => (
                 <a
                   key={item.name}
                   href={item.href}
                   className="text-gray-400 hover:text-gray-500"
                 >
                   <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                  {Icon && <Icon className="h-6 w-6" aria-hidden={true} />}
                 </a>
               ))}
             </div>
