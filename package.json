@@ -11,7 +11,7 @@
     "@headlessui/react": "1.7.18",
     "@heroicons/react": "1.0.6",
     "@hookform/resolvers": "2.9.11",
-    "@react-google-maps/api": "2.19.2",
+    "@react-google-maps/api": "2.19.3",
     "@stripe/react-stripe-js": "1.16.5",
     "@stripe/stripe-js": "1.54.2",
     "classnames": "2.5.1",
