@@ -45,7 +45,7 @@
     "@types/node": "17.0.45",
     "@types/react": "17.0.75",
     "autoprefixer": "10.4.17",
-    "postcss": "8.4.33",
+    "postcss": "8.4.35",
     "prettier": "2.8.8",
     "prettier-plugin-tailwindcss": "0.5.11",
     "tailwindcss": "3.3.5",
